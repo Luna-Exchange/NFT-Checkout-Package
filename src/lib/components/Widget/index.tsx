@@ -2,8 +2,8 @@ import React from 'react';
 // import './style.css';
 
 type ComponentProps = {
-    bgimg?: string;
-    curryLogo?: string;
+    nftImgUrl?: string;
+    collectionImgUrl?: string;
     lunaLogo?: string;
     collectionTitle: string;
     nftTitle: string;
@@ -11,13 +11,14 @@ type ComponentProps = {
     price: number;
     mintsRemain: number;
     mintBtnDisabled: boolean;
+    questions: string[];
     onConnectWallet?: () => void;
     onMintNft?: () => void;
 };
 
 const Widget: React.FC<ComponentProps> = ({
-    bgimg,
-    curryLogo,
+    nftImgUrl,
+    collectionImgUrl,
     lunaLogo,
     collectionTitle,
     nftTitle,
@@ -25,6 +26,7 @@ const Widget: React.FC<ComponentProps> = ({
     price,
     mintsRemain,
     mintBtnDisabled,
+    questions,
     onConnectWallet,
     onMintNft,
 }): JSX.Element => {
@@ -43,7 +45,7 @@ const Widget: React.FC<ComponentProps> = ({
             }}
         >
             <div style={{ width: '40%', position: 'relative' }}>
-                <img src={bgimg} width="100%" height="100%" alt="" style={{ objectFit: 'cover' }} />
+                <img src={nftImgUrl} width="100%" height="100%" alt="" style={{ objectFit: 'cover' }} />
                 <div style={{ position: 'absolute', inset: 0 }}>
                     <div
                         style={{
@@ -80,7 +82,7 @@ const Widget: React.FC<ComponentProps> = ({
                                 alignItems: 'center',
                             }}
                         >
-                            <img src={curryLogo} width={40} height={40} alt="" />
+                            <img src={collectionImgUrl} width={40} height={40} style={{ borderRadius: 100 }} alt="" />
                             <p style={{ fontSize: 20, color: 'white', marginLeft: 16 }}>{collectionTitle}</p>
                         </div>
                         <div
@@ -177,35 +179,47 @@ const Widget: React.FC<ComponentProps> = ({
                 <p
                     style={{
                         width: '60%',
-                        height: 40,
+                        padding: '16px',
+                        wordBreak: 'break-all',
+                        color: 'white',
                         background: '#252525',
                         borderColor: 'transparent',
                         borderRadius: 4,
                         marginTop: 0,
                     }}
-                ></p>
+                >
+                    {questions[0]}
+                </p>
                 <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 2</p>
                 <p
                     style={{
                         width: '60%',
-                        height: 40,
+                        padding: '16px',
+                        wordBreak: 'break-all',
+                        color: 'white',
                         background: '#252525',
                         borderColor: 'transparent',
                         borderRadius: 4,
                         marginTop: 0,
                     }}
-                ></p>
+                >
+                    {questions[1]}
+                </p>
                 <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 3</p>
                 <p
                     style={{
                         width: '60%',
-                        height: 100,
+                        padding: '16px',
+                        wordBreak: 'break-all',
+                        color: 'white',
                         background: '#252525',
                         borderColor: 'transparent',
                         borderRadius: 4,
                         marginTop: 0,
                     }}
-                ></p>
+                >
+                    {questions[2]}
+                </p>
             </div>
         </div>
     );
