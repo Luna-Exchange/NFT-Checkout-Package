@@ -6,5 +6,60 @@
     padding: 8px;
     display: flex;
     flex-direction: row;
+    text-align: left;
     background-color: #1d1d1d;
+}
+
+.mint-nft_btn {
+    width: 156px;
+    height: 34px;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid white;
+    border-radius: 4px;
+    background: none;
+    color: white;
+    cursor: pointer;
+}
+
+.mint-nft_btn:disabled {
+    border: 1px solid transparent;
+    background: #9e9e9e;
+    color: #616161;
+    cursor: default;
+}
+
+.mint-nft_btn:active:enabled {
+    transform: scale(0.99);
+}
+
+.connect-wallet_btn {
+    width: 156px;
+    height: 34px;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid white;
+    border-radius: 4px;
+    background: none;
+    color: white;
+    margin-left: 16px;
+    cursor: pointer;
+}
+
+.connect-wallet_btn:active {
+    transform: scale(0.99);
+    /* box-shadow: 3px 2px 2px 2px rgba(0, 0, 0, 0.25); */
+}
+
+.question {
+    width: 60%;
+    height: 40px;
+    background-color: #252525;
+    border-color: transparent;
+    border-radius: 4px;
+    margin-top: 0px;
+}
+
+.question3 {
+    height: 100px;
 }
