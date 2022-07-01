@@ -175,51 +175,63 @@ const Widget: React.FC<ComponentProps> = ({
                 </div>
             </div>
             <div style={{ width: '30%', display: 'flex', flexDirection: 'column', marginLeft: 48 }}>
-                <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 1</p>
-                <p
-                    style={{
-                        width: '60%',
-                        padding: '16px',
-                        wordBreak: 'break-all',
-                        color: 'white',
-                        background: '#252525',
-                        borderColor: 'transparent',
-                        borderRadius: 4,
-                        marginTop: 0,
-                    }}
-                >
-                    {questions[0]}
-                </p>
-                <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 2</p>
-                <p
-                    style={{
-                        width: '60%',
-                        padding: '16px',
-                        wordBreak: 'break-all',
-                        color: 'white',
-                        background: '#252525',
-                        borderColor: 'transparent',
-                        borderRadius: 4,
-                        marginTop: 0,
-                    }}
-                >
-                    {questions[1]}
-                </p>
-                <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 3</p>
-                <p
-                    style={{
-                        width: '60%',
-                        padding: '16px',
-                        wordBreak: 'break-all',
-                        color: 'white',
-                        background: '#252525',
-                        borderColor: 'transparent',
-                        borderRadius: 4,
-                        marginTop: 0,
-                    }}
-                >
-                    {questions[2]}
-                </p>
+                {questions[0] && (
+                    <>
+                        <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 1</p>
+                        <p
+                            style={{
+                                width: '60%',
+                                padding: '16px',
+                                wordBreak: 'break-all',
+                                color: 'white',
+                                background: '#252525',
+                                borderColor: 'transparent',
+                                borderRadius: 4,
+                                marginTop: 0,
+                            }}
+                        >
+                            {questions[0]}
+                        </p>
+                    </>
+                )}
+                {questions[1] && (
+                    <>
+                        <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 2</p>
+                        <p
+                            style={{
+                                width: '60%',
+                                padding: '16px',
+                                wordBreak: 'break-all',
+                                color: 'white',
+                                background: '#252525',
+                                borderColor: 'transparent',
+                                borderRadius: 4,
+                                marginTop: 0,
+                            }}
+                        >
+                            {questions[1]}
+                        </p>
+                    </>
+                )}
+                {questions[2] && (
+                    <>
+                        <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 3</p>
+                        <p
+                            style={{
+                                width: '60%',
+                                padding: '16px',
+                                wordBreak: 'break-all',
+                                color: 'white',
+                                background: '#252525',
+                                borderColor: 'transparent',
+                                borderRadius: 4,
+                                marginTop: 0,
+                            }}
+                        >
+                            {questions[2]}
+                        </p>
+                    </>
+                )}
             </div>
         </div>
     );
