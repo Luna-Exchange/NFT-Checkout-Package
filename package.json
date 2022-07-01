@@ -1,29 +1,29 @@
 {
-  "name": "@sportigos/nft-checkout",
-  "version": "1.0.6",
-  "description": "Learning how to create React modules using TypeScript!",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/esm/index.d.ts",
-  "license": "MIT",
-  "scripts": {
-    "build": "yarn build:esm && yarn build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
-    "prepublishOnly": "yarn build"
-  },
-  "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
-  },
-  "devDependencies": {
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "typescript": "^4.0.2"
-  },
-  "files": [
-    "/lib"
-  ]
+    "name": "@sportigos/nft-checkout",
+    "version": "1.0.13",
+    "description": "Learning how to create React modules using TypeScript!",
+    "main": "./lib/cjs/index.js",
+    "module": "./lib/esm/index.js",
+    "types": "./lib/esm/index.d.ts",
+    "license": "MIT",
+    "scripts": {
+        "build": "yarn build:esm && yarn build:cjs",
+        "build:esm": "tsc",
+        "build:cjs": "tsc --module commonjs --outDir lib/cjs",
+        "prepublishOnly": "yarn build"
+    },
+    "peerDependencies": {},
+    "devDependencies": {
+        "@types/react": "^17.0.0",
+        "@types/react-dom": "^17.0.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "typescript": "^4.1.2"
+    },
+    "files": [
+        "/lib"
+    ],
+    "dependencies": {
+        "@iconify/react": "^3.2.2"
+    }
 }
