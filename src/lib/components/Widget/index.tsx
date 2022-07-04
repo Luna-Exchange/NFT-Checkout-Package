@@ -17,6 +17,8 @@ type ComponentProps = {
     onConnectWallet?: () => void;
     onMintNft?: () => void;
     className?: string;
+    nftCount: string;
+    onNftCountChange: (value: string) => void;
 };
 
 const Widget: React.FC<ComponentProps> = ({
@@ -34,6 +36,8 @@ const Widget: React.FC<ComponentProps> = ({
     onConnectWallet,
     onMintNft,
     className = '',
+    nftCount,
+    onNftCountChange,
 }): JSX.Element => {
     return (
         <div
@@ -157,12 +161,22 @@ const Widget: React.FC<ComponentProps> = ({
                                 <p style={{ fontWeight: 600 }}>{mintsRemain}</p>
                             </div>
                         </div>
-                        <div style={{ marginTop: 24 }} className="btn-box">
+                        <div
+                            style={{ display: 'flex', flexDirection: 'row', gap: 16, marginTop: 24 }}
+                            className="btn-box"
+                        >
+                            <input
+                                placeholder="Number of NFT"
+                                value={nftCount}
+                                onChange={(event) => onNftCountChange(event.target.value)}
+                                style={{ width: '50%', borderRadius: 4 }}
+                                className="number-of-nft__inut"
+                            ></input>
                             <button
                                 disabled={mintBtnDisabled}
                                 onClick={onMintNft}
                                 style={{
-                                    width: 156,
+                                    width: '50%',
                                     height: 34,
                                     fontSize: 14,
                                     fontWeight: 400,
@@ -172,29 +186,29 @@ const Widget: React.FC<ComponentProps> = ({
                                     // color: 'white',
                                     // cursor: 'pointer',
                                 }}
-                                className="mint-nft_btn"
+                                className="mint-nft__btn"
                             >
                                 MINT NFT
                             </button>
-                            <button
-                                onClick={onConnectWallet}
-                                style={{
-                                    width: 156,
-                                    height: 34,
-                                    fontSize: 14,
-                                    fontWeight: 400,
-                                    border: ' 1px solid white',
-                                    borderRadius: 4,
-                                    background: 'none',
-                                    color: 'white',
-                                    cursor: 'pointer',
-                                    marginLeft: 16,
-                                }}
-                                className="connect-wallet_btn"
-                            >
-                                CONNECT WALLET
-                            </button>
                         </div>
+                        <button
+                            onClick={onConnectWallet}
+                            style={{
+                                width: '100%',
+                                height: 34,
+                                fontSize: 14,
+                                fontWeight: 400,
+                                border: ' 1px solid white',
+                                borderRadius: 4,
+                                background: 'none',
+                                color: 'white',
+                                cursor: 'pointer',
+                                marginTop: 16,
+                            }}
+                            className="connect-wallet__btn"
+                        >
+                            CONNECT WALLET
+                        </button>
                     </div>
                 </div>
             </div>
