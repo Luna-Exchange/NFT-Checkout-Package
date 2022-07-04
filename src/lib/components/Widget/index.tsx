@@ -135,82 +135,64 @@ const Widget: React.FC<ComponentProps> = ({
                     </div>
                 </div>
             </div>
-            <div style={{ width: '30%', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ padding: 16 }}>
-                    <p style={{ fontSize: 20, color: 'white' }}>{nftTitle}</p>
-                </div>
-                <div style={{ height: 1, background: '#444444' }}></div>
-                <div
-                    style={{
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        padding: 16,
-                    }}
-                >
-                    <p style={{ fontSize: 14, color: '#9E9E9E' }}>{nftDescription}</p>
+            <div style={{ width: '30%', display: 'flex', flexDirection: 'column', padding: 16 }}>
+                <p style={{ fontSize: 20, color: 'white' }}>{nftTitle}</p>
+                <p style={{ fontSize: 14, color: '#9E9E9E' }}>{nftDescription}</p>
+                <div style={{ display: 'flex', flexDirection: 'row', color: 'white' }}>
                     <div>
-                        <div style={{ display: 'flex', flexDirection: 'row', color: 'white' }}>
-                            <div>
-                                <p>Price</p>
-                                <p style={{ fontWeight: 600 }}>{`${price} ETH`}</p>
-                            </div>
-                            <div style={{ marginLeft: 60 }}>
-                                <p>Mints Remaining</p>
-                                <p style={{ fontWeight: 600 }}>{mintsRemain}</p>
-                            </div>
-                        </div>
-                        <div
-                            style={{ display: 'flex', flexDirection: 'row', gap: 16, marginTop: 24 }}
-                            className="btn-box"
-                        >
-                            <input
-                                placeholder="Number of NFT"
-                                value={nftCount}
-                                onChange={(event) => onNftCountChange(event.target.value)}
-                                style={{ width: '50%', borderRadius: 4 }}
-                                className="number-of-nft__inut"
-                            ></input>
-                            <button
-                                disabled={mintBtnDisabled}
-                                onClick={onMintNft}
-                                style={{
-                                    width: '50%',
-                                    height: 34,
-                                    fontSize: 14,
-                                    fontWeight: 400,
-                                    // border: ' 1px solid white',
-                                    borderRadius: 4,
-                                    // background: 'none',
-                                    // color: 'white',
-                                    // cursor: 'pointer',
-                                }}
-                                className="mint-nft__btn"
-                            >
-                                MINT NFT
-                            </button>
-                        </div>
-                        <button
-                            onClick={onConnectWallet}
-                            style={{
-                                width: '100%',
-                                height: 34,
-                                fontSize: 14,
-                                fontWeight: 400,
-                                border: ' 1px solid white',
-                                borderRadius: 4,
-                                background: 'none',
-                                color: 'white',
-                                cursor: 'pointer',
-                                marginTop: 16,
-                            }}
-                            className="connect-wallet__btn"
-                        >
-                            CONNECT WALLET
-                        </button>
+                        <p>Price</p>
+                        <p style={{ fontWeight: 600 }}>{`${price} ETH`}</p>
+                    </div>
+                    <div style={{ marginLeft: 60 }}>
+                        <p>Mints Remaining</p>
+                        <p style={{ fontWeight: 600 }}>{mintsRemain}</p>
                     </div>
                 </div>
+                <div style={{ display: 'flex', flexDirection: 'row', gap: 16, marginTop: 16 }}>
+                    <input
+                        placeholder="Number of NFT"
+                        value={nftCount}
+                        onChange={(event) => onNftCountChange(event.target.value)}
+                        style={{ width: '50%', borderRadius: 4 }}
+                        className="number-of-nft__inut"
+                    ></input>
+                    <button
+                        disabled={mintBtnDisabled}
+                        onClick={onMintNft}
+                        style={{
+                            width: '50%',
+                            height: 34,
+                            fontSize: 14,
+                            fontWeight: 400,
+                            // border: ' 1px solid white',
+                            borderRadius: 4,
+                            // background: 'none',
+                            // color: 'white',
+                            // cursor: 'pointer',
+                        }}
+                        className="mint-nft__btn"
+                    >
+                        MINT NFT
+                    </button>
+                </div>
+                <button
+                    onClick={onConnectWallet}
+                    style={{
+                        width: '100%',
+                        height: 34,
+                        fontSize: 14,
+                        fontWeight: 400,
+                        border: ' 1px solid white',
+                        borderRadius: 4,
+                        background: 'none',
+                        color: 'white',
+                        cursor: 'pointer',
+                        marginTop: 16,
+                    }}
+                    className="connect-wallet__btn"
+                >
+                    CONNECT WALLET
+                </button>
             </div>
             <div style={{ width: '30%', display: 'flex', flexDirection: 'column', marginLeft: 48 }}>
                 {questions[0] && (
