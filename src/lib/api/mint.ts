@@ -2,15 +2,15 @@ import axios from 'axios';
 import SERVER_URL from './server';
 // import { FirstPartyAnswers } from '../type';
 
-export const getMintInfo = (collecttionId: string, token: string) =>
+export const getMintInfo = (collecttionId: string, username: string, password: string) =>
     new Promise((resolve: (value: any) => void, reject: (value: string) => void) => {
         let reqUrl = `${SERVER_URL}/mint/${collecttionId}/info`;
         // console.log('reqUrl:', reqUrl);
 
         const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': token,
+            auth: {
+                username: username,
+                password: password,
             },
         };
 
@@ -18,12 +18,11 @@ export const getMintInfo = (collecttionId: string, token: string) =>
             .get(reqUrl, config)
             .then((response) => {
                 // console.log('getMintInfo response:', response.data);
-                if (response.data.code === 200) resolve(response.data.data);
-                else resolve('');
+                resolve(response.data);
             })
             .catch((error) => {
-                // console.log('getMintInfo error:', error.response.data);
-                reject(error.response.data);
+                // console.log('getMintInfo error:', error);
+                reject(error);
             });
     });
 
