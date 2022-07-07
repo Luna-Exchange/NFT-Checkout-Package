@@ -1,6 +1,7 @@
 import React from 'react';
 // import './style.css';
 import { Icon } from '@iconify/react';
+// import { getMintInfo } from '../../api/mint';
 
 type ComponentProps = {
     nftImgUrl?: string;
@@ -23,7 +24,7 @@ type ComponentProps = {
     onAnswersChange: (index: number, value: string) => void;
 };
 
-const Widget: React.FC<ComponentProps> = ({
+const IFrameBox: React.FC<ComponentProps> = ({
     nftImgUrl,
     collectionImgUrl,
     lunaLogo,
@@ -43,6 +44,16 @@ const Widget: React.FC<ComponentProps> = ({
     answers,
     onAnswersChange,
 }): JSX.Element => {
+    // useEffect(() => {
+    //     getMintInfo('aaa', 'aaa')
+    //         .then(async (response: any) => {
+    //             console.log('getMintInfo response:', response);
+    //         })
+    //         .catch((error) => {
+    //             console.log('getMintInfo error:', error);
+    //         });
+    // }, []);
+
     return (
         <div
             style={{
@@ -237,4 +248,4 @@ const Widget: React.FC<ComponentProps> = ({
     );
 };
 
-export default Widget;
+export default IFrameBox;

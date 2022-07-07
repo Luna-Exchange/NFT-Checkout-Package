@@ -1,3 +1,3 @@
-import Widget from "./components/Widget";
+import IFrameBox from './components/IFrameBox';
 
-export { Widget };
+export { IFrameBox };
