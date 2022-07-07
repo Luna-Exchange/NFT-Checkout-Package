@@ -19,6 +19,8 @@ type ComponentProps = {
     className?: string;
     nftCount: string;
     onNftCountChange: (value: string) => void;
+    answers: string[];
+    onAnswersChange: (index: number, value: string) => void;
 };
 
 const Widget: React.FC<ComponentProps> = ({
@@ -38,6 +40,8 @@ const Widget: React.FC<ComponentProps> = ({
     className = '',
     nftCount,
     onNftCountChange,
+    answers,
+    onAnswersChange,
 }): JSX.Element => {
     return (
         <div
@@ -155,7 +159,7 @@ const Widget: React.FC<ComponentProps> = ({
                         onChange={(event) => onNftCountChange(event.target.value)}
                         style={{ width: '50%', borderRadius: 4 }}
                         className="number-of-nft__inut"
-                    ></input>
+                    />
                     <button
                         disabled={mintBtnDisabled}
                         onClick={onMintNft}
@@ -194,63 +198,39 @@ const Widget: React.FC<ComponentProps> = ({
                     CONNECT WALLET
                 </button>
             </div>
-            <div style={{ width: '30%', display: 'flex', flexDirection: 'column', marginLeft: 48 }}>
+            <div style={{ width: '30%', display: 'flex', flexDirection: 'column', gap: 16, marginLeft: 48 }}>
                 {questions[0] && (
-                    <>
-                        <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 1</p>
-                        <p
-                            style={{
-                                width: '60%',
-                                padding: '16px',
-                                wordBreak: 'break-all',
-                                color: 'white',
-                                background: '#252525',
-                                borderColor: 'transparent',
-                                borderRadius: 4,
-                                marginTop: 0,
-                            }}
-                        >
-                            {questions[0]}
-                        </p>
-                    </>
+                    <div>
+                        <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>{questions[0]}</p>
+                        <input
+                            placeholder="Answer 1"
+                            value={answers[0]}
+                            onChange={(event) => onAnswersChange(0, event.target.value)}
+                            style={{ width: '60%', padding: '12px 8px', borderRadius: 4 }}
+                        />
+                    </div>
                 )}
                 {questions[1] && (
-                    <>
-                        <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 2</p>
-                        <p
-                            style={{
-                                width: '60%',
-                                padding: '16px',
-                                wordBreak: 'break-all',
-                                color: 'white',
-                                background: '#252525',
-                                borderColor: 'transparent',
-                                borderRadius: 4,
-                                marginTop: 0,
-                            }}
-                        >
-                            {questions[1]}
-                        </p>
-                    </>
+                    <div>
+                        <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>{questions[1]}</p>
+                        <input
+                            placeholder="Answer 2"
+                            value={answers[1]}
+                            onChange={(event) => onAnswersChange(1, event.target.value)}
+                            style={{ width: '60%', padding: '12px 8px', borderRadius: 4 }}
+                        />
+                    </div>
                 )}
                 {questions[2] && (
-                    <>
-                        <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 3</p>
-                        <p
-                            style={{
-                                width: '60%',
-                                padding: '16px',
-                                wordBreak: 'break-all',
-                                color: 'white',
-                                background: '#252525',
-                                borderColor: 'transparent',
-                                borderRadius: 4,
-                                marginTop: 0,
-                            }}
-                        >
-                            {questions[2]}
-                        </p>
-                    </>
+                    <div>
+                        <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>{questions[2]}</p>
+                        <input
+                            placeholder="Answer 3"
+                            value={answers[2]}
+                            onChange={(event) => onAnswersChange(2, event.target.value)}
+                            style={{ width: '60%', padding: '12px 8px', borderRadius: 4 }}
+                        />
+                    </div>
                 )}
             </div>
         </div>
