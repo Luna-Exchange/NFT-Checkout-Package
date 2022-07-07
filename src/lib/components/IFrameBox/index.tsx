@@ -179,11 +179,11 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             height: 34,
                             fontSize: 14,
                             fontWeight: 400,
-                            // border: ' 1px solid white',
+                            border: ' 1px solid white',
                             borderRadius: 4,
-                            // background: 'none',
-                            // color: 'white',
-                            // cursor: 'pointer',
+                            background: 'none',
+                            color: 'white',
+                            cursor: 'pointer',
                         }}
                         className="mint-nft__btn"
                     >
