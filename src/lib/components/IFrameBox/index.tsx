@@ -3,6 +3,7 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 // import { getMintInfo } from '../../api/mint';
 import LunaLogo from '../../assets/LunaLogo';
+import { useWeb3React } from '@web3-react/core';
 
 type ComponentProps = {
     nftImgUrl?: string;
@@ -16,6 +17,7 @@ type ComponentProps = {
     questions: string[];
     socialLinks: { [key: string]: boolean };
     onConnectWallet?: () => void;
+    onDisconnectWallet?: () => void;
     onMintNft?: () => void;
     className?: string;
     nftCount: string;
@@ -36,6 +38,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
     questions,
     socialLinks,
     onConnectWallet,
+    onDisconnectWallet,
     onMintNft,
     className = '',
     nftCount,
@@ -52,6 +55,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
     //             console.log('getMintInfo error:', error);
     //         });
     // }, []);
+    const { active } = useWeb3React();
 
     return (
         <div
@@ -190,24 +194,45 @@ const IFrameBox: React.FC<ComponentProps> = ({
                         MINT NFT
                     </button>
                 </div>
-                <button
-                    onClick={onConnectWallet}
-                    style={{
-                        width: '100%',
-                        height: 34,
-                        fontSize: 14,
-                        fontWeight: 400,
-                        border: ' 1px solid white',
-                        borderRadius: 4,
-                        background: 'none',
-                        color: 'white',
-                        cursor: 'pointer',
-                        marginTop: 16,
-                    }}
-                    className="connect-wallet__btn"
-                >
-                    CONNECT WALLET
-                </button>
+                {!active ? (
+                    <button
+                        onClick={onConnectWallet}
+                        style={{
+                            width: '100%',
+                            height: 34,
+                            fontSize: 14,
+                            fontWeight: 400,
+                            border: ' 1px solid white',
+                            borderRadius: 4,
+                            background: 'none',
+                            color: 'white',
+                            cursor: 'pointer',
+                            marginTop: 16,
+                        }}
+                        className="connect-wallet__btn"
+                    >
+                        CONNECT WALLET
+                    </button>
+                ) : (
+                    <button
+                        onClick={onDisconnectWallet}
+                        style={{
+                            width: '100%',
+                            height: 34,
+                            fontSize: 14,
+                            fontWeight: 400,
+                            border: ' 1px solid white',
+                            borderRadius: 4,
+                            background: 'none',
+                            color: 'white',
+                            cursor: 'pointer',
+                            marginTop: 16,
+                        }}
+                        className="connect-wallet__btn"
+                    >
+                        DISCONNECT WALLET
+                    </button>
+                )}
             </div>
             <div style={{ width: '30%', display: 'flex', flexDirection: 'column', gap: 16, marginLeft: 48 }}>
                 {questions[0] && (
