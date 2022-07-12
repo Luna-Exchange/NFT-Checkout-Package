@@ -44,7 +44,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
     nftCount,
     onNftCountChange,
     answers,
-    onAnswersChange,
+    onAnswersChange
 }): JSX.Element => {
     // useEffect(() => {
     //     getMintInfo('aaa', 'aaa')
@@ -68,7 +68,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                 flexDirection: 'row',
                 textAlign: 'left',
                 padding: 8,
-                background: '#1d1d1d',
+                background: '#1d1d1d'
             }}
             className={className}
         >
@@ -81,7 +81,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             height: '60%',
                             background:
                                 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(27, 28, 34, 0) 0.01%, #000000 100%)',
-                            transform: 'rotate(-180deg)',
+                            transform: 'rotate(-180deg)'
                         }}
                     ></div>
                 </div>
@@ -92,7 +92,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        padding: 8,
+                        padding: 8
                     }}
                 >
                     <div
@@ -100,14 +100,14 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'space-between',
-                            alignItems: 'center',
+                            alignItems: 'center'
                         }}
                     >
                         <div
                             style={{
                                 display: 'flex',
                                 flexDirection: 'row',
-                                alignItems: 'center',
+                                alignItems: 'center'
                             }}
                         >
                             <img src={collectionImgUrl} width={40} height={40} style={{ borderRadius: 100 }} alt="" />
@@ -117,7 +117,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             style={{
                                 display: 'flex',
                                 flexDirection: 'row',
-                                alignItems: 'center',
+                                alignItems: 'center'
                             }}
                         >
                             {socialLinks['twitter'] && <Icon icon="mdi:twitter" fontSize={24} color="white" />}
@@ -145,7 +145,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             alignItems: 'center',
                             background: '#000000BF',
                             padding: 8,
-                            marginLeft: -8,
+                            marginLeft: -8
                         }}
                     >
                         <p style={{ fontSize: 14, color: 'white', margin: 0 }}>Powered by</p>
@@ -187,7 +187,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             borderRadius: 4,
                             background: 'none',
                             color: 'white',
-                            cursor: 'pointer',
+                            cursor: 'pointer'
                         }}
                         className="mint-nft__btn"
                     >
@@ -207,7 +207,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             background: 'none',
                             color: 'white',
                             cursor: 'pointer',
-                            marginTop: 16,
+                            marginTop: 16
                         }}
                         className="connect-wallet__btn"
                     >
@@ -226,7 +226,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             background: 'none',
                             color: 'white',
                             cursor: 'pointer',
-                            marginTop: 16,
+                            marginTop: 16
                         }}
                         className="connect-wallet__btn"
                     >
