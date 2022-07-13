@@ -3,9 +3,10 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 // import { getMintInfo } from '../../api/mint';
 import LunaLogo from '../../assets/LunaLogo';
-import { useWeb3React } from '@web3-react/core';
+// import { useWeb3React } from '@web3-react/core';
 
 type ComponentProps = {
+    active: boolean;
     nftImgUrl?: string;
     collectionImgUrl?: string;
     collectionTitle: string;
@@ -27,6 +28,7 @@ type ComponentProps = {
 };
 
 const IFrameBox: React.FC<ComponentProps> = ({
+    active,
     nftImgUrl,
     collectionImgUrl,
     collectionTitle,
@@ -55,7 +57,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
     //             console.log('getMintInfo error:', error);
     //         });
     // }, []);
-    const { active } = useWeb3React();
+    // const { active } = useWeb3React();
 
     return (
         <div

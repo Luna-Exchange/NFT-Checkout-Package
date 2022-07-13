@@ -20,7 +20,7 @@ type ComponentProps = {
 };
 
 const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, password }): JSX.Element => {
-    const { account, activate, deactivate } = useWeb3React();
+    const { account, activate, deactivate, active } = useWeb3React();
     const [mintInfo, setMintInfo] = useState<any>();
 
     const [twitterEnabled, setTwitterEnabled] = useState<boolean>(false);
@@ -103,6 +103,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             <div>
                 {!!mintInfo && (
                     <IFrameBox
+                        active={active}
                         nftImgUrl={mintInfo.background_header}
                         collectionImgUrl={mintInfo.image}
                         collectionTitle={mintInfo.name}
