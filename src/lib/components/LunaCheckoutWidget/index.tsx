@@ -29,7 +29,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
     const [instagramEnabled, setInstagramEnabled] = useState<boolean>(false);
 
     const [mintPrice, setMintPrice] = useState<number>(0);
-    const [mintRemain, setMintRemain] = useState<number>(0);
+    const [mintRemain, setMintRemain] = useState<number | undefined>(0);
 
     const [nftCount, setNftCount] = useState<string>('');
     const [answers, setAnswers] = useState<string[]>([]);
@@ -63,19 +63,28 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             });
     }, [collectionId, username, password]);
 
-    async function getMintPrice() {
+    async function getTokenInfo() {
         if (contract) {
-            const res = await contract.mintPrice(1);
-            const mintPrice = parseFloat(ethers.utils.formatEther(res.toString()));
+            const resMintPrice = await contract.mintPrice(1);
+            const mintPrice = parseFloat(ethers.utils.formatEther(resMintPrice.toString()));
+
+            const tokenBalance = await contract.balanceForTokenId(1);
+            const tokenBalanceReadable = parseInt(ethers.utils.formatEther(tokenBalance.toString()));
+
+            const maxSupply = await contract.maxSupply(1);
+            const maxSupplyReadable = parseInt(maxSupply.toString());
+
+            const mintRemaining = maxSupplyReadable ? maxSupplyReadable - tokenBalanceReadable : undefined;
+
             setMintPrice(mintPrice);
-            setMintRemain(0);
+            setMintRemain(mintRemaining);
             console.log('mintPrice:', mintPrice);
         }
     }
 
     const contract = useContract(mintInfo?.contract_address, NFT_ABI);
     // const contract = useContract('0xf7485edf11bfc4cb0a15a63302cc3a8cf6f98920', NFT_ABI);
-    getMintPrice();
+    getTokenInfo();
 
     const onNftCountChange = (value: string) => {
         if (!isNaN(Number(value))) {

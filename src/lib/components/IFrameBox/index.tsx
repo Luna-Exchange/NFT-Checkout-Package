@@ -13,7 +13,7 @@ type ComponentProps = {
     nftTitle: string;
     nftDescription: string;
     price: number;
-    mintsRemain: number;
+    mintsRemain: number | undefined;
     mintBtnDisabled: boolean;
     questions: string[];
     socialLinks: { [key: string]: boolean };
@@ -179,7 +179,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                         </div>
                         <div style={{ marginLeft: 60 }}>
                             <p>Mints Remaining</p>
-                            <p style={{ fontWeight: 600 }}>{mintsRemain}</p>
+                            <p style={{ fontWeight: 600 }}>{mintsRemain ? mintsRemain : 'Unlimited'}</p>
                         </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', gap: 16, marginTop: 16 }}>
