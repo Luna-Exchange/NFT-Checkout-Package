@@ -28,6 +28,9 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
     const [facebookEnabled, setFacebookEnabled] = useState<boolean>(false);
     const [instagramEnabled, setInstagramEnabled] = useState<boolean>(false);
 
+    const [mintPrice, setMintPrice] = useState<number>(0);
+    const [mintRemain, setMintRemain] = useState<number>(0);
+
     const [nftCount, setNftCount] = useState<string>('');
     const [answers, setAnswers] = useState<string[]>([]);
 
@@ -60,8 +63,19 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             });
     }, [collectionId, username, password]);
 
+    async function getMintPrice() {
+        if (contract) {
+            const res = await contract.mintPrice(1);
+            const mintPrice = parseFloat(ethers.utils.formatEther(res.toString()));
+            setMintPrice(mintPrice);
+            setMintRemain(0);
+            console.log('mintPrice:', mintPrice);
+        }
+    }
+
     const contract = useContract(mintInfo?.contract_address, NFT_ABI);
     // const contract = useContract('0xf7485edf11bfc4cb0a15a63302cc3a8cf6f98920', NFT_ABI);
+    getMintPrice();
 
     const onNftCountChange = (value: string) => {
         if (!isNaN(Number(value))) {
@@ -86,8 +100,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
     const handleMint = async () => {
         console.log(contract);
         if (contract) {
-            const res = await contract.mintPrice(1);
-            const mintPrice = parseFloat(ethers.utils.formatEther(res.toString()));
+            console.log('mintPrice, nftCount:', mintPrice, nftCount);
             try {
                 await contract.mint(account, 1, parseInt(nftCount), {
                     value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
@@ -109,8 +122,8 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
                         collectionTitle={mintInfo.name}
                         nftTitle={mintInfo.name}
                         nftDescription={mintInfo.description}
-                        price={0.08}
-                        mintsRemain={10000}
+                        price={mintPrice}
+                        mintsRemain={mintRemain}
                         mintBtnDisabled={false}
                         questions={mintInfo.first_party_data.map((item: any) => item.question)}
                         socialLinks={{

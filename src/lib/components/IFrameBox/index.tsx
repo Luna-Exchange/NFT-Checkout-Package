@@ -187,7 +187,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             placeholder="Number of NFT"
                             value={nftCount}
                             onChange={(event) => onNftCountChange(event.target.value)}
-                            style={{ width: '50%', borderRadius: 4 }}
+                            style={{ width: '50%', padding: '0 8px', borderRadius: 4 }}
                             className="number-of-nft__inut"
                         />
                         <button
