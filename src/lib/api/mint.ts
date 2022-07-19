@@ -1,6 +1,6 @@
 import axios from 'axios';
 import SERVER_URL from './server';
-// import { FirstPartyAnswers } from '../type';
+import { FirstPartyAnswers } from '../type';
 
 export const getMintInfo = (collecttionId: string, username: string, password: string) =>
     new Promise((resolve: (value: any) => void, reject: (value: string) => void) => {
@@ -10,8 +10,8 @@ export const getMintInfo = (collecttionId: string, username: string, password: s
         const config = {
             auth: {
                 username: username,
-                password: password,
-            },
+                password: password
+            }
         };
 
         axios
@@ -26,36 +26,35 @@ export const getMintInfo = (collecttionId: string, username: string, password: s
             });
     });
 
-// export const answerMintQuestions = (
-//     collecttionId: string,
-//     wallet: string,
-//     answers: FirstPartyAnswers[],
-//     token: string
-// ) =>
-//     new Promise((resolve: (value: any) => void, reject: (value: string) => void) => {
-//         let reqUrl = `${SERVER_URL}/mint/${collecttionId}/answers`;
-//         // console.log('reqUrl:', reqUrl);
+export const answerMintQuestions = (
+    collecttionId: string,
+    wallet: string,
+    answers: FirstPartyAnswers[],
+    username: string,
+    password: string
+) =>
+    new Promise((resolve: (value: any) => void, reject: (value: string) => void) => {
+        let reqUrl = `${SERVER_URL}/mint/${collecttionId}/answers`;
+        // console.log('reqUrl:', reqUrl);
 
-//         const body: any = {};
-//         body['wallet_address'] = wallet;
-//         body['answers'] = JSON.stringify(answers);
+        const body: any = {};
+        body['wallet_address'] = wallet;
+        body['answers'] = answers;
 
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'x-auth-token': token,
-//             },
-//         };
-
-//         axios
-//             .post(reqUrl, body, config)
-//             .then((response) => {
-//                 // console.log('addOrg response:', response);
-//                 if (response.data.code === 200) resolve(response.data.data);
-//                 else resolve('');
-//             })
-//             .catch((error) => {
-//                 // console.log('addOrg error:', error);
-//                 reject(error.response.data);
-//             });
-//     });
+        const config = {
+            auth: {
+                username: username,
+                password: password
+            }
+        };
+        axios
+            .post(reqUrl, body, config)
+            .then((response) => {
+                // console.log('answerMintQuestions response:', response);
+                resolve(response.data);
+            })
+            .catch((error) => {
+                // console.log('answerMintQuestions error:', error);
+                reject(error);
+            });
+    });

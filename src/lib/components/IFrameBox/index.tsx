@@ -22,8 +22,10 @@ type ComponentProps = {
     onMintNft?: () => void;
     className?: string;
     nftCount: string;
+    nftCountError?: boolean;
     onNftCountChange: (value: string) => void;
     answers: string[];
+    answersError?: boolean[];
     onAnswersChange: (index: number, value: string) => void;
     onIframeCode?: () => void;
     onInstallGuide?: () => void;
@@ -47,8 +49,10 @@ const IFrameBox: React.FC<ComponentProps> = ({
     onMintNft,
     className = '',
     nftCount,
+    nftCountError = false,
     onNftCountChange,
     answers,
+    answersError = [false, false, false],
     onAnswersChange,
     onIframeCode,
     onInstallGuide,
@@ -175,11 +179,11 @@ const IFrameBox: React.FC<ComponentProps> = ({
                     <div style={{ display: 'flex', flexDirection: 'row', color: 'white' }}>
                         <div>
                             <p>Price</p>
-                            <p style={{ fontWeight: 600 }}>{`${price} ETH`}</p>
+                            <p style={{ fontWeight: 600 }}>{active ? `${price} ETH` : '-'}</p>
                         </div>
                         <div style={{ marginLeft: 60 }}>
                             <p>Mints Remaining</p>
-                            <p style={{ fontWeight: 600 }}>{mintsRemain ? mintsRemain : 'Unlimited'}</p>
+                            <p style={{ fontWeight: 600 }}>{!active ? '-' : mintsRemain ? mintsRemain : 'Unlimited'}</p>
                         </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', gap: 16, marginTop: 16 }}>
@@ -187,7 +191,12 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             placeholder="Number of NFT"
                             value={nftCount}
                             onChange={(event) => onNftCountChange(event.target.value)}
-                            style={{ width: '50%', padding: '0 8px', borderRadius: 4 }}
+                            style={{
+                                width: '50%',
+                                padding: '0 8px',
+                                borderRadius: 4,
+                                border: nftCountError ? '2px solid #EB5757' : 'none'
+                            }}
                             className="number-of-nft__inut"
                         />
                         <button
@@ -257,7 +266,12 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                 placeholder="Answer 1"
                                 value={answers[0]}
                                 onChange={(event) => onAnswersChange(0, event.target.value)}
-                                style={{ width: '60%', padding: '12px 8px', borderRadius: 4 }}
+                                style={{
+                                    width: '60%',
+                                    padding: '12px 8px',
+                                    borderRadius: 4,
+                                    border: answersError[0] ? '2px solid #EB5757' : 'none'
+                                }}
                             />
                         </div>
                     )}
@@ -268,7 +282,12 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                 placeholder="Answer 2"
                                 value={answers[1]}
                                 onChange={(event) => onAnswersChange(1, event.target.value)}
-                                style={{ width: '60%', padding: '12px 8px', borderRadius: 4 }}
+                                style={{
+                                    width: '60%',
+                                    padding: '12px 8px',
+                                    borderRadius: 4,
+                                    border: answersError[1] ? '2px solid #EB5757' : 'none'
+                                }}
                             />
                         </div>
                     )}
@@ -279,7 +298,12 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                 placeholder="Answer 3"
                                 value={answers[2]}
                                 onChange={(event) => onAnswersChange(2, event.target.value)}
-                                style={{ width: '60%', padding: '12px 8px', borderRadius: 4 }}
+                                style={{
+                                    width: '60%',
+                                    padding: '12px 8px',
+                                    borderRadius: 4,
+                                    border: answersError[2] ? '2px solid #EB5757' : 'none'
+                                }}
                             />
                         </div>
                     )}
