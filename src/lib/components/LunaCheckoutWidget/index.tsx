@@ -72,7 +72,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             const mintPrice = parseFloat(ethers.utils.formatEther(resMintPrice.toString()));
 
             const tokenBalance = await contract.balanceForTokenId(1);
-            const tokenBalanceReadable = parseInt(ethers.utils.formatEther(tokenBalance.toString()));
+            const tokenBalanceReadable = parseInt(tokenBalance.toString());
 
             const maxSupply = await contract.maxSupply(1);
             const maxSupplyReadable = parseInt(maxSupply.toString());
