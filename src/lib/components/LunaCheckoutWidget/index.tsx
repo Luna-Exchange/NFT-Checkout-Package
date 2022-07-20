@@ -4,9 +4,11 @@ import { getMintInfo, answerMintQuestions } from '../../api/mint';
 import { Web3ReactProvider, useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { testConnectors } from '../../utils/connector';
-import { useContract } from '../../utils/useContract';
+// import { useContract } from '../../utils/useContract';
 import NFT_ABI from '../../assets/abi/erc1155.json';
 import { FirstPartyAnswers } from '../../type';
+import { getContract } from '../../utils';
+import { Contract } from '@ethersproject/contracts';
 
 const getLibrary = (provider: any): ethers.providers.Web3Provider => {
     const library = new ethers.providers.Web3Provider(provider);
@@ -21,7 +23,7 @@ type ComponentProps = {
 };
 
 const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, password }): JSX.Element => {
-    const { account, activate, deactivate, active } = useWeb3React();
+    const { account, activate, deactivate, active, library, chainId } = useWeb3React();
     const [mintInfo, setMintInfo] = useState<any>();
 
     const [twitterEnabled, setTwitterEnabled] = useState<boolean>(false);
@@ -29,8 +31,10 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
     const [facebookEnabled, setFacebookEnabled] = useState<boolean>(false);
     const [instagramEnabled, setInstagramEnabled] = useState<boolean>(false);
 
+    const [contract, setContract] = useState<Contract>();
+
     const [mintPrice, setMintPrice] = useState<number>(0);
-    const [mintRemain, setMintRemain] = useState<number | undefined>(0);
+    const [mintRemain, setMintRemain] = useState<number | undefined>();
 
     const [nftCount, setNftCount] = useState<string>('');
     const [nftCountError, setNftCountError] = useState<boolean>(false);
@@ -66,28 +70,49 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             });
     }, [collectionId, username, password]);
 
-    async function getTokenInfo() {
-        if (contract) {
-            const resMintPrice = await contract.mintPrice(1);
-            const mintPrice = parseFloat(ethers.utils.formatEther(resMintPrice.toString()));
+    useEffect(() => {
+        const get = () => {
+            if (!mintInfo?.contract_address || !NFT_ABI || !library || !chainId) return undefined;
+            let address: string | undefined;
+            if (typeof mintInfo?.contract_address === 'string') address = mintInfo?.contract_address;
+            else address = mintInfo?.contract_address[chainId];
+            if (!address) return undefined;
+            try {
+                return getContract(address, NFT_ABI, library, account ? account : undefined);
+            } catch (error) {
+                console.error('Failed to get contract', error);
+                return undefined;
+            }
+        };
+        const contract = get();
+        setContract(contract);
+    }, [mintInfo, library, chainId, account]);
 
-            const tokenBalance = await contract.balanceForTokenId(1);
-            const tokenBalanceReadable = parseInt(tokenBalance.toString());
-
-            const maxSupply = await contract.maxSupply(1);
-            const maxSupplyReadable = parseInt(maxSupply.toString());
-
-            const mintRemaining = maxSupplyReadable ? maxSupplyReadable - tokenBalanceReadable : undefined;
-
-            setMintPrice(mintPrice);
-            setMintRemain(mintRemaining);
-            console.log('mintPrice:', mintPrice);
-        }
-    }
-
-    const contract = useContract(mintInfo?.contract_address, NFT_ABI);
+    // const contract = useContract(mintInfo?.contract_address, NFT_ABI);
     // const contract = useContract('0xf7485edf11bfc4cb0a15a63302cc3a8cf6f98920', NFT_ABI);
-    getTokenInfo();
+    // getTokenInfo();
+
+    useEffect(() => {
+        async function getTokenInfo() {
+            if (contract) {
+                const resMintPrice = await contract.mintPrice(1);
+                const mintPrice = parseFloat(ethers.utils.formatEther(resMintPrice.toString()));
+
+                const tokenBalance = await contract.balanceForTokenId(1);
+                const tokenBalanceReadable = parseInt(tokenBalance.toString());
+
+                const maxSupply = await contract.maxSupply(1);
+                const maxSupplyReadable = parseInt(maxSupply.toString());
+
+                const mintRemaining = maxSupplyReadable ? maxSupplyReadable - tokenBalanceReadable : undefined;
+
+                setMintPrice(mintPrice);
+                setMintRemain(mintRemaining);
+                console.log('mintPrice:', mintPrice);
+            }
+        }
+        getTokenInfo();
+    }, [contract]);
 
     const onNftCountChange = (value: string) => {
         if (!isNaN(Number(value))) {
@@ -128,6 +153,8 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
                         value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
                     });
                     console.log('mint success!');
+
+                    setMintRemain(mintRemain ? mintRemain - parseInt(nftCount) : undefined);
 
                     if (mintInfo.first_party_data.length > 0) {
                         postAnswers();
