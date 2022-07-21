@@ -27,9 +27,6 @@ type ComponentProps = {
     answers: string[];
     answersError?: boolean[];
     onAnswersChange: (index: number, value: string) => void;
-    onIframeCode?: () => void;
-    onInstallGuide?: () => void;
-    onRefresh?: () => void;
 };
 
 const IFrameBox: React.FC<ComponentProps> = ({
@@ -53,10 +50,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
     onNftCountChange,
     answers,
     answersError = [false, false, false],
-    onAnswersChange,
-    onIframeCode,
-    onInstallGuide,
-    onRefresh
+    onAnswersChange
 }): JSX.Element => {
     // useEffect(() => {
     //     getMintInfo('aaa', 'aaa')
@@ -308,74 +302,6 @@ const IFrameBox: React.FC<ComponentProps> = ({
                         </div>
                     )}
                 </div>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 24, marginTop: 24 }}>
-                <button
-                    style={{
-                        height: 32,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: 8,
-                        padding: '2px 12px',
-                        fontSize: 13,
-                        fontWeight: 500,
-                        borderRadius: 4,
-                        border: 'none',
-                        background: '#212121',
-                        color: 'white',
-                        cursor: 'pointer'
-                    }}
-                    onClick={onIframeCode}
-                    className="btn"
-                >
-                    <Icon icon="mdi:code-tags" fontSize={24} color="white" />
-                    SEE iFRAME CODE
-                </button>
-                <button
-                    style={{
-                        height: 32,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: 8,
-                        padding: '2px 12px',
-                        fontSize: 13,
-                        fontWeight: 500,
-                        borderRadius: 4,
-                        border: 'none',
-                        background: '#212121',
-                        color: 'white',
-                        cursor: 'pointer'
-                    }}
-                    onClick={onInstallGuide}
-                    className="btn"
-                >
-                    <Icon icon="mdi:bookmark-multiple" fontSize={18} color="white" />
-                    INSTALLATION GUIDE
-                </button>
-                <button
-                    style={{
-                        height: 32,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: 8,
-                        padding: '2px 12px',
-                        fontSize: 13,
-                        fontWeight: 500,
-                        borderRadius: 4,
-                        border: 'none',
-                        background: '#212121',
-                        color: 'white',
-                        cursor: 'pointer'
-                    }}
-                    onClick={onRefresh}
-                    className="btn"
-                >
-                    <Icon icon="mdi:refresh" fontSize={24} color="white" />
-                    REFRESH
-                </button>
             </div>
         </div>
     );
