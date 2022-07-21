@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .mint-nft__btn {
     width: 50%;
     height: 34px;
