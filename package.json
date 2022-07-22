@@ -1,6 +1,6 @@
 {
-    "name": "@sportigos/nft-checkout",
-    "version": "1.0.38",
+    "name": "nft-checkout",
+    "version": "1.2.01",
     "description": "Learning how to create React modules using TypeScript!",
     "main": "./lib/cjs/index.js",
     "module": "./lib/esm/index.js",
@@ -8,16 +8,23 @@
     "license": "MIT",
     "scripts": {
         "build": "yarn build:esm && yarn build:cjs",
-        "build:esm": "tsc",
-        "build:cjs": "tsc --module commonjs --outDir lib/cjs",
-        "prepublishOnly": "yarn build"
+        "build:esm": "yarn clean && tsc --outDir lib/esm",
+        "build:cjs": "tsc --module commonjs --outDir lib/cjs && yarn copy-files",
+        "prepublishOnly": "yarn build",
+        "clean": "rimraf lib/",
+        "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css lib/esm/"
     },
     "peerDependencies": {},
     "devDependencies": {
         "@types/react": "^17.0.0",
         "@types/react-dom": "^17.0.0",
+        "autoprefixer": "^10.4.7",
+        "copyfiles": "^2.4.1",
+        "postcss": "^8.4.14",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
+        "rimraf": "^3.0.2",
+        "tailwindcss": "^3.1.6",
         "typescript": "^4.1.2"
     },
     "files": [
