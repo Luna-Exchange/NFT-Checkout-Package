@@ -61,9 +61,8 @@ const IFrameBox: React.FC<ComponentProps> = ({
   return (
     <div className="container mx-auto">
       <div
-        className={`flex flex-col xl:flex-row text-left w-full sm:min-h-min xl:max-h-[400px] box-border bg-[${
-          bgColor ? bgColor : '#1d1d1d'
-        }] ${className}`}
+        className={`flex flex-col xl:flex-row text-left w-full sm:min-h-min xl:max-h-[400px] box-border ${className}`}
+        style={{ backgroundColor: bgColor ? bgColor : '#1d1d1d' }}
       >
         <div className="relative w-full min-h-[240px] sm:h-[400px] sm:w-[400px] items-center justify-center border-[1px] border-solid border-white sm:border-none">
           <img src={nftImgUrl} width="100%" height="100%" alt="" className="object-cover" />
