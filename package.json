@@ -1,6 +1,6 @@
 {
     "name": "nft-checkout",
-    "version": "1.3.6",
+    "version": "1.3.7",
     "description": "Luna NFT plugin",
     "main": "./lib/cjs/index.js",
     "module": "./lib/esm/index.js",
@@ -14,18 +14,14 @@
         "clean": "rimraf lib/",
         "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css lib/esm/"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Luna-Exchange/NFT-Checkout-package.git"
+    },
     "peerDependencies": {},
     "devDependencies": {
         "@types/react": "^17.0.0",
         "@types/react-dom": "^17.0.0",
-        "autoprefixer": "^10.4.7",
-        "copyfiles": "^2.4.1",
-        "postcss": "^8.4.14",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "react-loading-icons": "^1.1.0",
-        "rimraf": "^3.0.2",
-        "tailwindcss": "^3.1.6",
         "typescript": "^4.1.2"
     },
     "files": [
@@ -38,6 +34,14 @@
         "@web3-react/walletconnect-connector": "^6.2.13",
         "@web3-react/walletlink-connector": "^6.2.14",
         "axios": "^0.27.2",
+        "autoprefixer": "^10.4.7",
+        "copyfiles": "^2.4.1",
+        "postcss": "^8.4.14",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-loading-icons": "^1.1.0",
+        "rimraf": "^3.0.2",
+        "tailwindcss": "^3.1.6",
         "ethers": "^5.6.9"
     }
 }
