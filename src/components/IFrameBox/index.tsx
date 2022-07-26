@@ -81,11 +81,11 @@ const IFrameBox: React.FC<ComponentProps> = ({
               <div className="flex flex-col gap-2">
                 <p className="font-normal text-[20px] leading-[24px] text-white">{nftTitle}</p>
                 <p className="font-normal text-[14px] leading-[18px] text-white text-ellipsis w-full overflow-hidden items-center whitespace-nowrap">
-                  {projectAbout}
+                  {nftDescription}
                 </p>
               </div>
               <p className="text-[14px] leading-[18px] h-[72px] tracking-[0.16px] flex items-center text-white">
-                {nftDescription}
+                {projectAbout}
               </p>
               <div className="flex flex-row text-white justify-between sm:gap-[80px]">
                 <div className="flex flex-col gap-1">
