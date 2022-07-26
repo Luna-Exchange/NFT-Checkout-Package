@@ -18,7 +18,6 @@
       "allowSyntheticDefaultImports": true,
       "resolveJsonModule": true
     },
-    "exclude": ["node_modules", "lib"],
-    "hooks": ["copy-files"],
+    "exclude": ["node_modules"],
     "include": ["src"],
   }
