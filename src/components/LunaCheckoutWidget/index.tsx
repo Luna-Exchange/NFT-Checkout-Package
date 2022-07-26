@@ -129,7 +129,18 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
     setAnswersError(updatedAnswersError);
   };
 
-  const handleConnectMetamask = () => {
+  const handleConnectMetamask = async () => {
+    const w: any = window;
+
+    await w.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [
+        {
+          chainId: '0x4'
+        }
+      ]
+    });
+
     activate(testConnectors.injected);
   };
 
