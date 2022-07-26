@@ -6,9 +6,9 @@ import { SpinningCircles } from 'react-loading-icons';
 type ComponentProps = {
   active: boolean;
   nftImgUrl?: string;
-  collectionTitle: string;
   nftTitle: string;
   nftDescription: string;
+  projectAbout: string;
   price: number;
   maxSupply: number;
   mintsRemain: number | undefined;
@@ -34,9 +34,9 @@ type ComponentProps = {
 const IFrameBox: React.FC<ComponentProps> = ({
   active,
   nftImgUrl,
-  collectionTitle,
   nftTitle,
   nftDescription,
+  projectAbout,
   price,
   maxSupply,
   mintsRemain,
@@ -80,7 +80,9 @@ const IFrameBox: React.FC<ComponentProps> = ({
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <p className="font-normal text-[20px] leading-[24px] text-white">{nftTitle}</p>
-                <p className="font-normal text-[14px] leading-[18px] text-white">{collectionTitle}</p>
+                <p className="font-normal text-[14px] leading-[18px] text-white text-ellipsis w-full overflow-hidden items-center whitespace-nowrap">
+                  {projectAbout}
+                </p>
               </div>
               <p className="text-[14px] leading-[18px] h-[72px] tracking-[0.16px] flex items-center text-white">
                 {nftDescription}

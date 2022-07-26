@@ -201,9 +201,9 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
           <IFrameBox
             active={active}
             nftImgUrl={mintInfo.background_header}
-            collectionTitle={mintInfo.name}
             nftTitle={mintInfo.name}
             nftDescription={mintInfo.description}
+            projectAbout={mintInfo.about}
             price={mintPrice}
             maxSupply={maxSupply}
             mintsRemain={mintRemain}
