@@ -158,9 +158,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                             {questions[0] && (
                                                 <div className="flex flex-col gap-2">
                                                     <div className="flex flex-row justify-between gap-2">
-                                                        <p className="text-xs font-normal text-white">
-                                                            {questions[0]} Question 1
-                                                        </p>
+                                                        <p className="text-xs font-normal text-white">{questions[0]}</p>
                                                         {answersError[0] && (
                                                             <p className="text-xs italic font-normal text-white">
                                                                 required
@@ -171,7 +169,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                                         placeholder="Answer 1"
                                                         value={answers[0]}
                                                         onChange={(event) => onAnswersChange(0, event.target.value)}
-                                                        className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-white ${
+                                                        className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-black ${
                                                             answersError[0]
                                                                 ? 'border-2 border-solid border-[#EB5757]'
                                                                 : 'border-none'
@@ -183,9 +181,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                             {questions[1] && (
                                                 <div className="flex flex-col gap-2">
                                                     <div className="flex flex-row justify-between gap-2">
-                                                        <p className="text-xs font-normal text-white">
-                                                            {questions[1]} Question 2
-                                                        </p>
+                                                        <p className="text-xs font-normal text-white">{questions[1]}</p>
                                                         {answersError[1] && (
                                                             <p className="text-xs italic font-normal text-white">
                                                                 required
@@ -196,7 +192,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                                         placeholder="Answer 2"
                                                         value={answers[1]}
                                                         onChange={(event) => onAnswersChange(1, event.target.value)}
-                                                        className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-white ${
+                                                        className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-black ${
                                                             answersError[1]
                                                                 ? 'border-2 border-solid border-[#EB5757]'
                                                                 : 'border-none'
@@ -208,9 +204,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                             {questions[2] && (
                                                 <div className="flex flex-col gap-2">
                                                     <div className="flex flex-row justify-between gap-2">
-                                                        <p className="text-xs font-normal text-white">
-                                                            {questions[2]} Question 3
-                                                        </p>
+                                                        <p className="text-xs font-normal text-white">{questions[2]}</p>
                                                         {answersError[2] && (
                                                             <p className="text-xs italic font-normal text-white">
                                                                 required
@@ -221,7 +215,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                                         placeholder="Answer 3"
                                                         value={answers[2]}
                                                         onChange={(event) => onAnswersChange(2, event.target.value)}
-                                                        className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-white ${
+                                                        className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-black ${
                                                             answersError[2]
                                                                 ? 'border-2 border-solid border-[#EB5757]'
                                                                 : 'border-none'

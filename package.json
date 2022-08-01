@@ -1,6 +1,6 @@
 {
-    "name": "@sportigos/nft-checkout",
-    "version": "1.2.6",
+    "name": "luna-nft-checkout",
+    "version": "1.0.0",
     "description": "Learning how to create React modules using TypeScript!",
     "main": "./lib/cjs/index.js",
     "module": "./lib/esm/index.js",
