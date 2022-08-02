@@ -10,11 +10,11 @@ Check out the [Demo](https://zingy-cendol-f45b26.netlify.app/)!
 ### Install from NPM
 
 ```bash
-yarn add nft-checkout
+yarn add luna-nft-checkout
 ```
 
 ```bash
-npm install nft-checkout
+npm install luna-nft-checkout
 ```
 
 ### Import LunaCheckoutWidget from package
@@ -22,25 +22,23 @@ npm install nft-checkout
 You can import component:
 
 ```ts
-import { LunaCheckoutWidget } from "nft-checkout";
+import { LunaCheckoutWidget } from 'luna-nft-checkout';
 ```
 
 and use with collection id, api key and secret key:
 
 ```tsx
-<LunaCheckoutWidget
-  collectionId="<id>"
-  username="<api_key>"
-  password="<secret_key>"
-/>
+<LunaCheckoutWidget collectionId="<id>" username="<api_key>" password="<secret_key>" libraryType="web3 | ethers" />
 ```
+
+**note: Don't forget specify library type(whether web3 or ethers)!**
 
 You can import IFrameBox compoent and use directly in your front-end code.
 
 ### Components
 
 ```tsx
-import { IFrmaeBox } from "nft-checkout";
+import { IFrmaeBox } from "luna-nft-checkout";
 ...
 <IFrameBox
   active={active}
