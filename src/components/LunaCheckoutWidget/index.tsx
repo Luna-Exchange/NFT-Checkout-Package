@@ -10,18 +10,31 @@ import { getContract } from '../../utils';
 import { Contract } from '@ethersproject/contracts';
 
 // const getLibrary = (provider: any): ethers.providers.Web3Provider => {
-//   const library = new ethers.providers.Web3Provider(provider);
-//   library.pollingInterval = 8000;
-//   return library;
+//     const library = new ethers.providers.Web3Provider(provider);
+//     library.pollingInterval = 8000;
+//     return library;
 // };
+
+const libraries = {
+  WEB3: 'web3',
+  ETHERS: 'ethers'
+} as const;
+
+type Library = typeof libraries[keyof typeof libraries];
 
 type ComponentProps = {
   collectionId: string;
   username: string;
   password: string;
+  libraryType: Library;
 };
 
-const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, password }): JSX.Element => {
+const LunaCheckoutWidget: React.FC<ComponentProps> = ({
+  collectionId,
+  username,
+  password,
+  libraryType
+}): JSX.Element => {
   const { account, activate, deactivate, active, library, chainId } = useWeb3React();
   const [mintInfo, setMintInfo] = useState<any>();
 
@@ -73,6 +86,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
   }, [collectionId, username, password]);
 
   useEffect(() => {
+    console.log(library);
     const get = () => {
       if (!mintInfo?.contract_address || !NFT_ABI || !library || !chainId) return undefined;
       let address: string | undefined;
@@ -80,7 +94,9 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
       else address = mintInfo?.contract_address[chainId];
       if (!address) return undefined;
       try {
-        return getContract(address, NFT_ABI, library, account ? account : undefined);
+        return libraryType === libraries.ETHERS
+          ? getContract(address, NFT_ABI, library, account ? account : undefined)
+          : new library.eth.Contract(NFT_ABI, address);
       } catch (error) {
         console.error('Failed to get contract', error);
         return undefined;
@@ -93,13 +109,22 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
   useEffect(() => {
     async function getTokenInfo() {
       if (contract) {
-        const resMintPrice = await contract.mintPrice(1);
+        const resMintPrice =
+          libraryType === libraries.ETHERS
+            ? await contract.mintPrice(1)
+            : await contract.methods.mintPrice(1).call({ from: account });
         const mintPrice = parseFloat(ethers.utils.formatEther(resMintPrice.toString()));
 
-        const tokenBalance = await contract.balanceForTokenId(1);
+        const tokenBalance =
+          libraryType === libraries.ETHERS
+            ? await contract.balanceForTokenId(1)
+            : await contract.methods.balanceForTokenId(1).call({ from: account });
         const tokenBalanceReadable = parseInt(tokenBalance.toString());
 
-        const maxSupply = await contract.maxSupply(1);
+        const maxSupply =
+          libraryType === libraries.ETHERS
+            ? await contract.maxSupply(1)
+            : await contract.methods.maxSupply(1).call({ from: account });
         const maxSupplyReadable = parseInt(maxSupply.toString());
 
         const mintRemaining = maxSupplyReadable ? maxSupplyReadable - tokenBalanceReadable : undefined;
@@ -164,10 +189,17 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
       if (!!nftCount && errors[0] === false && errors[1] === false && errors[2] === false) {
         setMintProcessing(true);
         try {
-          const tx = await contract.mint(account, 1, parseInt(nftCount), {
-            value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
-          });
-          await tx.wait();
+          if (libraryType === libraries.ETHERS) {
+            const tx = await contract.mint(account, 1, parseInt(nftCount), {
+              value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
+            });
+            await tx.wait();
+          } else {
+            await contract.methods.mint(account, 1, parseInt(nftCount)).send({
+              from: account,
+              value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
+            });
+          }
           console.log('mint success!');
           setMintSucceed(true);
 
