@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import IFrameBox from '../IFrameBox';
 import { getMintInfo, answerMintQuestions } from '../../api/mint';
-import { useWeb3React } from '@web3-react/core';
+import { Web3ReactProvider, useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { testConnectors } from '../../utils/connector';
 import NFT_ABI from '../../assets/abi/erc1155.json';
@@ -9,11 +9,11 @@ import { FirstPartyAnswers } from '../../type';
 import { getContract } from '../../utils';
 import { Contract } from '@ethersproject/contracts';
 
-// const getLibrary = (provider: any): ethers.providers.Web3Provider => {
-//     const library = new ethers.providers.Web3Provider(provider);
-//     library.pollingInterval = 8000;
-//     return library;
-// };
+const getLibrary = (provider: any): ethers.providers.Web3Provider => {
+  const library = new ethers.providers.Web3Provider(provider);
+  library.pollingInterval = 8000;
+  return library;
+};
 
 const libraries = {
   WEB3: 'web3',
@@ -141,6 +141,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   const onNftCountChange = (value: string) => {
     if (!isNaN(Number(value))) {
       setNftCount(value);
+      setNftCountError(!value);
     }
   };
 
@@ -176,8 +177,6 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   const handleMint = async () => {
     console.log(contract);
     if (contract) {
-      console.log('mintPrice, nftCount:', mintPrice, nftCount);
-
       setNftCountError(!nftCount);
 
       let errors = [...answersError];
@@ -238,43 +237,43 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   };
 
   return (
-    // <Web3ReactProvider getLibrary={getLibrary}>
-    <div>
-      {!!mintInfo && (
-        <IFrameBox
-          active={active}
-          nftImgUrl={mintInfo.image}
-          nftTitle={mintInfo.name}
-          nftDescription={mintInfo.description}
-          projectAbout={mintInfo.about}
-          price={mintPrice}
-          maxSupply={maxSupply}
-          mintsRemain={mintRemain}
-          mintBtnDisabled={false}
-          bgColor={mintInfo.checkout_background_color}
-          questions={mintInfo.first_party_data.map((item: any) => item.question)}
-          socialLinks={{
-            twitter: twitterEnabled,
-            discord: discordEnabled,
-            facebook: facebookEnabled,
-            instagram: instagramEnabled
-          }}
-          nftCount={nftCount}
-          nftCountError={nftCountError}
-          onNftCountChange={onNftCountChange}
-          answers={answers}
-          answersError={answersError}
-          onAnswersChange={onAnswersChange}
-          onConnectWallet={handleConnectMetamask}
-          onDisconnectWallet={handleDisconnectMetamask}
-          onMintNft={handleMint}
-          mintProcessing={mintProcessing}
-          mintSucceed={mintSucceed}
-          setMintSucceed={setMintSucceed}
-        />
-      )}
-    </div>
-    // </Web3ReactProvider>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <div>
+        {!!mintInfo && (
+          <IFrameBox
+            active={active}
+            nftImgUrl={mintInfo.image}
+            nftTitle={mintInfo.name}
+            nftDescription={mintInfo.description}
+            projectAbout={mintInfo.about}
+            price={mintPrice}
+            maxSupply={maxSupply}
+            mintsRemain={mintRemain}
+            mintBtnDisabled={false}
+            bgColor={mintInfo.checkout_background_color}
+            questions={mintInfo.first_party_data.map((item: any) => item.question)}
+            socialLinks={{
+              twitter: twitterEnabled,
+              discord: discordEnabled,
+              facebook: facebookEnabled,
+              instagram: instagramEnabled
+            }}
+            nftCount={nftCount}
+            nftCountError={nftCountError}
+            onNftCountChange={onNftCountChange}
+            answers={answers}
+            answersError={answersError}
+            onAnswersChange={onAnswersChange}
+            onConnectWallet={handleConnectMetamask}
+            onDisconnectWallet={handleDisconnectMetamask}
+            onMintNft={handleMint}
+            mintProcessing={mintProcessing}
+            mintSucceed={mintSucceed}
+            setMintSucceed={setMintSucceed}
+          />
+        )}
+      </div>
+    </Web3ReactProvider>
   );
 };
 
