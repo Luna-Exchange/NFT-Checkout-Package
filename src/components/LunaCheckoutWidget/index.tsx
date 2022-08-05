@@ -86,7 +86,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   }, [collectionId, username, password]);
 
   useEffect(() => {
-    console.log(library);
+    // console.log(library);
     const get = () => {
       if (!mintInfo?.contract_address || !NFT_ABI || !library || !chainId) return undefined;
       let address: string | undefined;
@@ -262,6 +262,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
             nftCountError={nftCountError}
             onNftCountChange={onNftCountChange}
             answers={answers}
+            setAnswers={setAnswers}
             answersError={answersError}
             onAnswersChange={onAnswersChange}
             onConnectWallet={handleConnectMetamask}

@@ -23,6 +23,7 @@ type ComponentProps = {
   nftCountError?: boolean;
   onNftCountChange: (value: string) => void;
   answers: string[];
+  setAnswers: (answers: string[]) => void;
   answersError?: boolean[];
   onAnswersChange: (index: number, value: string) => void;
   mintProcessing: boolean;
@@ -44,13 +45,14 @@ const IFrameBox: React.FC<ComponentProps> = ({
   questions,
   socialLinks,
   onConnectWallet,
-  onDisconnectWallet,
+  // onDisconnectWallet,
   onMintNft,
   className = '',
   nftCount,
   nftCountError = false,
   onNftCountChange,
   answers,
+  setAnswers,
   answersError = [false, false, false],
   onAnswersChange,
   mintProcessing = false,
@@ -76,10 +78,12 @@ const IFrameBox: React.FC<ComponentProps> = ({
   };
 
   const handleReset = () => {
-    answers.forEach((answer, index) => {
-      answers[index] = '';
+    const answersArrary = answers.map((answer, index) => {
+      answers[index] = answer;
       error[index] = false;
+      return (answer = '');
     });
+    setAnswers(answersArrary);
     setStep(0);
     // onDisconnectWallet && onDisconnectWallet();
   };
