@@ -10,9 +10,9 @@ import { getContract } from '../../utils';
 import { Contract } from '@ethersproject/contracts';
 
 // const getLibrary = (provider: any): ethers.providers.Web3Provider => {
-//     const library = new ethers.providers.Web3Provider(provider);
-//     library.pollingInterval = 8000;
-//     return library;
+//   const library = new ethers.providers.Web3Provider(provider);
+//   library.pollingInterval = 8000;
+//   return library;
 // };
 
 const libraries = {
@@ -86,7 +86,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   }, [collectionId, username, password]);
 
   useEffect(() => {
-    console.log(library);
+    // console.log(library);
     const get = () => {
       if (!mintInfo?.contract_address || !NFT_ABI || !library || !chainId) return undefined;
       let address: string | undefined;
@@ -141,6 +141,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   const onNftCountChange = (value: string) => {
     if (!isNaN(Number(value))) {
       setNftCount(value);
+      setNftCountError(!value);
     }
   };
 
@@ -176,8 +177,6 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   const handleMint = async () => {
     console.log(contract);
     if (contract) {
-      console.log('mintPrice, nftCount:', mintPrice, nftCount);
-
       setNftCountError(!nftCount);
 
       let errors = [...answersError];
@@ -263,6 +262,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
           nftCountError={nftCountError}
           onNftCountChange={onNftCountChange}
           answers={answers}
+          setAnswers={setAnswers}
           answersError={answersError}
           onAnswersChange={onAnswersChange}
           onConnectWallet={handleConnectMetamask}
