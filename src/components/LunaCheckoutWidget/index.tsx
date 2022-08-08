@@ -8,6 +8,7 @@ import NFT_ABI from '../../assets/abi/erc1155.json';
 import { FirstPartyAnswers } from '../../type';
 import { getContract } from '../../utils';
 import { Contract } from '@ethersproject/contracts';
+import WebFont from 'webfontloader';
 
 // const getLibrary = (provider: any): ethers.providers.Web3Provider => {
 //   const library = new ethers.providers.Web3Provider(provider);
@@ -55,6 +56,14 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   const [answersError, setAnswersError] = useState<boolean[]>([false, false, false]);
   const [mintProcessing, setMintProcessing] = useState<boolean>(false);
   const [mintSucceed, setMintSucceed] = useState<boolean>(false);
+
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ['Roboto', 'Mouse Memoirs', 'Chilanka', 'Uchen']
+      }
+    });
+  }, []);
 
   useEffect(() => {
     getMintInfo(collectionId, username, password)
@@ -251,6 +260,9 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
           mintsRemain={mintRemain}
           mintBtnDisabled={false}
           bgColor={mintInfo.checkout_background_color}
+          font={mintInfo.checkout_font}
+          fontColor={mintInfo.checkout_font_color}
+          // tcLink={mintInfo.terms_and_condition_link}
           questions={mintInfo.first_party_data.map((item: any) => item.question)}
           socialLinks={{
             twitter: twitterEnabled,

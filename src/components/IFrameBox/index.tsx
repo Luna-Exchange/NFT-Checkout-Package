@@ -13,6 +13,9 @@ type ComponentProps = {
   mintsRemain: number | undefined;
   mintBtnDisabled: boolean;
   bgColor: string | undefined;
+  font: string | undefined;
+  fontColor: string | undefined;
+  // tcLink: string | undefined;
   questions: string[];
   socialLinks: { [key: string]: boolean };
   onConnectWallet?: () => void;
@@ -42,6 +45,9 @@ const IFrameBox: React.FC<ComponentProps> = ({
   mintsRemain,
   mintBtnDisabled,
   bgColor,
+  font,
+  fontColor,
+  // tcLink,
   questions,
   socialLinks,
   onConnectWallet,
@@ -120,32 +126,43 @@ const IFrameBox: React.FC<ComponentProps> = ({
         <div className="flex flex-col gap-4 mx-4 sm:flex-row pt-9 xl:ml-16 xl:ml-7">
           <div className="flex flex-col w-full gap-8 sm:w-80">
             <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-2">
-                <p className="text-xl font-normal text-white">{nftTitle}</p>
-                <p
-                  className="items-center w-full overflow-hidden text-sm font-normal text-white whitespace-nowrap"
-                  style={{ textOverflow: 'ellipsis' }}
-                >
+              <div
+                className="flex flex-col gap-2"
+                style={{
+                  color: fontColor ? fontColor : 'white',
+                  fontFamily: font ? font : 'inherit'
+                }}
+              >
+                <p className="text-xl font-normal">{nftTitle}</p>
+                <p className="items-center w-full overflow-hidden text-sm font-normal whitespace-nowrap">
                   {nftDescription}
                 </p>
               </div>
               <p
-                className="flex items-center text-sm text-white"
+                className="flex items-center text-sm"
                 style={{
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  color: fontColor ? fontColor : 'white',
+                  fontFamily: font ? font : 'inherit'
                 }}
               >
                 {projectAbout}
               </p>
-              <div className="flex flex-row justify-between text-white sm:gap-20">
-                <div className="flex flex-col gap-1">
+              <div className="flex flex-row justify-between sm:gap-20">
+                <div
+                  className="flex flex-col gap-1"
+                  style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                >
                   <p className="flex items-center text-base font-normal">Price</p>
                   <p className="flex items-center text-base font-semibold">{active ? `${price} ETH` : '-'}</p>
                 </div>
-                <div className="flex flex-col gap-1">
+                <div
+                  className="flex flex-col gap-1"
+                  style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                >
                   <p className="flex items-center text-base font-normal">Total Mints</p>
                   <p className="flex items-center text-base font-semibold">{!active ? '-' : maxSupply}</p>
                 </div>
@@ -154,8 +171,13 @@ const IFrameBox: React.FC<ComponentProps> = ({
             {!active ? (
               <button
                 onClick={onConnectWallet}
-                className="w-full font-normal text-white border border-white border-solid rounded cursor-pointer bg-none mt-7"
-                style={{ padding: '6px', fontSize: '14px' }}
+                className="w-full font-normal border border-white border-solid rounded cursor-pointer bg-none mt-7"
+                style={{
+                  padding: '6px',
+                  fontSize: '14px',
+                  color: fontColor ? fontColor : 'white',
+                  fontFamily: font ? font : 'inherit'
+                }}
               >
                 CONNECT WALLET
               </button>
@@ -167,12 +189,20 @@ const IFrameBox: React.FC<ComponentProps> = ({
                   </div>
                 ) : mintSucceed ? (
                   <div className="flex flex-col justify-center h-full" style={{ gap: '34px' }}>
-                    <p className="flex items-center justify-center text-xl font-normal text-white align-center">
+                    <p
+                      className="flex items-center justify-center text-xl font-normal align-center"
+                      style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                    >
                       {nftCount} NFT is(are) successfully minted.
                     </p>
                     <button
-                      className="font-normal text-white border border-white border-solid rounded"
-                      style={{ height: '34px', fontSize: '14px' }}
+                      className="font-normal border border-white border-solid rounded"
+                      style={{
+                        height: '34px',
+                        fontSize: '14px',
+                        color: fontColor ? fontColor : 'white',
+                        fontFamily: font ? font : 'inherit'
+                      }}
                       onClick={() => setMintSucceed(false)}
                     >
                       OK
@@ -183,9 +213,12 @@ const IFrameBox: React.FC<ComponentProps> = ({
                     <div className="flex flex-col gap-3">
                       {step < questions.length && (
                         <div className="flex flex-col gap-2">
-                          <div className="flex flex-row justify-between gap-2">
-                            <p className="text-xs font-normal text-white">{questions[step]}</p>
-                            {error[step] && <p className="text-xs italic font-normal text-white">required</p>}
+                          <div
+                            className="flex flex-row justify-between gap-2"
+                            style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                          >
+                            <p className="text-xs font-normal">{questions[step]}</p>
+                            {error[step] && <p className="text-xs italic font-normal">required</p>}
                           </div>
                           <input
                             name={`question${step}`}
@@ -195,7 +228,10 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-black ${
                               error[step] ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
                             }`}
-                            style={{ borderColor: error[step] ? '#EB5757' : 'none' }}
+                            style={{
+                              borderColor: error[step] ? '#EB5757' : 'none',
+                              fontFamily: font ? font : 'inherit'
+                            }}
                           />
                         </div>
                       )}
@@ -209,18 +245,30 @@ const IFrameBox: React.FC<ComponentProps> = ({
                               className={`w-full px-2 rounded h-8 ${
                                 nftCountError ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
                               }`}
-                              style={{ borderColor: nftCountError ? '#EB5757' : 'none' }}
+                              style={{
+                                borderColor: nftCountError ? '#EB5757' : 'none',
+                                fontFamily: font ? font : 'inherit'
+                              }}
                             />
                             {nftCountError && (
-                              <p className="relative text-xs italic font-normal text-white left-2 top-1">required</p>
+                              <p
+                                className="relative text-xs italic font-normal left-2 top-1"
+                                style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                              >
+                                required
+                              </p>
                             )}
                           </div>
-
                           <button
                             disabled={mintBtnDisabled && mintsRemain === 0}
                             onClick={onMintNft}
-                            className="h-8 font-normal border border-solid border-white rounded bg-none text-white cursor-pointer active:enabled:scale-[0.99]"
-                            style={{ width: '50%', fontSize: '14px' }}
+                            className="h-8 font-normal border border-solid border-white rounded bg-none cursor-pointer active:enabled:scale-[0.99]"
+                            style={{
+                              width: '50%',
+                              fontSize: '14px',
+                              color: fontColor ? fontColor : 'white',
+                              fontFamily: font ? font : 'inherit'
+                            }}
                           >
                             MINT NFT
                           </button>
@@ -229,18 +277,36 @@ const IFrameBox: React.FC<ComponentProps> = ({
                       <div className="flex flex-row gap-4 justify-center">
                         <div
                           className="flex flex-row gap-2 items-center text-xs cursor-pointer"
-                          style={{ color: step > 0 ? 'white' : 'rgba(255,255,255,0.5)' }}
+                          style={{
+                            color:
+                              step > 0
+                                ? fontColor
+                                  ? fontColor
+                                  : 'white'
+                                : fontColor
+                                ? `${fontColor}80`
+                                : 'rgba(255,255,255,0.5)'
+                          }}
                           onClick={onBackward}
                         >
                           <Icon icon="akar-icons:arrow-left" />
-                          <p>BACK</p>
+                          <p style={{ fontFamily: font ? font : 'inherit' }}>BACK</p>
                         </div>
                         <div
                           className="flex flex-row gap-2 items-center text-xs cursor-pointer"
-                          style={{ color: step < questions.length ? 'white' : 'rgba(255,255,255,0.5)' }}
+                          style={{
+                            color:
+                              step > 0
+                                ? fontColor
+                                  ? fontColor
+                                  : 'white'
+                                : fontColor
+                                ? `${fontColor}80`
+                                : 'rgba(255,255,255,0.5)'
+                          }}
                           onClick={onForward}
                         >
-                          <p>NEXT</p>
+                          <p style={{ fontFamily: font ? font : 'inherit' }}>NEXT</p>
                           <Icon icon="akar-icons:arrow-right" />
                         </div>
                       </div>
@@ -250,7 +316,10 @@ const IFrameBox: React.FC<ComponentProps> = ({
               </>
             )}
           </div>
-          <div className="flex flex-row items-center justify-center gap-4 text-white sm:flex-col sm:justify-start">
+          <div
+            className="flex flex-row items-center justify-center gap-4 sm:flex-col sm:justify-start"
+            style={{ color: fontColor ? fontColor : 'white' }}
+          >
             {socialLinks['twitter'] && <Icon icon="mdi:twitter" fontSize={16} className="cursor-pointer" />}
             {socialLinks['discord'] && <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />}
             {socialLinks['facebook'] && <Icon icon="gg:facebook" fontSize={16} className="cursor-pointer" />}
