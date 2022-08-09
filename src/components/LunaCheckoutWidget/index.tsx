@@ -8,7 +8,7 @@ import NFT_ABI from '../../assets/abi/erc1155.json';
 import { FirstPartyAnswers } from '../../type';
 import { getContract } from '../../utils';
 import { Contract } from '@ethersproject/contracts';
-import WebFont from 'webfontloader';
+// import WebFont from 'webfontloader';
 
 // const getLibrary = (provider: any): ethers.providers.Web3Provider => {
 //   const library = new ethers.providers.Web3Provider(provider);
@@ -59,13 +59,13 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
 
   const [termsProcess, setTermsProcess] = useState<boolean>(false);
 
-  useEffect(() => {
-    WebFont.load({
-      google: {
-        families: ['Roboto', 'Mouse Memoirs', 'Chilanka', 'Uchen']
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   WebFont.load({
+  //     google: {
+  //       families: ['Roboto', 'Mouse Memoirs', 'Chilanka', 'Uchen']
+  //     }
+  //   });
+  // }, []);
 
   useEffect(() => {
     getMintInfo(collectionId, username, password)
