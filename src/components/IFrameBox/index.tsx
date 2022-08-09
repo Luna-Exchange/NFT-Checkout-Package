@@ -15,12 +15,15 @@ type ComponentProps = {
   bgColor: string | undefined;
   font: string | undefined;
   fontColor: string | undefined;
-  // tcLink: string | undefined;
+  termsProcess?: boolean;
+  onCancelTerms?: () => void;
+  tcLink: string | undefined;
   questions: string[];
   socialLinks: { [key: string]: boolean };
   onConnectWallet?: () => void;
   onDisconnectWallet?: () => void;
-  onMintNft?: () => void;
+  onMintNft?: (termsProcess: boolean) => void;
+  onHandleMint?: () => void;
   className?: string;
   nftCount: string;
   nftCountError?: boolean;
@@ -47,12 +50,15 @@ const IFrameBox: React.FC<ComponentProps> = ({
   bgColor,
   font,
   fontColor,
-  // tcLink,
+  tcLink,
+  termsProcess = false,
+  onCancelTerms,
   questions,
   socialLinks,
   onConnectWallet,
   // onDisconnectWallet,
   onMintNft,
+  onHandleMint,
   className = '',
   nftCount,
   nftCountError = false,
@@ -67,6 +73,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
 }): JSX.Element => {
   const [step, setStep] = useState<number>(0);
   const [error, setError] = useState<boolean[]>(answersError);
+  const [checkedTcLink, setCheckedTcLink] = useState<boolean>(false);
 
   const onBackward = () => {
     if (step > 0) setStep(step - 1);
@@ -91,7 +98,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
     });
     setAnswers(answersArrary);
     setStep(0);
-    // onDisconnectWallet && onDisconnectWallet();
+    onCancelTerms && onCancelTerms();
   };
 
   const onChange = (step: number, value: string) => {
@@ -100,6 +107,10 @@ const IFrameBox: React.FC<ComponentProps> = ({
     });
     setError(errors);
     onAnswersChange(step, value);
+  };
+
+  const onMintBtn = (value: boolean) => {
+    onMintNft && onMintNft(value);
   };
 
   return (
@@ -211,105 +222,163 @@ const IFrameBox: React.FC<ComponentProps> = ({
                 ) : (
                   <>
                     <div className="flex flex-col gap-3">
-                      {step < questions.length && (
-                        <div className="flex flex-col gap-2">
-                          <div
-                            className="flex flex-row justify-between gap-2"
-                            style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
-                          >
-                            <p className="text-xs font-normal">{questions[step]}</p>
-                            {error[step] && <p className="text-xs italic font-normal">required</p>}
-                          </div>
-                          <input
-                            name={`question${step}`}
-                            placeholder={`Answer ${step}`}
-                            value={answers[step] || ''}
-                            onChange={(event) => onChange(step, event.target.value)}
-                            className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-black ${
-                              error[step] ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
-                            }`}
-                            style={{
-                              borderColor: error[step] ? '#EB5757' : 'none',
-                              fontFamily: font ? font : 'inherit'
-                            }}
-                          />
-                        </div>
-                      )}
-                      {step === questions.length && (
-                        <div className="flex flex-row justify-between gap-4 mt-7">
-                          <div style={{ width: '50%' }}>
-                            <input
-                              placeholder="Number of NFT"
-                              value={nftCount}
-                              onChange={(event) => onNftCountChange(event.target.value)}
-                              className={`w-full px-2 rounded h-8 ${
-                                nftCountError ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
-                              }`}
-                              style={{
-                                borderColor: nftCountError ? '#EB5757' : 'none',
-                                fontFamily: font ? font : 'inherit'
-                              }}
-                            />
-                            {nftCountError && (
-                              <p
-                                className="relative text-xs italic font-normal left-2 top-1"
+                      {!termsProcess ? (
+                        <>
+                          {step < questions.length && (
+                            <div className="flex flex-col gap-2">
+                              <div
+                                className="flex flex-row justify-between gap-2"
                                 style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
                               >
-                                required
-                              </p>
-                            )}
+                                <p className="text-xs font-normal">{questions[step]}</p>
+                                {error[step] && <p className="text-xs italic font-normal">required</p>}
+                              </div>
+                              <input
+                                name={`question${step}`}
+                                placeholder={`Answer ${step}`}
+                                value={answers[step] || ''}
+                                onChange={(event) => onChange(step, event.target.value)}
+                                className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-black ${
+                                  error[step] ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
+                                }`}
+                                style={{
+                                  borderColor: error[step] ? '#EB5757' : 'none',
+                                  fontFamily: font ? font : 'inherit'
+                                }}
+                              />
+                            </div>
+                          )}
+                          {step === questions.length && (
+                            <div className="flex flex-row justify-between gap-4 mt-7">
+                              <div style={{ width: '50%' }}>
+                                <input
+                                  placeholder="Number of NFT"
+                                  value={nftCount}
+                                  onChange={(event) => onNftCountChange(event.target.value)}
+                                  className={`w-full px-2 rounded h-8 ${
+                                    nftCountError ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
+                                  }`}
+                                  style={{
+                                    borderColor: nftCountError ? '#EB5757' : 'none',
+                                    fontFamily: font ? font : 'inherit'
+                                  }}
+                                />
+                                {nftCountError && (
+                                  <p
+                                    className="relative text-xs italic font-normal left-2 top-1"
+                                    style={{
+                                      color: fontColor ? fontColor : 'white',
+                                      fontFamily: font ? font : 'inherit'
+                                    }}
+                                  >
+                                    required
+                                  </p>
+                                )}
+                              </div>
+                              <button
+                                disabled={mintBtnDisabled && mintsRemain === 0}
+                                onClick={() => onMintBtn(true)}
+                                className="h-8 font-normal border border-solid border-white rounded bg-none cursor-pointer active:enabled:scale-[0.99]"
+                                style={{
+                                  width: '50%',
+                                  fontSize: '14px',
+                                  color: fontColor ? fontColor : 'white',
+                                  fontFamily: font ? font : 'inherit'
+                                }}
+                              >
+                                MINT NFT
+                              </button>
+                            </div>
+                          )}
+                          <div className="flex flex-row gap-4 justify-center">
+                            <div
+                              className="flex flex-row gap-2 items-center text-xs cursor-pointer"
+                              style={{
+                                color:
+                                  step > 0
+                                    ? fontColor
+                                      ? fontColor
+                                      : 'white'
+                                    : fontColor
+                                    ? `${fontColor}80`
+                                    : 'rgba(255,255,255,0.5)'
+                              }}
+                              onClick={onBackward}
+                            >
+                              <Icon icon="akar-icons:arrow-left" />
+                              <p style={{ fontFamily: font ? font : 'inherit' }}>BACK</p>
+                            </div>
+                            <div
+                              className="flex flex-row gap-2 items-center text-xs cursor-pointer"
+                              style={{
+                                color:
+                                  step < questions.length
+                                    ? fontColor
+                                      ? fontColor
+                                      : 'white'
+                                    : fontColor
+                                    ? `${fontColor}80`
+                                    : 'rgba(255,255,255,0.5)'
+                              }}
+                              onClick={onForward}
+                            >
+                              <p style={{ fontFamily: font ? font : 'inherit' }}>NEXT</p>
+                              <Icon icon="akar-icons:arrow-right" />
+                            </div>
                           </div>
-                          <button
-                            disabled={mintBtnDisabled && mintsRemain === 0}
-                            onClick={onMintNft}
-                            className="h-8 font-normal border border-solid border-white rounded bg-none cursor-pointer active:enabled:scale-[0.99]"
-                            style={{
-                              width: '50%',
-                              fontSize: '14px',
-                              color: fontColor ? fontColor : 'white',
-                              fontFamily: font ? font : 'inherit'
-                            }}
+                        </>
+                      ) : (
+                        <div className="flex flex-col gap-2">
+                          <label
+                            className="flex flex-row justify-start gap-2"
+                            style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
                           >
-                            MINT NFT
-                          </button>
+                            <input
+                              type="checkbox"
+                              checked={checkedTcLink}
+                              onChange={() => setCheckedTcLink(!checkedTcLink)}
+                            />
+                            <p className="text-xs font-normal">
+                              I agree with the{' '}
+                              <a href={tcLink ? tcLink : '#'} target="_blank">
+                                <u>Terms & Conditions</u>
+                              </a>
+                            </p>
+                          </label>
+                          <div className="flex flex-row justify-between gap-4">
+                            <button
+                              onClick={onCancelTerms}
+                              className="h-8 font-normal border border-solid border-white rounded bg-none cursor-pointer active:enabled:scale-[0.99]"
+                              style={{
+                                width: '50%',
+                                fontSize: '14px',
+                                color: fontColor ? fontColor : 'white',
+                                fontFamily: font ? font : 'inherit'
+                              }}
+                            >
+                              CANCEL
+                            </button>
+                            <button
+                              disabled={(mintBtnDisabled && mintsRemain === 0) || !checkedTcLink}
+                              onClick={onHandleMint}
+                              className="h-8 font-normal border border-solid border-white rounded bg-black cursor-pointer active:enabled:scale-[0.99]"
+                              style={{
+                                width: '50%',
+                                fontSize: '14px',
+                                backgroundColor:
+                                  (mintBtnDisabled && mintsRemain === 0) || !checkedTcLink ? 'gray' : 'black',
+                                cursor:
+                                  !(mintBtnDisabled && mintsRemain === 0) && checkedTcLink ? 'pointer' : 'not-allowed',
+                                color: fontColor ? fontColor : 'white',
+                                fontFamily: font ? font : 'inherit',
+                                filter: 'invert(100%)'
+                              }}
+                            >
+                              MINT NFT
+                            </button>
+                          </div>
                         </div>
                       )}
-                      <div className="flex flex-row gap-4 justify-center">
-                        <div
-                          className="flex flex-row gap-2 items-center text-xs cursor-pointer"
-                          style={{
-                            color:
-                              step > 0
-                                ? fontColor
-                                  ? fontColor
-                                  : 'white'
-                                : fontColor
-                                ? `${fontColor}80`
-                                : 'rgba(255,255,255,0.5)'
-                          }}
-                          onClick={onBackward}
-                        >
-                          <Icon icon="akar-icons:arrow-left" />
-                          <p style={{ fontFamily: font ? font : 'inherit' }}>BACK</p>
-                        </div>
-                        <div
-                          className="flex flex-row gap-2 items-center text-xs cursor-pointer"
-                          style={{
-                            color:
-                              step > 0
-                                ? fontColor
-                                  ? fontColor
-                                  : 'white'
-                                : fontColor
-                                ? `${fontColor}80`
-                                : 'rgba(255,255,255,0.5)'
-                          }}
-                          onClick={onForward}
-                        >
-                          <p style={{ fontFamily: font ? font : 'inherit' }}>NEXT</p>
-                          <Icon icon="akar-icons:arrow-right" />
-                        </div>
-                      </div>
                     </div>
                   </>
                 )}
