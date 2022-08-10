@@ -171,7 +171,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
       method: 'wallet_switchEthereumChain',
       params: [
         {
-          chainId: '0x4'
+          chainId: mintInfo.chain === 'ethereum' ? '0x4' : '0x13881'
         }
       ]
     });
@@ -288,6 +288,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
           mintProcessing={mintProcessing}
           mintSucceed={mintSucceed}
           setMintSucceed={setMintSucceed}
+          chain={mintInfo.chain}
         />
       )}
     </div>
