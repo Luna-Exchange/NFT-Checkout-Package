@@ -35,6 +35,7 @@ type ComponentProps = {
   mintProcessing: boolean;
   mintSucceed: boolean;
   setMintSucceed: (value: boolean) => void;
+  chain: string;
 };
 
 const IFrameBox: React.FC<ComponentProps> = ({
@@ -69,7 +70,8 @@ const IFrameBox: React.FC<ComponentProps> = ({
   onAnswersChange,
   mintProcessing = false,
   mintSucceed = false,
-  setMintSucceed
+  setMintSucceed,
+  chain
 }): JSX.Element => {
   const [step, setStep] = useState<number>(0);
   const [error, setError] = useState<boolean[]>(answersError);
@@ -168,7 +170,9 @@ const IFrameBox: React.FC<ComponentProps> = ({
                   style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
                 >
                   <p className="flex items-center text-base font-normal">Price</p>
-                  <p className="flex items-center text-base font-semibold">{active ? `${price} ETH` : '-'}</p>
+                  <p className="flex items-center text-base font-semibold">
+                    {active ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
+                  </p>
                 </div>
                 <div
                   className="flex flex-col gap-1"
