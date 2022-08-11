@@ -101,6 +101,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
     setAnswers(answersArrary);
     setStep(0);
     onCancelTerms && onCancelTerms();
+    onNftCountChange && onNftCountChange('');
   };
 
   const onChange = (step: number, value: string) => {

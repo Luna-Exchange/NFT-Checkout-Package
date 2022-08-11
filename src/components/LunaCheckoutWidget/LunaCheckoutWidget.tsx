@@ -190,7 +190,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
     }
     setAnswersError(errors);
 
-    setTermsProcess(termsProcess);
+    if (nftCount) setTermsProcess(termsProcess);
   };
 
   const handleMint = async () => {
