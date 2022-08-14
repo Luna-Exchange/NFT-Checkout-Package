@@ -43,7 +43,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
   nftImgUrl,
   nftTitle,
   nftDescription,
-  projectAbout,
+  // projectAbout,
   price,
   maxSupply,
   mintsRemain,
