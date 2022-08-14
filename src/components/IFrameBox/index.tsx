@@ -148,22 +148,23 @@ const IFrameBox: React.FC<ComponentProps> = ({
                 }}
               >
                 <p className="text-xl font-normal">{nftTitle}</p>
-                <p className="items-center w-full overflow-hidden text-sm font-normal whitespace-nowrap">
+                {/* <p className="items-center w-full overflow-hidden text-sm font-normal whitespace-nowrap">
                   {nftDescription}
-                </p>
+                </p> */}
               </div>
               <p
                 className="flex items-center text-sm"
                 style={{
                   display: '-webkit-box',
-                  WebkitLineClamp: 2,
+                  WebkitLineClamp: 4,
                   WebkitBoxOrient: 'vertical',
                   overflow: 'hidden',
                   color: fontColor ? fontColor : 'white',
-                  fontFamily: font ? font : 'inherit'
+                  fontFamily: font ? font : 'inherit',
+                  minHeight: '80px'
                 }}
               >
-                {projectAbout}
+                {nftDescription}
               </p>
               <div className="flex flex-row justify-between sm:gap-20">
                 <div
@@ -255,7 +256,18 @@ const IFrameBox: React.FC<ComponentProps> = ({
                           )}
                           {step === questions.length && (
                             <div className="flex flex-row justify-between gap-4 mt-7">
-                              <div style={{ width: '50%' }}>
+                              <div className="relative" style={{ width: '50%' }}>
+                                {nftCountError && (
+                                  <p
+                                    className="absolute text-xs italic font-normal left-1 -top-5"
+                                    style={{
+                                      color: fontColor ? fontColor : 'white',
+                                      fontFamily: font ? font : 'inherit'
+                                    }}
+                                  >
+                                    required
+                                  </p>
+                                )}
                                 <input
                                   placeholder="Number of NFT"
                                   value={nftCount}
@@ -268,17 +280,6 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                     fontFamily: font ? font : 'inherit'
                                   }}
                                 />
-                                {nftCountError && (
-                                  <p
-                                    className="relative text-xs italic font-normal left-2 top-1"
-                                    style={{
-                                      color: fontColor ? fontColor : 'white',
-                                      fontFamily: font ? font : 'inherit'
-                                    }}
-                                  >
-                                    required
-                                  </p>
-                                )}
                               </div>
                               <button
                                 disabled={mintBtnDisabled && mintsRemain === 0}
