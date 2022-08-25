@@ -2,20 +2,13 @@ import axios from 'axios';
 import SERVER_URL from './server';
 import { FirstPartyAnswers } from '../type';
 
-export const getMintInfo = (collecttionId: string, username: string, password: string) =>
+export const getMintInfo = (collecttionId: string) =>
     new Promise((resolve: (value: any) => void, reject: (value: string) => void) => {
         let reqUrl = `${SERVER_URL}/mint/${collecttionId}/info`;
         // console.log('reqUrl:', reqUrl);
 
-        const config = {
-            auth: {
-                username: username,
-                password: password
-            }
-        };
-
         axios
-            .get(reqUrl, config)
+            .get(reqUrl)
             .then((response) => {
                 // console.log('getMintInfo response:', response.data);
                 resolve(response.data);
@@ -30,8 +23,6 @@ export const answerMintQuestions = (
     collecttionId: string,
     wallet: string,
     answers: FirstPartyAnswers[],
-    username: string,
-    password: string
 ) =>
     new Promise((resolve: (value: any) => void, reject: (value: string) => void) => {
         let reqUrl = `${SERVER_URL}/mint/${collecttionId}/answers`;
@@ -41,14 +32,8 @@ export const answerMintQuestions = (
         body['wallet_address'] = wallet;
         body['answers'] = answers;
 
-        const config = {
-            auth: {
-                username: username,
-                password: password
-            }
-        };
         axios
-            .post(reqUrl, body, config)
+            .post(reqUrl, body)
             .then((response) => {
                 // console.log('answerMintQuestions response:', response);
                 resolve(response.data);

@@ -17,30 +17,30 @@ yarn add luna-nft-checkout
 npm install luna-nft-checkout
 ```
 
-### Import LunaCheckoutWidget from package
+### Import CheckoutWidget from package
 
 You can import component:
 
 ```ts
-import { LunaCheckoutWidget } from 'luna-nft-checkout';
+import { CheckoutWidget } from 'luna-nft-checkout';
 ```
 
 and use with collection id, api key and secret key:
 
 ```tsx
-<LunaCheckoutWidget collectionId="<id>" username="<api_key>" password="<secret_key>" libraryType="web3 | ethers" />
+<CheckoutWidget collectionId="<id>" libraryType="web3 | ethers" />
 ```
 
 **note: Don't forget specify library type(whether web3 or ethers)! by default it's ethers.**
 
-You can import IFrameBox compoent and use directly in your front-end code.
+You can import DetailBox compoent and use directly in your front-end code.
 
 ### Components
 
 ```tsx
 import { IFrmaeBox } from "luna-nft-checkout";
 ...
-<IFrameBox
+<DetailBox
   active={active}
   nftImgUrl={mintInfo.image}
   nftTitle={mintInfo.name}
@@ -81,7 +81,7 @@ import { IFrmaeBox } from "luna-nft-checkout";
 />
 ```
 
-## IFrameBox props type
+## DetailBox props type
 
 ```tsx
   active: boolean;
