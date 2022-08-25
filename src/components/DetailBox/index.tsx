@@ -38,7 +38,7 @@ type ComponentProps = {
   chain: string;
 };
 
-const IFrameBox: React.FC<ComponentProps> = ({
+const DetailBox: React.FC<ComponentProps> = ({
   active,
   nftImgUrl,
   nftTitle,
@@ -49,7 +49,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
   mintsRemain,
   mintBtnDisabled,
   bgColor,
-  font,
+  // font,
   fontColor,
   tcLink,
   termsProcess = false,
@@ -117,83 +117,107 @@ const IFrameBox: React.FC<ComponentProps> = ({
   };
 
   return (
-    <div className="container mx-auto" style={{ maxWidth: '841px' }}>
+    <div
+      className="container mx-auto rounded-2xl"
+      style={{ maxWidth: '864px', maxHeight: '421px', boxShadow: '0px 0px 16px rgba(0, 0, 0, 0.5)' }}
+    >
       <div
-        className={`flex flex-col xl:flex-row text-left w-full sm:min-h-min xl:max-h-96 box-border box ${className}`}
+        className={`flex flex-col xl:flex-row text-left w-full sm:min-h-min box-border box rounded-2xl ${className}`}
         style={{ backgroundColor: bgColor ? bgColor : '#1d1d1d' }}
       >
         <div
-          className="relative items-center justify-center w-full border border-white border-solid sm:h-96 sm:w-96 sm:border-none"
-          style={{ minHeight: '240px' }}
+          className="relative items-center justify-center w-full border border-white border-solid sm:h-full sm:border-none rounded-2xl"
+          style={{ minHeight: '240px', maxWidth: '421px' }}
         >
-          <img src={nftImgUrl} width="100%" height="100%" alt="" className="object-cover sm:w-96 sm:h-96" />
+          <img
+            src={nftImgUrl}
+            width="100%"
+            height="100%"
+            alt=""
+            className="object-cover sm:w-full sm:h-full rounded-2xl"
+          />
           <div className="absolute" style={{ inset: 0 }}>
             <div
               style={{
                 background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(27, 28, 34, 0) 0.01%, #000000 100%)',
                 height: '60%'
               }}
-              className="w-full transform -rotate-180"
+              className="w-full transform -rotate-180 rounded-2xl"
             ></div>
           </div>
         </div>
-        <div className="flex flex-col gap-4 mx-4 sm:flex-row pt-9 xl:ml-16 xl:ml-7">
-          <div className="flex flex-col w-full gap-8 sm:w-80">
-            <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4 mx-10 sm:flex-row pt-7">
+          <div className="flex flex-col w-full gap-6 sm:w-80">
+            <div className="flex flex-col">
               <div
                 className="flex flex-col gap-2"
                 style={{
-                  color: fontColor ? fontColor : 'white',
-                  fontFamily: font ? font : 'inherit'
+                  color: fontColor ? fontColor : 'white'
                 }}
               >
-                <p className="text-xl font-normal">{nftTitle}</p>
+                <p className="text-xl font-bold">{nftTitle}</p>
                 {/* <p className="items-center w-full overflow-hidden text-sm font-normal whitespace-nowrap">
                   {nftDescription}
                 </p> */}
               </div>
-              <p
-                className="flex items-center text-sm"
+              <div
+                className="rounded-t-lg border-solid p-4 justify-between items-center mt-10"
+                style={{ borderWidth: '1px', borderColor: '#E8E8E8', color: fontColor ? fontColor : 'white' }}
+              >
+                <p className="text-sm capitalize">description</p>
+              </div>
+              <div
+                className="rounded-b-lg border-solid p-4 justify-between items-center"
                 style={{
-                  display: '-webkit-box',
-                  WebkitLineClamp: 4,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden',
+                  borderWidth: '0 1px 1px 1px',
+                  borderColor: '#E8E8E8',
                   color: fontColor ? fontColor : 'white',
-                  fontFamily: font ? font : 'inherit',
-                  minHeight: '80px'
+                  backgroundColor: `${bgColor}80`
                 }}
               >
-                {nftDescription}
-              </p>
-              <div className="flex flex-row justify-between sm:gap-20">
-                <div
-                  className="flex flex-col gap-1"
-                  style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                <p
+                  className="flex items-center text-sm"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    color: fontColor ? fontColor : 'white',
+                    minHeight: '40px'
+                  }}
                 >
-                  <p className="flex items-center text-base font-normal">Price</p>
-                  <p className="flex items-center text-base font-semibold">
+                  {nftDescription}
+                </p>
+              </div>
+              <div className="flex flex-row justify-between pt-4 gap-2">
+                <div
+                  className="flex flex-col gap-1 rounded-lg py-2"
+                  style={{ width: '150px', color: fontColor ? fontColor : 'white', border: '1px solid #E8E8E8' }}
+                >
+                  <p className="flex items-center text-base font-normal justify-center">Price</p>
+                  <p className="flex items-center text-base font-semibold justify-center">
                     {active ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
                   </p>
                 </div>
                 <div
-                  className="flex flex-col gap-1"
-                  style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                  className="flex flex-col gap-1 rounded-lg py-2"
+                  style={{ width: '150px', color: fontColor ? fontColor : 'white', border: '1px solid #E8E8E8' }}
                 >
-                  <p className="flex items-center text-base font-normal">Total Mints</p>
-                  <p className="flex items-center text-base font-semibold">{!active ? '-' : maxSupply}</p>
+                  <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
+                  <p className="flex items-center text-base font-semibold justify-center">
+                    {!active ? '-' : maxSupply}
+                  </p>
                 </div>
               </div>
             </div>
             {!active ? (
               <button
                 onClick={onConnectWallet}
-                className="w-full font-normal border border-white border-solid rounded cursor-pointer bg-none mt-7"
+                className="w-full font-normal border border-white border-solid rounded cursor-pointer bg-none mt-2"
                 style={{
                   padding: '6px',
                   fontSize: '14px',
-                  color: fontColor ? fontColor : 'white',
-                  fontFamily: font ? font : 'inherit'
+                  color: fontColor ? fontColor : 'white'
                 }}
               >
                 CONNECT WALLET
@@ -205,10 +229,10 @@ const IFrameBox: React.FC<ComponentProps> = ({
                     <SpinningCircles />
                   </div>
                 ) : mintSucceed ? (
-                  <div className="flex flex-col justify-center h-full" style={{ gap: '34px' }}>
+                  <div className="flex flex-col justify-center h-full relative">
                     <p
-                      className="flex items-center justify-center text-xl font-normal align-center"
-                      style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                      className="flex absolute -top-2 items-center justify-center text-xl font-normal align-center"
+                      style={{ color: fontColor ? fontColor : 'white' }}
                     >
                       {nftCount} NFT is(are) successfully minted.
                     </p>
@@ -217,8 +241,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                       style={{
                         height: '34px',
                         fontSize: '14px',
-                        color: fontColor ? fontColor : 'white',
-                        fontFamily: font ? font : 'inherit'
+                        color: fontColor ? fontColor : 'white'
                       }}
                       onClick={() => setMintSucceed(false)}
                     >
@@ -234,7 +257,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             <div className="flex flex-col gap-2">
                               <div
                                 className="flex flex-row justify-between gap-2"
-                                style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                                style={{ color: fontColor ? fontColor : 'white' }}
                               >
                                 <p className="text-xs font-normal">{questions[step]}</p>
                                 {error[step] && <p className="text-xs italic font-normal">required</p>}
@@ -248,21 +271,19 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                   error[step] ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
                                 }`}
                                 style={{
-                                  borderColor: error[step] ? '#EB5757' : 'none',
-                                  fontFamily: font ? font : 'inherit'
+                                  borderColor: error[step] ? '#EB5757' : 'none'
                                 }}
                               />
                             </div>
                           )}
                           {step === questions.length && (
-                            <div className="flex flex-row justify-between gap-4 mt-7">
+                            <div className="flex flex-row justify-between gap-4 ">
                               <div className="relative" style={{ width: '50%' }}>
                                 {nftCountError && (
                                   <p
                                     className="absolute text-xs italic font-normal left-1 -top-5"
                                     style={{
-                                      color: fontColor ? fontColor : 'white',
-                                      fontFamily: font ? font : 'inherit'
+                                      color: fontColor ? fontColor : 'white'
                                     }}
                                   >
                                     required
@@ -276,8 +297,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                     nftCountError ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
                                   }`}
                                   style={{
-                                    borderColor: nftCountError ? '#EB5757' : 'none',
-                                    fontFamily: font ? font : 'inherit'
+                                    borderColor: nftCountError ? '#EB5757' : 'none'
                                   }}
                                 />
                               </div>
@@ -288,8 +308,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                 style={{
                                   width: '50%',
                                   fontSize: '14px',
-                                  color: fontColor ? fontColor : 'white',
-                                  fontFamily: font ? font : 'inherit'
+                                  color: fontColor ? fontColor : 'white'
                                 }}
                               >
                                 MINT NFT
@@ -312,7 +331,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                               onClick={onBackward}
                             >
                               <Icon icon="akar-icons:arrow-left" />
-                              <p style={{ fontFamily: font ? font : 'inherit' }}>BACK</p>
+                              <p style={{}}>BACK</p>
                             </div>
                             <div
                               className="flex flex-row gap-2 items-center text-xs cursor-pointer"
@@ -328,7 +347,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                               }}
                               onClick={onForward}
                             >
-                              <p style={{ fontFamily: font ? font : 'inherit' }}>NEXT</p>
+                              <p style={{}}>NEXT</p>
                               <Icon icon="akar-icons:arrow-right" />
                             </div>
                           </div>
@@ -337,7 +356,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                         <div className="flex flex-col gap-2">
                           <label
                             className="flex flex-row justify-start gap-2"
-                            style={{ color: fontColor ? fontColor : 'white', fontFamily: font ? font : 'inherit' }}
+                            style={{ color: fontColor ? fontColor : 'white' }}
                           >
                             <input
                               type="checkbox"
@@ -358,8 +377,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                               style={{
                                 width: '50%',
                                 fontSize: '14px',
-                                color: fontColor ? fontColor : 'white',
-                                fontFamily: font ? font : 'inherit'
+                                color: fontColor ? fontColor : 'white'
                               }}
                             >
                               CANCEL
@@ -376,7 +394,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                                 cursor:
                                   !(mintBtnDisabled && mintsRemain === 0) && checkedTcLink ? 'pointer' : 'not-allowed',
                                 color: fontColor ? fontColor : 'white',
-                                fontFamily: font ? font : 'inherit',
+
                                 filter: 'invert(100%)'
                               }}
                             >
@@ -421,4 +439,4 @@ const IFrameBox: React.FC<ComponentProps> = ({
   );
 };
 
-export default IFrameBox;
+export default DetailBox;

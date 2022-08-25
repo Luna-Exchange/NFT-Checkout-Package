@@ -1,4 +1,4 @@
-import LunaCheckoutWidget from './components/LunaCheckoutWidget';
-import IFrameBox from './components/IFrameBox';
+import CheckoutWidget from './components/CheckoutWidget';
+import DetailBox from './components/DetailBox';
 
-export { LunaCheckoutWidget, IFrameBox };
+export { CheckoutWidget, DetailBox };

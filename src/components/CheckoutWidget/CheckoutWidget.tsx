@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import IFrameBox from '../IFrameBox';
+import DetailBox from '../DetailBox';
 import { getMintInfo, answerMintQuestions } from '../../api/mint';
 import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
@@ -19,17 +19,10 @@ type Library = typeof libraries[keyof typeof libraries];
 
 type ComponentProps = {
   collectionId: string;
-  username: string;
-  password: string;
   libraryType: Library;
 };
 
-const LunaCheckoutWidget: React.FC<ComponentProps> = ({
-  collectionId,
-  username,
-  password,
-  libraryType
-}): JSX.Element => {
+const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType }): JSX.Element => {
   const { account, activate, deactivate, active, library, chainId } = useWeb3React();
   const [mintInfo, setMintInfo] = useState<any>();
 
@@ -62,7 +55,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   // }, []);
 
   useEffect(() => {
-    getMintInfo(collectionId, username, password)
+    getMintInfo(collectionId)
       .then(async (response: any) => {
         console.log('getMintInfo response:', response);
         setMintInfo(response);
@@ -88,7 +81,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
         setFacebookEnabled(false);
         setInstagramEnabled(false);
       });
-  }, [collectionId, username, password]);
+  }, [collectionId]);
 
   useEffect(() => {
     const get = () => {
@@ -231,7 +224,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
         answer: answers[index]
       }));
 
-      answerMintQuestions(collectionId, account, firstPartyAnswers, username, password)
+      answerMintQuestions(collectionId, account, firstPartyAnswers)
         .then(async (response: any) => {
           console.log('answerMintQuestions response:', response);
         })
@@ -244,7 +237,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   return (
     <div>
       {!!mintInfo && (
-        <IFrameBox
+        <DetailBox
           active={active}
           nftImgUrl={mintInfo.image}
           nftTitle={mintInfo.name}
@@ -288,4 +281,4 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   );
 };
 
-export default LunaCheckoutWidget;
+export default CheckoutWidget;
