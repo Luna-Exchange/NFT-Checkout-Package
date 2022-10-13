@@ -158,7 +158,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType })
       method: 'wallet_switchEthereumChain',
       params: [
         {
-          chainId: mintInfo.chain === 'ethereum' ? '0x4' : '0x13881'
+          chainId: mintInfo.chain === 'ethereum' ? '0x5' : '0x13881'
         }
       ]
     });

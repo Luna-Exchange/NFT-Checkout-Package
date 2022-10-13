@@ -25,7 +25,7 @@ type ComponentProps = {
   libraryType?: Library;
 };
 
-const LunaCheckout: React.FC<ComponentProps> = ({ collectionId, libraryType = 'ethers' }): JSX.Element => {
+const InsomniaCheckout: React.FC<ComponentProps> = ({ collectionId, libraryType = 'ethers' }): JSX.Element => {
   return (
     <Web3ReactProvider getLibrary={libraryType === 'ethers' ? getLibraryFromEthers : getLibraryFromWeb3}>
       <CheckoutWidget collectionId={collectionId} libraryType={libraryType} />
@@ -33,4 +33,4 @@ const LunaCheckout: React.FC<ComponentProps> = ({ collectionId, libraryType = 'e
   );
 };
 
-export default LunaCheckout;
+export default InsomniaCheckout;
