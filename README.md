@@ -19,10 +19,11 @@ npm install luna-nft-checkout
 
 ### Import CheckoutWidget from package
 
-You can import component:
+You can import component and style:
 
 ```ts
 import { CheckoutWidget } from 'luna-nft-checkout';
+import 'luna-nft-checkout/lib/esm/styles/style.css';
 ```
 
 and use with collection id, api key and secret key:
@@ -38,7 +39,7 @@ You can import DetailBox compoent and use directly in your front-end code.
 ### Components
 
 ```tsx
-import { IFrmaeBox } from "luna-nft-checkout";
+import { DetailBox } from "luna-nft-checkout";
 ...
 <DetailBox
   active={active}
