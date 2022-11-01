@@ -7,16 +7,20 @@
         "type": "git",
         "url": "git://github.com/Luna-Exchange/NFT-Checkout-Package.git"
     },
+    "publishConfig": {
+        "registry": "https://github.com/Luna-Exchange/NFT-Checkout-Package.git"
+    },
     "main": "./lib/cjs/index.js",
     "module": "./lib/esm/index.js",
     "types": "./lib/esm/index.d.ts",
     "license": "MIT",
     "scripts": {
-        "build": "yarn build:esm && yarn build:cjs",
+        "build": "yarn build:esm && yarn build:cjs && yarn bundle",
         "build:esm": "yarn clean && tsc --outDir lib/esm",
         "build:cjs": "tsc --module commonjs --outDir lib/cjs && yarn copy-files && yarn copy-styles",
         "prepublishOnly": "yarn build",
         "clean": "rimraf lib/",
+        "bundle": "browserify lib/cjs/index.js -p esmify > bundle.js && copyfiles bundle.js lib/esm/",
         "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css lib/esm/",
         "copy-styles": "copyfiles -u 2 src/styles/*.css lib/esm/styles"
     },
@@ -26,12 +30,15 @@
         "@types/react": "^18.0.21",
         "@types/react-dom": "^18.0.6",
         "autoprefixer": "^10.4.7",
+        "browser-resolve": "^2.0.0",
         "copyfiles": "^2.4.1",
+        "esmify": "^2.1.1",
         "postcss": "^8.4.14",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "rimraf": "^3.0.2",
         "tailwindcss": "^3.1.6",
+        "tsify": "^5.0.4",
         "typescript": "^4.8.4"
     },
     "files": [
