@@ -7,9 +7,6 @@
         "type": "git",
         "url": "git://github.com/Luna-Exchange/NFT-Checkout-Package.git"
     },
-    "publishConfig": {
-        "registry": "https://github.com/Luna-Exchange/NFT-Checkout-Package.git"
-    },
     "main": "./lib/cjs/index.js",
     "module": "./lib/esm/index.js",
     "types": "./lib/esm/index.d.ts",
