@@ -1,5 +1,5 @@
 Arguments: 
-  /home/d/.nvm/versions/node/v16.14.2/bin/node /home/d/.yarn/bin/yarn.js add -D broswer-resolve
+  /home/d/.nvm/versions/node/v16.14.2/bin/node /home/d/.yarn/bin/yarn.js add @headless/react
 
 PATH: 
   /home/d/.yarn/bin:/home/d/.config/yarn/global/node_modules/.bin:/home/d/.nvm/versions/node/v16.14.2/bin:/home/d/.local/share/solana/install/active_release/bin:/home/d/.cargo/bin:/home/d/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/broswer-resolve: Not found
+  Error: https://registry.yarnpkg.com/@headless%2freact: Not found
       at Request.params.callback [as _callback] (/home/d/.yarn/lib/cli.js:66138:18)
       at Request.self.callback (/home/d/.yarn/lib/cli.js:140883:22)
       at Request.emit (node:events:526:28)
@@ -29,26 +29,24 @@ Trace:
 npm manifest: 
   {
       "name": "luna-nft-checkout",
-      "version": "1.7.1",
+      "version": "1.8.0",
       "description": "Library based on Typescript to mint Luna NFT!",
       "author": "Leon Jin <ultraj0330@gmail.com>",
       "repository": {
           "type": "git",
           "url": "git://github.com/Luna-Exchange/NFT-Checkout-Package.git"
       },
-      "publishConfig": {
-          "registry": "https://github.com/Luna-Exchange/NFT-Checkout-Package.git"
-      },
       "main": "./lib/cjs/index.js",
       "module": "./lib/esm/index.js",
       "types": "./lib/esm/index.d.ts",
       "license": "MIT",
       "scripts": {
-          "build": "yarn build:esm && yarn build:cjs",
+          "build": "yarn build:esm && yarn build:cjs && yarn bundle",
           "build:esm": "yarn clean && tsc --outDir lib/esm",
           "build:cjs": "tsc --module commonjs --outDir lib/cjs && yarn copy-files && yarn copy-styles",
           "prepublishOnly": "yarn build",
           "clean": "rimraf lib/",
+          "bundle": "browserify lib/cjs/index.js -p esmify > bundle.js && copyfiles bundle.js lib/esm/",
           "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css lib/esm/",
           "copy-styles": "copyfiles -u 2 src/styles/*.css lib/esm/styles"
       },
@@ -58,6 +56,7 @@ npm manifest:
           "@types/react": "^18.0.21",
           "@types/react-dom": "^18.0.6",
           "autoprefixer": "^10.4.7",
+          "browser-resolve": "^2.0.0",
           "copyfiles": "^2.4.1",
           "esmify": "^2.1.1",
           "postcss": "^8.4.14",
@@ -1674,6 +1673,13 @@ Lockfile:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
     integrity sha512-cKV8tMCEpQs4hK/ik71d6LrPOnpkpGBR0wzxqr68g2m/LB2GxVYQroAjMJZRVM1Y4BCjCKc3vAamxSzOY2RP+w==
+  
+  browser-resolve@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/browser-resolve/-/browser-resolve-2.0.0.tgz#99b7304cb392f8d73dba741bb2d7da28c6d7842b"
+    integrity sha512-7sWsQlYL2rGLy2IWm8WL8DCTJvYLc/qlOnsakDac87SOoCd16WLsaAMdCiAqsTNHIe+SXfaqyxyo6THoWqs8WQ==
+    dependencies:
+      resolve "^1.17.0"
   
   browserify-aes@^1.0.0, browserify-aes@^1.0.4, browserify-aes@^1.2.0:
     version "1.2.0"
@@ -4534,7 +4540,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/resolve-alpn/-/resolve-alpn-1.2.1.tgz#b7adbdac3546aaaec20b45e7d8265927072726f9"
     integrity sha512-0a1F4l73/ZFZOakJnQ3FvkJ2+gSTQWz/r2KE5OdDY0TxPm5h4GkqkWWfM47T7HsbnOtcJVEF4epCVy6u7Q3K+g==
   
-  resolve@^1.1.7, resolve@^1.14.2, resolve@^1.22.1:
+  resolve@^1.1.7, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.22.1:
     version "1.22.1"
     resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.1.tgz#27cb2ebb53f91abb49470a928bba7558066ac177"
     integrity sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==

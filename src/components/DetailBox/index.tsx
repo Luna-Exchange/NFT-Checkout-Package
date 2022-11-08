@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { SpinningCircles } from 'react-loading-icons';
+import { Disclosure } from '@headlessui/react';
 
 type ComponentProps = {
   active: boolean;
@@ -123,7 +124,7 @@ const DetailBox: React.FC<ComponentProps> = ({
     >
       <div
         className={`flex flex-col xl:flex-row text-left w-full sm:min-h-min box-border box rounded-2xl ${className}`}
-        style={{ backgroundColor: bgColor ? bgColor : '#1d1d1d' }}
+        style={{ backgroundColor: bgColor ? bgColor : 'white' }}
       >
         <div
           className="relative items-center justify-center w-full border border-white border-solid sm:h-full sm:border-none rounded-2xl"
@@ -150,17 +151,44 @@ const DetailBox: React.FC<ComponentProps> = ({
           <div className="flex flex-col w-full gap-6 sm:w-80">
             <div className="flex flex-col">
               <div
-                className="flex flex-col gap-2"
+                className="flex flex-col"
                 style={{
-                  color: fontColor ? fontColor : 'white'
+                  color: fontColor ? fontColor : '#222221'
                 }}
               >
-                <p className="text-xl font-bold">{nftTitle}</p>
-                {/* <p className="items-center w-full overflow-hidden text-sm font-normal whitespace-nowrap">
-                  {nftDescription}
-                </p> */}
+                <div className="flex flex-row gap-2 items-center">
+                  <p className="text-xl font-bold">Insomnia Access Pass</p>
+                  <Icon icon={chain === 'ethereum' ? 'logos:ethereum' : 'logos:polygon'} />
+                </div>
+                <p className="text-md font-normal">{nftTitle}</p>
               </div>
-              <div
+              <div className="w-full px-4 pt-16">
+                <div className="w-full max-w-md p-2 mx-auto bg-white rounded-2xl">
+                  <Disclosure>
+                    {({ open }) => (
+                      <>
+                        <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                          <span className="text-sm capitalize">description</span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className={`${open ? 'rotate-180 transform' : ''} h-5 w-5 text-purple-500`}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                          </svg>
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                          {nftDescription}
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
+                </div>
+              </div>
+              {/* <div
                 className="rounded-t-lg border-solid p-4 justify-between items-center mt-10"
                 style={{ borderWidth: '1px', borderColor: '#E8E8E8', color: fontColor ? fontColor : 'white' }}
               >
@@ -171,7 +199,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                 style={{
                   borderWidth: '0 1px 1px 1px',
                   borderColor: '#E8E8E8',
-                  color: fontColor ? fontColor : 'white',
+                  color: fontColor ? fontColor : '#222221',
                   backgroundColor: `${bgColor}80`
                 }}
               >
@@ -182,17 +210,17 @@ const DetailBox: React.FC<ComponentProps> = ({
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                     overflow: 'hidden',
-                    color: fontColor ? fontColor : 'white',
+                    color: fontColor ? fontColor : '#222221',
                     minHeight: '40px'
                   }}
                 >
                   {nftDescription}
                 </p>
-              </div>
+              </div> */}
               <div className="flex flex-row justify-between pt-4 gap-2">
                 <div
                   className="flex flex-col gap-1 rounded-lg py-2"
-                  style={{ width: '150px', color: fontColor ? fontColor : 'white', border: '1px solid #E8E8E8' }}
+                  style={{ width: '150px', color: fontColor ? fontColor : '#222221', border: '1px solid #E8E8E8' }}
                 >
                   <p className="flex items-center text-base font-normal justify-center">Price</p>
                   <p className="flex items-center text-base font-semibold justify-center">
@@ -201,7 +229,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                 </div>
                 <div
                   className="flex flex-col gap-1 rounded-lg py-2"
-                  style={{ width: '150px', color: fontColor ? fontColor : 'white', border: '1px solid #E8E8E8' }}
+                  style={{ width: '150px', color: fontColor ? fontColor : '#222221', border: '1px solid #E8E8E8' }}
                 >
                   <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
                   <p className="flex items-center text-base font-semibold justify-center">
@@ -213,7 +241,7 @@ const DetailBox: React.FC<ComponentProps> = ({
             {!active ? (
               <button
                 onClick={onConnectWallet}
-                className="w-full font-normal border border-white border-solid rounded cursor-pointer bg-none mt-2"
+                className="w-full font-normal border border-white border-solid rounded cursor-pointer bg-black mt-2"
                 style={{
                   padding: '6px',
                   fontSize: '14px',
@@ -232,7 +260,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                   <div className="flex flex-col justify-center h-full relative">
                     <p
                       className="flex absolute -top-2 items-center justify-center text-xl font-normal align-center"
-                      style={{ color: fontColor ? fontColor : 'white' }}
+                      style={{ color: fontColor ? fontColor : '#222221' }}
                     >
                       {nftCount} NFT is(are) successfully minted.
                     </p>
@@ -241,7 +269,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                       style={{
                         height: '34px',
                         fontSize: '14px',
-                        color: fontColor ? fontColor : 'white'
+                        color: fontColor ? fontColor : '#222221'
                       }}
                       onClick={() => setMintSucceed(false)}
                     >
@@ -257,7 +285,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                             <div className="flex flex-col gap-2">
                               <div
                                 className="flex flex-row justify-between gap-2"
-                                style={{ color: fontColor ? fontColor : 'white' }}
+                                style={{ color: fontColor ? fontColor : '#222221' }}
                               >
                                 <p className="text-xs font-normal">{questions[step]}</p>
                                 {error[step] && <p className="text-xs italic font-normal">required</p>}
@@ -283,7 +311,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                                   <p
                                     className="absolute text-xs italic font-normal left-1 -top-5"
                                     style={{
-                                      color: fontColor ? fontColor : 'white'
+                                      color: fontColor ? fontColor : '#222221'
                                     }}
                                   >
                                     required
@@ -308,7 +336,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                                 style={{
                                   width: '50%',
                                   fontSize: '14px',
-                                  color: fontColor ? fontColor : 'white'
+                                  color: fontColor ? fontColor : '#222221'
                                 }}
                               >
                                 MINT NFT
@@ -356,7 +384,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                         <div className="flex flex-col gap-2">
                           <label
                             className="flex flex-row justify-start gap-2"
-                            style={{ color: fontColor ? fontColor : 'white' }}
+                            style={{ color: fontColor ? fontColor : '#222221' }}
                           >
                             <input
                               type="checkbox"
@@ -377,7 +405,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                               style={{
                                 width: '50%',
                                 fontSize: '14px',
-                                color: fontColor ? fontColor : 'white'
+                                color: fontColor ? fontColor : '#222221'
                               }}
                             >
                               CANCEL
@@ -393,7 +421,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                                   (mintBtnDisabled && mintsRemain === 0) || !checkedTcLink ? 'gray' : 'black',
                                 cursor:
                                   !(mintBtnDisabled && mintsRemain === 0) && checkedTcLink ? 'pointer' : 'not-allowed',
-                                color: fontColor ? fontColor : 'white',
+                                color: fontColor ? fontColor : '#222221',
 
                                 filter: 'invert(100%)'
                               }}
@@ -411,7 +439,7 @@ const DetailBox: React.FC<ComponentProps> = ({
           </div>
           <div
             className="flex flex-row items-center justify-center gap-4 sm:flex-col sm:justify-start"
-            style={{ color: fontColor ? fontColor : 'white' }}
+            style={{ color: fontColor ? fontColor : '#222221' }}
           >
             {socialLinks['twitter'] && <Icon icon="mdi:twitter" fontSize={16} className="cursor-pointer" />}
             {socialLinks['discord'] && <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />}
