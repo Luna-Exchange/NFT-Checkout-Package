@@ -131,24 +131,18 @@ const DetailBox: React.FC<ComponentProps> = ({
 
   return (
     <div
-      className="container mx-auto rounded-2xl"
-      style={{ maxWidth: '864px', maxHeight: '421px', boxShadow: '0px 0px 16px rgba(0, 0, 0, 0.5)' }}
+      className="container mx-auto rounded-2xl w-max min-h-screen md:min-h-full"
+      style={{ maxWidth: '864px', boxShadow: '0px 0px 16px rgba(0, 0, 0, 0.5)' }}
     >
       <div
-        className={`flex flex-col xl:flex-row text-left w-full sm:min-h-min box-border box rounded-2xl ${className}`}
+        className={`flex flex-col md:flex-row text-left w-full sm:min-h-min box-border box rounded-2xl ${className}`}
         style={{ backgroundColor: bgColor ? bgColor : 'white' }}
       >
         <div
           className="relative items-center justify-center w-full border border-white border-solid sm:h-full sm:border-none rounded-2xl"
           style={{ minHeight: '240px', maxWidth: '421px' }}
         >
-          <img
-            src={nftImgUrl}
-            width="100%"
-            height="100%"
-            alt=""
-            className="object-cover sm:w-full sm:h-full rounded-2xl"
-          />
+          <img src={nftImgUrl} alt="" className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl" />
           <div className="absolute" style={{ inset: 0 }}>
             <div
               style={{
@@ -159,8 +153,11 @@ const DetailBox: React.FC<ComponentProps> = ({
             ></div>
           </div>
         </div>
-        <div className="flex flex-col gap-4 mx-10 sm:flex-row pt-7">
-          <div className="relative flex flex-col w-full gap-6 sm:w-80">
+        <div className="relative flex flex-col gap-0 md:gap-4 mx-4 md:mx-10 sm:mx-8 md:flex-row pt-7">
+          <div
+            className="relative flex flex-col w-full md:w-80 md:gap-6"
+            style={{ minHeight: '300px', maxWidth: '357px' }}
+          >
             <div className="flex flex-col">
               <div
                 className="flex flex-col"
@@ -291,7 +288,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                 <></>
               )}
             </div>
-            <div className="absolute bottom-8 w-full">
+            <div className="absolute bottom-0 sm:bottom-2 md:bottom-8 w-full">
               {!active ? (
                 <button
                   onClick={onConnectWallet}
@@ -452,14 +449,10 @@ const DetailBox: React.FC<ComponentProps> = ({
                 </>
               )}
             </div>
-            <div className="absolute bottom-2 flex flex-row gap-2 w-full items-center justify-center">
-              <p className="text-xs font-normal">Powered by:</p>
-              <CheckoutLogo />
-            </div>
           </div>
           <div
-            className="flex flex-row items-center justify-center gap-4 sm:flex-col sm:justify-start"
-            style={{ color: fontColor ? fontColor : '#222221' }}
+            className="flex flex-row items-start md:items-center justify-start md:justify-center sm:justify-start gap-4 sm:flex-col mb-2 md:mb-0"
+            style={{ color: fontColor ? fontColor : '#222221', minHeight: '12px' }}
           >
             {socialLinks['twitter'] && <Icon icon="mdi:twitter" fontSize={16} className="cursor-pointer" />}
             {socialLinks['discord'] && <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />}
@@ -480,6 +473,10 @@ const DetailBox: React.FC<ComponentProps> = ({
                 onClick={handleReset}
               />
             )}
+          </div>
+          <div className="absolute bottom-2 flex flex-row gap-2 w-full items-center justify-center">
+            <p className="text-xs font-normal">Powered by:</p>
+            <CheckoutLogo />
           </div>
         </div>
       </div>
