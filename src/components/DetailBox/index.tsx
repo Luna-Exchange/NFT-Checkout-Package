@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { SpinningCircles } from 'react-loading-icons';
 import { Disclosure } from '@headlessui/react';
+import CheckoutLogo from '../../assets/CheckoutLogo';
+
+enum StageType {
+  TERMS = 'TERMS',
+  QUESTION = 'QUESTION',
+  NORMAL = 'NORMAL'
+}
 
 type ComponentProps = {
   active: boolean;
@@ -52,14 +59,14 @@ const DetailBox: React.FC<ComponentProps> = ({
   bgColor,
   // font,
   fontColor,
-  tcLink,
-  termsProcess = false,
+  // tcLink,
+  // termsProcess = false,
   onCancelTerms,
   questions,
   socialLinks,
   onConnectWallet,
   // onDisconnectWallet,
-  onMintNft,
+  // onMintNft,
   onHandleMint,
   className = '',
   nftCount,
@@ -74,9 +81,17 @@ const DetailBox: React.FC<ComponentProps> = ({
   setMintSucceed,
   chain
 }): JSX.Element => {
+  const [stage, setStage] = useState<StageType>(StageType.NORMAL);
   const [step, setStep] = useState<number>(0);
   const [error, setError] = useState<boolean[]>(answersError);
-  const [checkedTcLink, setCheckedTcLink] = useState<boolean>(false);
+
+  useEffect(() => {
+    setStage(active ? StageType.TERMS : StageType.NORMAL);
+  }, [active]);
+
+  const handleAgree = () => {
+    setStage(questions.length > 0 ? StageType.QUESTION : StageType.NORMAL);
+  };
 
   const onBackward = () => {
     if (step > 0) setStep(step - 1);
@@ -100,6 +115,7 @@ const DetailBox: React.FC<ComponentProps> = ({
       return (answer = '');
     });
     setAnswers(answersArrary);
+    setStage(StageType.NORMAL);
     setStep(0);
     onCancelTerms && onCancelTerms();
     onNftCountChange && onNftCountChange('');
@@ -111,10 +127,6 @@ const DetailBox: React.FC<ComponentProps> = ({
     });
     setError(errors);
     onAnswersChange(step, value);
-  };
-
-  const onMintBtn = (value: boolean) => {
-    onMintNft && onMintNft(value);
   };
 
   return (
@@ -148,7 +160,7 @@ const DetailBox: React.FC<ComponentProps> = ({
           </div>
         </div>
         <div className="flex flex-col gap-4 mx-10 sm:flex-row pt-7">
-          <div className="flex flex-col w-full gap-6 sm:w-80">
+          <div className="relative flex flex-col w-full gap-6 sm:w-80">
             <div className="flex flex-col">
               <div
                 className="flex flex-col"
@@ -162,187 +174,200 @@ const DetailBox: React.FC<ComponentProps> = ({
                 </div>
                 <p className="text-md font-normal">{nftTitle}</p>
               </div>
-              <div className="w-full px-4 pt-16">
-                <div className="w-full max-w-md p-2 mx-auto bg-white rounded-2xl">
-                  <Disclosure>
-                    {({ open }) => (
-                      <>
-                        <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                          <span className="text-sm capitalize">description</span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className={`${open ? 'rotate-180 transform' : ''} h-5 w-5 text-purple-500`}
+              {stage === StageType.NORMAL ? (
+                <>
+                  <div className="w-full max-w-md mx-auto bg-white rounded-2xl mt-4">
+                    <Disclosure>
+                      {({ open }) => (
+                        <>
+                          <Disclosure.Button
+                            className={`flex justify-between w-full border-solid p-3 text-sm font-normal text-left rounded-${
+                              open ? 't-' : ''
+                            }lg hover:bg-purple-100 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75`}
+                            style={{
+                              borderWidth: '1px',
+                              borderColor: '#E8E8E8',
+                              color: fontColor ? fontColor : '#222221'
+                            }}
                           >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                          </svg>
-                        </Disclosure.Button>
-                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                          {nftDescription}
-                        </Disclosure.Panel>
-                      </>
-                    )}
-                  </Disclosure>
-                </div>
-              </div>
-              {/* <div
-                className="rounded-t-lg border-solid p-4 justify-between items-center mt-10"
-                style={{ borderWidth: '1px', borderColor: '#E8E8E8', color: fontColor ? fontColor : 'white' }}
-              >
-                <p className="text-sm capitalize">description</p>
-              </div>
-              <div
-                className="rounded-b-lg border-solid p-4 justify-between items-center"
-                style={{
-                  borderWidth: '0 1px 1px 1px',
-                  borderColor: '#E8E8E8',
-                  color: fontColor ? fontColor : '#222221',
-                  backgroundColor: `${bgColor}80`
-                }}
-              >
-                <p
-                  className="flex items-center text-sm"
+                            <span className="text-sm capitalize">description</span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className={`${open ? 'rotate-180 transform' : ''} h-5 w-5 text-black-800`}
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                          </Disclosure.Button>
+                          <Disclosure.Panel
+                            className="p-3 rounded-b-lg border-solid items-center"
+                            style={{
+                              borderWidth: '0 1px 1px 1px',
+                              borderColor: '#E8E8E8',
+                              color: fontColor ? fontColor : '#222221',
+                              backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+                            }}
+                          >
+                            <p
+                              className="flex items-center text-xs"
+                              style={{
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                                color: fontColor ? fontColor : '#222221',
+                                minHeight: '32px'
+                              }}
+                            >
+                              {nftDescription}
+                            </p>
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                  </div>
+                  <div className="flex flex-row justify-between pt-4 gap-2">
+                    <div
+                      className="flex flex-col gap-1 rounded-lg py-2"
+                      style={{
+                        width: '150px',
+                        color: fontColor ? fontColor : '#222221',
+                        border: '1px solid #E8E8E8',
+                        backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+                      }}
+                    >
+                      <p className="flex items-center text-base font-normal justify-center">Price</p>
+                      <p className="flex items-center text-base font-semibold justify-center">
+                        {active ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
+                      </p>
+                    </div>
+                    <div
+                      className="flex flex-col gap-1 rounded-lg py-2"
+                      style={{
+                        width: '150px',
+                        color: fontColor ? fontColor : '#222221',
+                        border: '1px solid #E8E8E8',
+                        backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+                      }}
+                    >
+                      <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
+                      <p className="flex items-center text-base font-semibold justify-center">
+                        {!active ? '-' : maxSupply}
+                      </p>
+                    </div>
+                  </div>
+                </>
+              ) : stage === StageType.TERMS ? (
+                <>
+                  <div
+                    className="rounded-lg border-solid p-3 justify-between items-center mt-4"
+                    style={{
+                      borderWidth: '1px',
+                      borderColor: '#E8E8E8',
+                      color: fontColor ? fontColor : '#222221',
+                      backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+                    }}
+                  >
+                    <p className="text-md">You need to answer our questionaire first before mininting.</p>
+                  </div>
+                  <div
+                    className="rounded-lg border-solid p-3 justify-between items-center mt-4"
+                    style={{
+                      borderWidth: '1px',
+                      borderColor: '#E8E8E8',
+                      color: fontColor ? fontColor : '#222221',
+                      backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+                    }}
+                  >
+                    <p className="text-md">
+                      By completing this process and minting the NFT, you agree with our Terms and Conditions.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="absolute bottom-8 w-full">
+              {!active ? (
+                <button
+                  onClick={onConnectWallet}
+                  className="w-full font-normal border border-white border-solid rounded cursor-pointer bg-black mt-2 uppercase"
                   style={{
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    color: fontColor ? fontColor : '#222221',
-                    minHeight: '40px'
+                    padding: '6px',
+                    fontSize: '14px',
+                    color: fontColor ? fontColor : 'white'
                   }}
                 >
-                  {nftDescription}
-                </p>
-              </div> */}
-              <div className="flex flex-row justify-between pt-4 gap-2">
-                <div
-                  className="flex flex-col gap-1 rounded-lg py-2"
-                  style={{ width: '150px', color: fontColor ? fontColor : '#222221', border: '1px solid #E8E8E8' }}
+                  connect wallet
+                </button>
+              ) : stage === StageType.TERMS ? (
+                <button
+                  onClick={handleAgree}
+                  className="w-full font-normal border border-white border-solid rounded cursor-pointer bg-black mt-2 uppercase"
+                  style={{
+                    padding: '6px',
+                    fontSize: '14px',
+                    color: fontColor ? fontColor : 'white'
+                  }}
                 >
-                  <p className="flex items-center text-base font-normal justify-center">Price</p>
-                  <p className="flex items-center text-base font-semibold justify-center">
-                    {active ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
-                  </p>
-                </div>
-                <div
-                  className="flex flex-col gap-1 rounded-lg py-2"
-                  style={{ width: '150px', color: fontColor ? fontColor : '#222221', border: '1px solid #E8E8E8' }}
-                >
-                  <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
-                  <p className="flex items-center text-base font-semibold justify-center">
-                    {!active ? '-' : maxSupply}
-                  </p>
-                </div>
-              </div>
-            </div>
-            {!active ? (
-              <button
-                onClick={onConnectWallet}
-                className="w-full font-normal border border-white border-solid rounded cursor-pointer bg-black mt-2"
-                style={{
-                  padding: '6px',
-                  fontSize: '14px',
-                  color: fontColor ? fontColor : 'white'
-                }}
-              >
-                CONNECT WALLET
-              </button>
-            ) : (
-              <>
-                {mintProcessing ? (
-                  <div className="flex items-center justify-center w-full h-full">
-                    <SpinningCircles />
-                  </div>
-                ) : mintSucceed ? (
-                  <div className="flex flex-col justify-center h-full relative">
-                    <p
-                      className="flex absolute -top-2 items-center justify-center text-xl font-normal align-center"
-                      style={{ color: fontColor ? fontColor : '#222221' }}
-                    >
-                      {nftCount} NFT is(are) successfully minted.
-                    </p>
-                    <button
-                      className="font-normal border border-white border-solid rounded"
-                      style={{
-                        height: '34px',
-                        fontSize: '14px',
-                        color: fontColor ? fontColor : '#222221'
-                      }}
-                      onClick={() => setMintSucceed(false)}
-                    >
-                      OK
-                    </button>
-                  </div>
-                ) : (
-                  <>
+                  agree and proceed
+                </button>
+              ) : (
+                <>
+                  {mintProcessing ? (
+                    <div className="flex items-center justify-center w-full h-full">
+                      <SpinningCircles fill={bgColor ? `${bgColor}80` : '#8247E5'} />
+                    </div>
+                  ) : mintSucceed ? (
+                    <div className="flex flex-col justify-center h-full relative">
+                      <p
+                        className="flex absolute -top-8 items-center justify-center text-xl font-normal align-center"
+                        style={{ color: fontColor ? fontColor : '#222221' }}
+                      >
+                        {nftCount} NFT is(are) successfully minted.
+                      </p>
+                      <button
+                        className="font-normal border border-white border-solid rounded"
+                        style={{
+                          height: '34px',
+                          fontSize: '14px',
+                          color: fontColor ? fontColor : 'white',
+                          backgroundColor: bgColor ? `${bgColor}80` : '#222221'
+                        }}
+                        onClick={() => setMintSucceed(false)}
+                      >
+                        OK
+                      </button>
+                    </div>
+                  ) : (
                     <div className="flex flex-col gap-3">
-                      {!termsProcess ? (
+                      {step < questions.length && (
                         <>
-                          {step < questions.length && (
-                            <div className="flex flex-col gap-2">
-                              <div
-                                className="flex flex-row justify-between gap-2"
-                                style={{ color: fontColor ? fontColor : '#222221' }}
-                              >
-                                <p className="text-xs font-normal">{questions[step]}</p>
-                                {error[step] && <p className="text-xs italic font-normal">required</p>}
-                              </div>
-                              <input
-                                name={`question${step}`}
-                                placeholder={`Answer ${step}`}
-                                value={answers[step] || ''}
-                                onChange={(event) => onChange(step, event.target.value)}
-                                className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-black ${
-                                  error[step] ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
-                                }`}
-                                style={{
-                                  borderColor: error[step] ? '#EB5757' : 'none'
-                                }}
-                              />
+                          <div className="flex flex-col gap-2">
+                            <div
+                              className="flex flex-row justify-between gap-2"
+                              style={{ color: fontColor ? fontColor : '#222221' }}
+                            >
+                              <p className="text-xs font-normal">{questions[step]}</p>
+                              {error[step] && <p className="text-xs italic font-normal">required</p>}
                             </div>
-                          )}
-                          {step === questions.length && (
-                            <div className="flex flex-row justify-between gap-4 ">
-                              <div className="relative" style={{ width: '50%' }}>
-                                {nftCountError && (
-                                  <p
-                                    className="absolute text-xs italic font-normal left-1 -top-5"
-                                    style={{
-                                      color: fontColor ? fontColor : '#222221'
-                                    }}
-                                  >
-                                    required
-                                  </p>
-                                )}
-                                <input
-                                  placeholder="Number of NFT"
-                                  value={nftCount}
-                                  onChange={(event) => onNftCountChange(event.target.value)}
-                                  className={`w-full px-2 rounded h-8 ${
-                                    nftCountError ? 'border-2 border-solid border-[#EB5757]' : 'border-none'
-                                  }`}
-                                  style={{
-                                    borderColor: nftCountError ? '#EB5757' : 'none'
-                                  }}
-                                />
-                              </div>
-                              <button
-                                disabled={mintBtnDisabled && mintsRemain === 0}
-                                onClick={() => onMintBtn(true)}
-                                className="h-8 font-normal border border-solid border-white rounded bg-none cursor-pointer active:enabled:scale-[0.99]"
-                                style={{
-                                  width: '50%',
-                                  fontSize: '14px',
-                                  color: fontColor ? fontColor : '#222221'
-                                }}
-                              >
-                                MINT NFT
-                              </button>
-                            </div>
-                          )}
+                            <input
+                              name={`question${step}`}
+                              placeholder={`Answer ${step}`}
+                              value={answers[step] || ''}
+                              onChange={(event) => onChange(step, event.target.value)}
+                              className={`w-full px-2 py-3 rounded bg-[#252525] text-xs text-black ${
+                                error[step] ? 'border-2 border-solid border-[#EB5757]' : 'border'
+                              }`}
+                              style={{
+                                borderColor: error[step] ? '#EB5757' : '#222221'
+                              }}
+                            />
+                          </div>
                           <div className="flex flex-row gap-4 justify-center">
                             <div
                               className="flex flex-row gap-2 items-center text-xs cursor-pointer"
@@ -351,10 +376,10 @@ const DetailBox: React.FC<ComponentProps> = ({
                                   step > 0
                                     ? fontColor
                                       ? fontColor
-                                      : 'white'
+                                      : '#222221'
                                     : fontColor
                                     ? `${fontColor}80`
-                                    : 'rgba(255,255,255,0.5)'
+                                    : '#22222180'
                               }}
                               onClick={onBackward}
                             >
@@ -371,7 +396,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                                       : 'white'
                                     : fontColor
                                     ? `${fontColor}80`
-                                    : 'rgba(255,255,255,0.5)'
+                                    : '#22222180'
                               }}
                               onClick={onForward}
                             >
@@ -380,62 +405,57 @@ const DetailBox: React.FC<ComponentProps> = ({
                             </div>
                           </div>
                         </>
-                      ) : (
-                        <div className="flex flex-col gap-2">
-                          <label
-                            className="flex flex-row justify-start gap-2"
-                            style={{ color: fontColor ? fontColor : '#222221' }}
-                          >
+                      )}
+                      {step === questions.length && (
+                        <div className="flex flex-row justify-between gap-4 ">
+                          <div className="relative" style={{ width: '50%' }}>
+                            {nftCountError && (
+                              <p
+                                className="absolute text-xs italic font-normal left-1 -top-5"
+                                style={{
+                                  color: fontColor ? fontColor : '#222221'
+                                }}
+                              >
+                                required
+                              </p>
+                            )}
                             <input
-                              type="checkbox"
-                              checked={checkedTcLink}
-                              onChange={() => setCheckedTcLink(!checkedTcLink)}
+                              placeholder="Number of NFT"
+                              value={nftCount}
+                              onChange={(event) => onNftCountChange(event.target.value)}
+                              className={`w-full px-2 rounded h-8 ${
+                                nftCountError ? 'border-2 border-solid border-[#EB5757]' : 'border'
+                              }`}
+                              style={{
+                                borderColor: nftCountError ? '#EB5757' : '#222221'
+                              }}
                             />
-                            <p className="text-xs font-normal">
-                              I agree with the{' '}
-                              <a href={tcLink ? tcLink : '#'} target="_blank">
-                                <u>Terms & Conditions</u>
-                              </a>
-                            </p>
-                          </label>
-                          <div className="flex flex-row justify-between gap-4">
-                            <button
-                              onClick={onCancelTerms}
-                              className="h-8 font-normal border border-solid border-white rounded bg-none cursor-pointer active:enabled:scale-[0.99]"
-                              style={{
-                                width: '50%',
-                                fontSize: '14px',
-                                color: fontColor ? fontColor : '#222221'
-                              }}
-                            >
-                              CANCEL
-                            </button>
-                            <button
-                              disabled={(mintBtnDisabled && mintsRemain === 0) || !checkedTcLink}
-                              onClick={onHandleMint}
-                              className="h-8 font-normal border border-solid border-white rounded bg-black cursor-pointer active:enabled:scale-[0.99]"
-                              style={{
-                                width: '50%',
-                                fontSize: '14px',
-                                backgroundColor:
-                                  (mintBtnDisabled && mintsRemain === 0) || !checkedTcLink ? 'gray' : 'black',
-                                cursor:
-                                  !(mintBtnDisabled && mintsRemain === 0) && checkedTcLink ? 'pointer' : 'not-allowed',
-                                color: fontColor ? fontColor : '#222221',
-
-                                filter: 'invert(100%)'
-                              }}
-                            >
-                              MINT NFT
-                            </button>
                           </div>
+                          <button
+                            disabled={mintBtnDisabled && mintsRemain === 0}
+                            // onClick={() => onMintBtn(true)}
+                            onClick={onHandleMint}
+                            className="h-8 font-normal border border-solid border-white rounded bg-none cursor-pointer active:enabled:scale-[0.99]"
+                            style={{
+                              width: '50%',
+                              fontSize: '14px',
+                              color: fontColor ? fontColor : 'white',
+                              backgroundColor: bgColor ? `${bgColor}80` : '#222221'
+                            }}
+                          >
+                            MINT NFT
+                          </button>
                         </div>
                       )}
                     </div>
-                  </>
-                )}
-              </>
-            )}
+                  )}
+                </>
+              )}
+            </div>
+            <div className="absolute bottom-2 flex flex-row gap-2 w-full items-center justify-center">
+              <p className="text-xs font-normal">Powered by:</p>
+              <CheckoutLogo />
+            </div>
           </div>
           <div
             className="flex flex-row items-center justify-center gap-4 sm:flex-col sm:justify-start"
