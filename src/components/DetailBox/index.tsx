@@ -131,7 +131,7 @@ const DetailBox: React.FC<ComponentProps> = ({
 
   return (
     <div
-      className="container mx-auto rounded-2xl w-max min-h-screen md:min-h-full"
+      className="container mx-auto rounded-2xl w-max min-h-min md:min-h-full"
       style={{ maxWidth: '864px', boxShadow: '0px 0px 16px rgba(0, 0, 0, 0.5)' }}
     >
       <div
@@ -156,7 +156,7 @@ const DetailBox: React.FC<ComponentProps> = ({
         <div className="relative flex flex-col gap-0 md:gap-4 mx-4 md:mx-10 sm:mx-8 md:flex-row pt-7">
           <div
             className="relative flex flex-col w-full md:w-80 md:gap-6"
-            style={{ minHeight: '300px', maxWidth: '357px' }}
+            style={{ minHeight: '350px', maxWidth: '357px' }}
           >
             <div className="flex flex-col">
               <div
@@ -288,7 +288,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                 <></>
               )}
             </div>
-            <div className="absolute bottom-0 sm:bottom-2 md:bottom-8 w-full">
+            <div className="absolute bottom-2 sm:bottom-2 md:bottom-8 w-full">
               {!active ? (
                 <button
                   onClick={onConnectWallet}
