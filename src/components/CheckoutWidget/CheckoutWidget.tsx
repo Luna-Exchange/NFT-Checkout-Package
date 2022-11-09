@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DetailBox from '../DetailBox';
+import { NormalBox, MiniBox } from '../DetailBox';
 import { getMintInfo, answerMintQuestions } from '../../api/mint';
 import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
@@ -8,21 +8,9 @@ import NFT_ABI from '../../assets/abi/erc1155.json';
 import { FirstPartyAnswers } from '../../type';
 import { getContract } from '../../utils';
 import { Contract } from '@ethersproject/contracts';
-// import WebFont from 'webfontloader';
+import { libraries, ComponentProps } from './type';
 
-const libraries = {
-  WEB3: 'web3',
-  ETHERS: 'ethers'
-} as const;
-
-type Library = typeof libraries[keyof typeof libraries];
-
-type ComponentProps = {
-  collectionId: string;
-  libraryType: Library;
-};
-
-const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType }): JSX.Element => {
+const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, view }): JSX.Element => {
   const { account, activate, deactivate, active, library, chainId } = useWeb3React();
   const [mintInfo, setMintInfo] = useState<any>();
 
@@ -237,45 +225,89 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType })
   return (
     <div>
       {!!mintInfo && (
-        <DetailBox
-          active={active}
-          nftImgUrl={mintInfo.image}
-          nftTitle={mintInfo.name}
-          nftDescription={mintInfo.description}
-          projectAbout={mintInfo.about}
-          price={mintPrice}
-          maxSupply={maxSupply}
-          mintsRemain={mintRemain}
-          mintBtnDisabled={false}
-          bgColor={mintInfo.checkout_background_color}
-          font={mintInfo.checkout_font}
-          fontColor={mintInfo.checkout_font_color}
-          tcLink={mintInfo.terms_and_condition_link}
-          termsProcess={termsProcess}
-          onCancelTerms={handleCancelTerms}
-          questions={mintInfo.first_party_data.map((item: any) => item.question)}
-          socialLinks={{
-            twitter: twitterEnabled,
-            discord: discordEnabled,
-            facebook: facebookEnabled,
-            instagram: instagramEnabled
-          }}
-          nftCount={nftCount}
-          nftCountError={nftCountError}
-          onNftCountChange={onNftCountChange}
-          answers={answers}
-          setAnswers={setAnswers}
-          answersError={answersError}
-          onAnswersChange={onAnswersChange}
-          onConnectWallet={handleConnectMetamask}
-          onDisconnectWallet={handleDisconnectMetamask}
-          onMintNft={handleMintBtn}
-          onHandleMint={handleMint}
-          mintProcessing={mintProcessing}
-          mintSucceed={mintSucceed}
-          setMintSucceed={setMintSucceed}
-          chain={mintInfo.chain}
-        />
+        <>
+          {view === 'normal' ? (
+            <NormalBox
+              active={active}
+              nftImgUrl={mintInfo.image}
+              nftTitle={mintInfo.name}
+              nftDescription={mintInfo.description}
+              projectAbout={mintInfo.about}
+              price={mintPrice}
+              maxSupply={maxSupply}
+              mintsRemain={mintRemain}
+              mintBtnDisabled={false}
+              bgColor={mintInfo.checkout_background_color}
+              font={mintInfo.checkout_font}
+              fontColor={mintInfo.checkout_font_color}
+              tcLink={mintInfo.terms_and_condition_link}
+              termsProcess={termsProcess}
+              onCancelTerms={handleCancelTerms}
+              questions={mintInfo.first_party_data.map((item: any) => item.question)}
+              socialLinks={{
+                twitter: twitterEnabled,
+                discord: discordEnabled,
+                facebook: facebookEnabled,
+                instagram: instagramEnabled
+              }}
+              nftCount={nftCount}
+              nftCountError={nftCountError}
+              onNftCountChange={onNftCountChange}
+              answers={answers}
+              setAnswers={setAnswers}
+              answersError={answersError}
+              onAnswersChange={onAnswersChange}
+              onConnectWallet={handleConnectMetamask}
+              onDisconnectWallet={handleDisconnectMetamask}
+              onMintNft={handleMintBtn}
+              onHandleMint={handleMint}
+              mintProcessing={mintProcessing}
+              mintSucceed={mintSucceed}
+              setMintSucceed={setMintSucceed}
+              chain={mintInfo.chain}
+            />
+          ) : (
+            <MiniBox
+              active={active}
+              nftImgUrl={mintInfo.image}
+              nftTitle={mintInfo.name}
+              nftDescription={mintInfo.description}
+              projectAbout={mintInfo.about}
+              price={mintPrice}
+              maxSupply={maxSupply}
+              mintsRemain={mintRemain}
+              mintBtnDisabled={false}
+              bgColor={mintInfo.checkout_background_color}
+              font={mintInfo.checkout_font}
+              fontColor={mintInfo.checkout_font_color}
+              tcLink={mintInfo.terms_and_condition_link}
+              termsProcess={termsProcess}
+              onCancelTerms={handleCancelTerms}
+              questions={mintInfo.first_party_data.map((item: any) => item.question)}
+              socialLinks={{
+                twitter: twitterEnabled,
+                discord: discordEnabled,
+                facebook: facebookEnabled,
+                instagram: instagramEnabled
+              }}
+              nftCount={nftCount}
+              nftCountError={nftCountError}
+              onNftCountChange={onNftCountChange}
+              answers={answers}
+              setAnswers={setAnswers}
+              answersError={answersError}
+              onAnswersChange={onAnswersChange}
+              onConnectWallet={handleConnectMetamask}
+              onDisconnectWallet={handleDisconnectMetamask}
+              onMintNft={handleMintBtn}
+              onHandleMint={handleMint}
+              mintProcessing={mintProcessing}
+              mintSucceed={mintSucceed}
+              setMintSucceed={setMintSucceed}
+              chain={mintInfo.chain}
+            />
+          )}
+        </>
       )}
     </div>
   );
