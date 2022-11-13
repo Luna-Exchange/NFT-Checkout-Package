@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NormalBox, MiniBox } from '../DetailBox';
-import { getMintInfo, answerMintQuestions } from '../../api/mint';
+import { getMintInfo, answerMintQuestions, getAllAssets } from '../../api/mint';
 import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { testConnectors } from '../../utils/connector';
@@ -34,6 +34,8 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
 
   const [termsProcess, setTermsProcess] = useState<boolean>(false);
 
+  const [assets, setAssets] = useState<any>();
+
   // useEffect(() => {
   //   WebFont.load({
   //     google: {
@@ -46,6 +48,10 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
     getMintInfo(collectionId)
       .then(async (response: any) => {
         console.log('getMintInfo response:', response);
+        if (response.is_multiple_nft) {
+          const assetsResponse = await getAllAssets(collectionId);
+          setAssets(assetsResponse.data.items);
+        }
         setMintInfo(response);
 
         let twitterObj = response.social_links.find((item: any) => item.name === 'twitter');
@@ -265,6 +271,9 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
               mintSucceed={mintSucceed}
               setMintSucceed={setMintSucceed}
               chain={mintInfo.chain}
+              isMultipleNft={mintInfo.is_multiple_nft}
+              isRandomMint={mintInfo.random_mint}
+              assets={assets}
             />
           ) : (
             <MiniBox
@@ -305,6 +314,9 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
               mintSucceed={mintSucceed}
               setMintSucceed={setMintSucceed}
               chain={mintInfo.chain}
+              isMultipleNft={mintInfo.is_multiple_nft}
+              isRandomMint={mintInfo.random_mint}
+              assets={assets}
             />
           )}
         </>

@@ -42,8 +42,11 @@
         "/lib"
     ],
     "dependencies": {
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5",
         "@headlessui/react": "^1.7.4",
         "@iconify/react": "^3.2.2",
+        "@mui/material": "^5.10.13",
         "@types/webfontloader": "^1.6.34",
         "@web3-react/core": "^6.1.9",
         "@web3-react/injected-connector": "^6.0.7",
