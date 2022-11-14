@@ -35,6 +35,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
   const [termsProcess, setTermsProcess] = useState<boolean>(false);
 
   const [assets, setAssets] = useState<any>();
+  const [tokenId, setTokenId] = useState<number>();
 
   // useEffect(() => {
   //   WebFont.load({
@@ -185,12 +186,12 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
       setMintProcessing(true);
       try {
         if (libraryType === libraries.ETHERS) {
-          const tx = await contract.mint(account, 1, parseInt(nftCount), {
+          const tx = await contract.mint(account, tokenId ? tokenId : 1, parseInt(nftCount), {
             value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
           });
           await tx.wait();
         } else {
-          await contract.methods.mint(account, 1, parseInt(nftCount)).send({
+          await contract.methods.mint(account, tokenId ? tokenId : 1, parseInt(nftCount)).send({
             from: account,
             value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
           });
@@ -274,6 +275,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
               isMultipleNft={mintInfo.is_multiple_nft}
               isRandomMint={mintInfo.random_mint}
               assets={assets}
+              onChangeTokenId={setTokenId}
             />
           ) : (
             <MiniBox
@@ -317,6 +319,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
               isMultipleNft={mintInfo.is_multiple_nft}
               isRandomMint={mintInfo.random_mint}
               assets={assets}
+              onChangeTokenId={setTokenId}
             />
           )}
         </>

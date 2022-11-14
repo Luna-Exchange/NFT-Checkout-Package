@@ -42,4 +42,5 @@ export type ComponentProps = {
   isMultipleNft: boolean;
   isRandomMint: boolean;
   assets?: any[];
+  onChangeTokenId: (tokenId: number) => void;
 };

@@ -43,7 +43,8 @@ const DetailBox: React.FC<ComponentProps> = ({
   setMintSucceed,
   isMultipleNft,
   assets,
-  chain
+  chain,
+  onChangeTokenId
 }): JSX.Element => {
   const [stage, setStage] = useState<StageType>(StageType.NORMAL);
   const [step, setStep] = useState<number>(0);
@@ -51,10 +52,7 @@ const DetailBox: React.FC<ComponentProps> = ({
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const [currentNFTPgae, setCurrentNFTPage] = useState<number>(1);
   const [assetsList, setAssetsList] = useState<any>(assets);
-  const [selectedAsset, setSelectedAsset] = useState<any>();
   const [selectedNFTIndex, setSelectedNFTIndex] = useState<number>();
-
-  console.log(selectedAsset);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -115,7 +113,7 @@ const DetailBox: React.FC<ComponentProps> = ({
 
   const handleSelectNFT = (value: number, asset: any) => {
     setSelectedNFTIndex(value);
-    setSelectedAsset(asset);
+    onChangeTokenId(parseInt(asset.token_id));
   };
 
   const handlePaginationChange = (event: React.ChangeEvent<unknown>, value: number) => {
