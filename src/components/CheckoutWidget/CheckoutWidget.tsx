@@ -132,7 +132,8 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
   const onNftCountChange = (value: string) => {
     if (!isNaN(Number(value))) {
       setNftCount(value);
-      setNftCountError(!value);
+      if (mintInfo.random_mint) setNftCountError(parseInt(value) === 1 ? false : true);
+      else setNftCountError(!value);
     }
   };
 
@@ -170,7 +171,8 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
   };
 
   const handleMintBtn = async (termsProcess: boolean) => {
-    setNftCountError(!nftCount);
+    if (mintInfo.random_mint) setNftCountError(parseInt(nftCount) === 1 ? false : true);
+    else setNftCountError(!nftCount);
 
     let errors = [...answersError];
     for (let i = 0; i < mintInfo.first_party_data.length; i++) {
