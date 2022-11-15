@@ -8,7 +8,12 @@ const CoverComponent: React.FC<CoverProps> = ({ isMultipleNft, isRandomMint, ass
   return (
     <>
       {isMultipleNft === false || isRandomMint ? (
-        <img src={assets} alt="" className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl" />
+        <img
+          src={assets}
+          alt=""
+          className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl"
+          style={{ maxWidth: '421px', maxHeight: '421px' }}
+        />
       ) : Array.isArray(assets) ? (
         assets.length >= 9 ? (
           <div
@@ -121,7 +126,12 @@ const CoverComponent: React.FC<CoverProps> = ({ isMultipleNft, isRandomMint, ass
             ))}
           </div>
         ) : assets.length === 1 ? (
-          <img src={assets[0]} alt="" className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl" />
+          <img
+            src={assets[0]}
+            alt=""
+            className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl"
+            style={{ maxWidth: '421px', maxHeight: '421px' }}
+          />
         ) : null
       ) : null}
     </>
