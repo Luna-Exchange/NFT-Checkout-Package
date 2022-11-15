@@ -1,12 +1,13 @@
 interface CoverProps {
   isMultipleNft: boolean;
+  isRandomMint: boolean;
   assets: any | any[];
 }
 
-const CoverComponent: React.FC<CoverProps> = ({ isMultipleNft, assets }) => {
+const CoverComponent: React.FC<CoverProps> = ({ isMultipleNft, isRandomMint, assets }) => {
   return (
     <>
-      {isMultipleNft === false ? (
+      {isMultipleNft === false || isRandomMint ? (
         <img src={assets} alt="" className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl" />
       ) : Array.isArray(assets) ? (
         assets.length >= 9 ? (

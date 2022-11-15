@@ -36,7 +36,8 @@ const MiniBox: React.FC<ComponentProps> = ({
   isMultipleNft,
   assets,
   chain,
-  onChangeTokenId
+  onChangeTokenId,
+  isRandomMint
 }): JSX.Element => {
   const [stage, setStage] = useState<StageType>(StageType.NORMAL);
   const [step, setStep] = useState<number>(0);
@@ -116,7 +117,11 @@ const MiniBox: React.FC<ComponentProps> = ({
             className="relative items-center justify-center w-full border border-white border-solid sm:h-full sm:border-none rounded-2xl"
             style={{ minHeight: '240px', maxHeight: '421px', maxWidth: '421px' }}
           >
-            <CheckoutCover isMultipleNft={isMultipleNft} assets={isMultipleNft ? assets : nftImgUrl} />
+            <CheckoutCover
+              isMultipleNft={isMultipleNft}
+              isRandomMint={isRandomMint}
+              assets={!isMultipleNft || isRandomMint ? nftImgUrl : assets}
+            />
             <div className="absolute" style={{ inset: 0 }}>
               <div
                 style={{
@@ -128,7 +133,7 @@ const MiniBox: React.FC<ComponentProps> = ({
             </div>
           </div>
         )}
-        {stage !== StageType.CHOOOSENFT ? (
+        {stage !== StageType.CHOOOSENFT || isRandomMint ? (
           <div className="relative flex flex-col gap-0 pt-2">
             <div className="relative flex flex-col w-full mx-auto" style={{ minHeight: '180px', maxWidth: '325px' }}>
               <div className="flex flex-col">
