@@ -101,22 +101,23 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
   useEffect(() => {
     async function getTokenInfo() {
       if (contract) {
+        const id = mintInfo.random_mint ? 1 : tokenId ? tokenId : 1;
         const resMintPrice =
           libraryType === libraries.ETHERS
-            ? await contract.tokenPrices(1)
-            : await contract.methods.tokenPrices(1).call({ from: account });
+            ? await contract.tokenPrices(id)
+            : await contract.methods.tokenPrices(id).call({ from: account });
         const mintPrice = parseFloat(ethers.utils.formatEther(resMintPrice.toString()));
 
         const tokenBalance =
           libraryType === libraries.ETHERS
-            ? await contract.tokenMintedCount(1)
-            : await contract.methods.tokenMintedCount(1).call({ from: account });
+            ? await contract.tokenMintedCount(id)
+            : await contract.methods.tokenMintedCount(id).call({ from: account });
         const tokenBalanceReadable = parseInt(tokenBalance.toString());
 
         const maxSupply =
           libraryType === libraries.ETHERS
-            ? await contract.tokenSupplies(1)
-            : await contract.methods.tokenSupplies(1).call({ from: account });
+            ? await contract.tokenSupplies(id)
+            : await contract.methods.tokenSupplies(id).call({ from: account });
         const maxSupplyReadable = parseInt(maxSupply.toString());
 
         const mintRemaining = maxSupplyReadable ? maxSupplyReadable - tokenBalanceReadable : undefined;
@@ -127,7 +128,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
       }
     }
     getTokenInfo();
-  }, [contract]);
+  }, [contract, tokenId]);
 
   const onNftCountChange = (value: string) => {
     if (!isNaN(Number(value))) {
