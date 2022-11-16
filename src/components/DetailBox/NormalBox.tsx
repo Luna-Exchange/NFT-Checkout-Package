@@ -177,7 +177,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                 </div>
                 {stage === StageType.NORMAL ? (
                   <>
-                    <div className="w-full max-w-md mx-auto bg-white rounded-2xl mt-4">
+                    <div className="w-full max-w-md mx-auto bg-white rounded-lg mt-4">
                       <Disclosure>
                         {({ open }) => (
                           <>
