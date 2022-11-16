@@ -32,6 +32,7 @@ export function getContract(address: string, ABI: any, library: JsonRpcProvider,
 }
 
 export function getWindowSize() {
-  const { innerWidth, innerHeight } = window;
+  const innerHeight = typeof window !== 'undefined' && window.innerHeight;
+  const innerWidth = typeof window !== 'undefined' && window.innerWidth;
   return { innerWidth, innerHeight };
 }
