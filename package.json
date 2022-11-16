@@ -1,6 +1,6 @@
 {
     "name": "luna-nft-checkout",
-    "version": "1.9.6",
+    "version": "1.9.7",
     "description": "Library based on Typescript to mint Luna NFT!",
     "author": "Leon Jin <ultraj0330@gmail.com>",
     "repository": {
