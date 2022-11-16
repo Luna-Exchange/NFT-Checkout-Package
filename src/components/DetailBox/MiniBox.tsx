@@ -51,8 +51,9 @@ const MiniBox: React.FC<ComponentProps> = ({
   }, [active]);
 
   const handleAgree = () => {
-    if (isMultipleNft) setStage(StageType.CHOOOSENFT);
-    else setStage(questions.length > 0 ? StageType.QUESTION : StageType.NORMAL);
+    if (isMultipleNft && !isRandomMint) {
+      setStage(StageType.CHOOOSENFT);
+    } else setStage(questions.length > 0 ? StageType.QUESTION : StageType.NORMAL);
   };
 
   const onBackward = () => {
@@ -77,7 +78,7 @@ const MiniBox: React.FC<ComponentProps> = ({
       return (answer = '');
     });
     setAnswers(answersArrary);
-    setStage(StageType.NORMAL);
+    setStage(StageType.TERMS);
     setStep(0);
     onCancelTerms && onCancelTerms();
     onNftCountChange && onNftCountChange('');
@@ -112,7 +113,7 @@ const MiniBox: React.FC<ComponentProps> = ({
         className={`flex flex-col text-left w-full sm:min-h-min box-border box rounded-2xl ${className}`}
         style={{ backgroundColor: bgColor ? bgColor : 'white' }}
       >
-        {stage !== StageType.CHOOOSENFT && (
+        {(stage !== StageType.CHOOOSENFT || isRandomMint) && (
           <div
             className="relative items-center justify-center w-full border border-white border-solid sm:h-full sm:border-none rounded-2xl"
             style={{ minHeight: '240px', maxHeight: '421px', maxWidth: '421px' }}
@@ -164,7 +165,7 @@ const MiniBox: React.FC<ComponentProps> = ({
                     >
                       <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
                       <p className="flex items-center text-base font-semibold justify-center">
-                        {!active ? '-' : maxSupply}
+                        {!active ? '-' : maxSupply > Math.pow(10, 70) ? 'Unlimited' : maxSupply}
                       </p>
                     </div>
                   </div>
@@ -319,35 +320,37 @@ const MiniBox: React.FC<ComponentProps> = ({
                         )}
                         {step === questions.length && (
                           <div className="flex flex-row justify-between gap-4 ">
-                            <div className="relative" style={{ width: '50%' }}>
-                              {nftCountError && (
-                                <p
-                                  className="absolute text-xs italic font-normal left-1 -top-5"
+                            {!isRandomMint && (
+                              <div className="relative" style={{ width: '50%' }}>
+                                {nftCountError && (
+                                  <p
+                                    className="absolute text-xs italic font-normal left-1 -top-5"
+                                    style={{
+                                      color: fontColor ? fontColor : '#222221'
+                                    }}
+                                  >
+                                    required
+                                  </p>
+                                )}
+                                <input
+                                  placeholder="Number of NFT"
+                                  value={nftCount}
+                                  onChange={(event) => onNftCountChange(event.target.value)}
+                                  className={`w-full px-2 rounded h-8 ${
+                                    nftCountError ? 'border-2 border-solid border-[#EB5757]' : 'border'
+                                  }`}
                                   style={{
-                                    color: fontColor ? fontColor : '#222221'
+                                    borderColor: nftCountError ? '#EB5757' : '#222221'
                                   }}
-                                >
-                                  required
-                                </p>
-                              )}
-                              <input
-                                placeholder="Number of NFT"
-                                value={nftCount}
-                                onChange={(event) => onNftCountChange(event.target.value)}
-                                className={`w-full px-2 rounded h-8 ${
-                                  nftCountError ? 'border-2 border-solid border-[#EB5757]' : 'border'
-                                }`}
-                                style={{
-                                  borderColor: nftCountError ? '#EB5757' : '#222221'
-                                }}
-                              />
-                            </div>
+                                />
+                              </div>
+                            )}
                             <button
                               disabled={mintBtnDisabled && mintsRemain === 0}
                               onClick={onHandleMint}
                               className="h-8 font-normal border border-solid border-white rounded-full bg-none cursor-pointer active:enabled:scale-[0.99]"
                               style={{
-                                width: '50%',
+                                width: !isRandomMint ? '50%' : '100%',
                                 fontSize: '14px',
                                 color: fontColor ? fontColor : 'white',
                                 backgroundColor: bgColor ? `${bgColor}80` : '#222221'
@@ -364,7 +367,7 @@ const MiniBox: React.FC<ComponentProps> = ({
               </div>
             </div>
             <div
-              className="flex items-start justify-end mb-2 px-2"
+              className="flex items-start justify-end mb-2 px-2 z-10"
               style={{ color: fontColor ? fontColor : '#222221', minHeight: '12px' }}
             >
               {active && <Icon icon="bx:reset" fontSize={16} className="cursor-pointer" onClick={handleReset} />}
@@ -404,6 +407,7 @@ const MiniBox: React.FC<ComponentProps> = ({
                     fontSize: '14px',
                     color: fontColor ? fontColor : 'white'
                   }}
+                  disabled={selectedNFTIndex === undefined ? true : false}
                   onClick={() => setStage(questions.length > 0 ? StageType.QUESTION : StageType.NORMAL)}
                 >
                   choose nft
@@ -411,7 +415,7 @@ const MiniBox: React.FC<ComponentProps> = ({
               </div>
             </div>
             <div
-              className="flex items-start justify-end mb-2 px-2"
+              className="flex items-start justify-end mb-2 px-2 z-10"
               style={{ color: fontColor ? fontColor : '#222221', minHeight: '12px' }}
             >
               {active && <Icon icon="bx:reset" fontSize={16} className="cursor-pointer" onClick={handleReset} />}

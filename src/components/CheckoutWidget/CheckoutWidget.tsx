@@ -51,7 +51,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
         console.log('getMintInfo response:', response);
         if (response.is_multiple_nft) {
           const assetsResponse = await getAllAssets(collectionId);
-          setAssets(assetsResponse.data.items);
+          setAssets(assetsResponse.data.items.reverse());
         }
         setMintInfo(response);
 
@@ -103,20 +103,20 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
       if (contract) {
         const resMintPrice =
           libraryType === libraries.ETHERS
-            ? await contract.mintPrice(1)
-            : await contract.methods.mintPrice(1).call({ from: account });
+            ? await contract.tokenPrices(1)
+            : await contract.methods.tokenPrices(1).call({ from: account });
         const mintPrice = parseFloat(ethers.utils.formatEther(resMintPrice.toString()));
 
         const tokenBalance =
           libraryType === libraries.ETHERS
-            ? await contract.balanceForTokenId(1)
-            : await contract.methods.balanceForTokenId(1).call({ from: account });
+            ? await contract.tokenMintedCount(1)
+            : await contract.methods.tokenMintedCount(1).call({ from: account });
         const tokenBalanceReadable = parseInt(tokenBalance.toString());
 
         const maxSupply =
           libraryType === libraries.ETHERS
-            ? await contract.maxSupply(1)
-            : await contract.methods.maxSupply(1).call({ from: account });
+            ? await contract.tokenSupplies(1)
+            : await contract.methods.tokenSupplies(1).call({ from: account });
         const maxSupplyReadable = parseInt(maxSupply.toString());
 
         const mintRemaining = maxSupplyReadable ? maxSupplyReadable - tokenBalanceReadable : undefined;
@@ -171,8 +171,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
   };
 
   const handleMintBtn = async (termsProcess: boolean) => {
-    if (mintInfo.random_mint) setNftCountError(parseInt(nftCount) === 1 ? false : true);
-    else setNftCountError(!nftCount);
+    setNftCountError(!nftCount);
 
     let errors = [...answersError];
     for (let i = 0; i < mintInfo.first_party_data.length; i++) {
@@ -185,23 +184,30 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
 
   const handleMint = async () => {
     if (contract) {
+      if (!mintInfo.random_mint && !nftCount) {
+        setNftCountError(true);
+        return;
+      }
+
       setMintProcessing(true);
+      const count = mintInfo.random_mint ? 1 : parseInt(nftCount);
+      // console.log(account, mintInfo.random_mint ? 1 : tokenId ? tokenId : 1, count);
       try {
         if (libraryType === libraries.ETHERS) {
-          const tx = await contract.mint(account, tokenId ? tokenId : 1, parseInt(nftCount), {
-            value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
+          const tx = await contract.mint(account, mintInfo.random_mint ? 1 : tokenId ? tokenId : 1, count, {
+            value: ethers.utils.parseEther((mintPrice * count).toString())
           });
           await tx.wait();
         } else {
-          await contract.methods.mint(account, tokenId ? tokenId : 1, parseInt(nftCount)).send({
+          await contract.methods.mint(account, mintInfo.random_mint ? 1 : tokenId ? tokenId : 1, count).send({
             from: account,
-            value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
+            value: ethers.utils.parseEther((mintPrice * count).toString())
           });
         }
         console.log('mint success!');
         setMintSucceed(true);
 
-        setMintRemain(mintRemain ? mintRemain - parseInt(nftCount) : undefined);
+        setMintRemain(mintRemain ? mintRemain - count : undefined);
 
         if (mintInfo.first_party_data.length > 0) {
           postAnswers();
