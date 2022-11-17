@@ -123,7 +123,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
         const mintRemaining = maxSupplyReadable ? maxSupplyReadable - tokenBalanceReadable : undefined;
 
         setMintPrice(mintPrice);
-        setMaxSupply(maxSupplyReadable);
+        setMaxSupply(mintInfo.random_mint ? assets.length : maxSupplyReadable);
         setMintRemain(mintRemaining);
       }
     }
