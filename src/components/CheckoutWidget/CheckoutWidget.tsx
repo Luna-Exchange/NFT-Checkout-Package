@@ -121,10 +121,16 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
         const maxSupplyReadable = parseInt(maxSupply.toString());
 
         const mintRemaining = maxSupplyReadable ? maxSupplyReadable - tokenBalanceReadable : undefined;
+        console.log(mintRemaining);
+
+        const remainingSupply =
+          libraryType === libraries.ETHERS
+            ? await contract.remainingSupply()
+            : await contract.methods.remainingSupply().call({ from: account });
 
         setMintPrice(mintPrice);
         setMaxSupply(mintInfo.random_mint ? assets.length : maxSupplyReadable);
-        setMintRemain(mintRemaining);
+        setMintRemain(remainingSupply);
       }
     }
     getTokenInfo();

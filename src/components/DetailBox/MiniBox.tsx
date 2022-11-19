@@ -12,7 +12,7 @@ const MiniBox: React.FC<ComponentProps> = ({
   // nftTitle,
   // nftDescription,
   price,
-  maxSupply,
+  // maxSupply,
   mintsRemain,
   mintBtnDisabled,
   bgColor,
@@ -165,7 +165,8 @@ const MiniBox: React.FC<ComponentProps> = ({
                     >
                       <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
                       <p className="flex items-center text-base font-semibold justify-center">
-                        {!active ? '-' : maxSupply > Math.pow(10, 70) ? 'Unlimited' : maxSupply}
+                        {/* {!active ? '-' : maxSupply > Math.pow(10, 70) ? 'Unlimited' : maxSupply} */}
+                        {!active ? '-' : mintsRemain && mintsRemain > Math.pow(10, 70) ? 'Unlimited' : mintsRemain}
                       </p>
                     </div>
                   </div>
