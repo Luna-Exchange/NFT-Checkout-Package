@@ -14,10 +14,12 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
   const { account, activate, deactivate, active, library, chainId } = useWeb3React();
   const [mintInfo, setMintInfo] = useState<any>();
 
-  const [twitterEnabled, setTwitterEnabled] = useState<boolean>(false);
-  const [discordEnabled, setDiscordEnabled] = useState<boolean>(false);
-  const [facebookEnabled, setFacebookEnabled] = useState<boolean>(false);
-  const [instagramEnabled, setInstagramEnabled] = useState<boolean>(false);
+  const [socialLinks, setSocialLinks] = useState<any>({
+    twitter: {},
+    discord: {},
+    facebook: {},
+    instagram: {}
+  });
 
   const [contract, setContract] = useState<Contract>();
 
@@ -56,25 +58,20 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
         setMintInfo(response);
 
         let twitterObj = response.social_links.find((item: any) => item.name === 'twitter');
-        setTwitterEnabled(twitterObj ? twitterObj.enabled : false);
-
         let discordObj = response.social_links.find((item: any) => item.name === 'discord');
-        setDiscordEnabled(discordObj ? discordObj.enabled : false);
-
         let facebookObj = response.social_links.find((item: any) => item.name === 'facebook');
-        setFacebookEnabled(facebookObj ? facebookObj.enabled : false);
-
         let instagramObj = response.social_links.find((item: any) => item.name === 'instagram');
-        setInstagramEnabled(instagramObj ? instagramObj.enabled : false);
+
+        setSocialLinks({
+          twitter: twitterObj || {},
+          discord: discordObj || {},
+          facebook: facebookObj || {},
+          instagram: instagramObj || {}
+        });
       })
       .catch((error) => {
         console.warn('getMintInfo error:', error);
         setMintInfo(null);
-
-        setTwitterEnabled(false);
-        setDiscordEnabled(false);
-        setFacebookEnabled(false);
-        setInstagramEnabled(false);
       });
   }, [collectionId]);
 
@@ -266,12 +263,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
               termsProcess={termsProcess}
               onCancelTerms={handleCancelTerms}
               questions={mintInfo.first_party_data.map((item: any) => item.question)}
-              socialLinks={{
-                twitter: twitterEnabled,
-                discord: discordEnabled,
-                facebook: facebookEnabled,
-                instagram: instagramEnabled
-              }}
+              socialLinks={socialLinks}
               nftCount={nftCount}
               nftCountError={nftCountError}
               onNftCountChange={onNftCountChange}
@@ -310,12 +302,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
               termsProcess={termsProcess}
               onCancelTerms={handleCancelTerms}
               questions={mintInfo.first_party_data.map((item: any) => item.question)}
-              socialLinks={{
-                twitter: twitterEnabled,
-                discord: discordEnabled,
-                facebook: facebookEnabled,
-                instagram: instagramEnabled
-              }}
+              socialLinks={socialLinks}
               nftCount={nftCount}
               nftCountError={nftCountError}
               onNftCountChange={onNftCountChange}

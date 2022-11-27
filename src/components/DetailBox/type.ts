@@ -22,7 +22,7 @@ export type ComponentProps = {
   onCancelTerms?: () => void;
   tcLink: string | undefined;
   questions: string[];
-  socialLinks: { [key: string]: boolean };
+  socialLinks: any;
   onConnectWallet?: () => void;
   onDisconnectWallet?: () => void;
   onMintNft?: (termsProcess: boolean) => void;

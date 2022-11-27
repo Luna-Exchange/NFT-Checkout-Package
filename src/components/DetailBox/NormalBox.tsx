@@ -463,21 +463,35 @@ const DetailBox: React.FC<ComponentProps> = ({
               className="flex flex-row items-start justify-between md:items-center md:justify-start gap-4 md:flex-col mb-2 md:mb-0 px-2 md:px-0 z-10"
               style={{ color: fontColor ? fontColor : '#222221', minHeight: '12px' }}
             >
-              <div>
-                {socialLinks['twitter'] && <Icon icon="mdi:twitter" fontSize={16} className="cursor-pointer" />}
-                {socialLinks['discord'] && <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />}
-                {socialLinks['facebook'] && <Icon icon="gg:facebook" fontSize={16} className="cursor-pointer" />}
-                {socialLinks['instagram'] && <Icon icon="mdi:instagram" fontSize={16} className="cursor-pointer" />}
-              </div>
+              {socialLinks['twitter']?.enabled && (
+                <a href={socialLinks['tiwtter'].url} target="_blank" rel="noreferrer">
+                  <Icon icon="mdi:twitter" fontSize={16} className="cursor-pointer" />
+                </a>
+              )}
+              {socialLinks['discord']?.enabled && (
+                <a href={socialLinks['disocrd'].url} target="_blank" rel="noreferrer">
+                  <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />
+                </a>
+              )}
+              {socialLinks['facebook'].enalbed && (
+                <a href={socialLinks['facebook'].url} target="_blank" rel="noreferrer">
+                  <Icon icon="gg:facebook" fontSize={16} className="cursor-pointer" />
+                </a>
+              )}
+              {socialLinks['instagram']?.enabled && (
+                <a href={socialLinks['insatagram'].url} target="_blank" rel="noreferrer">
+                  <Icon icon="mdi:instagram" fontSize={16} className="cursor-pointer" />
+                </a>
+              )}
               {active && (
                 <Icon
                   icon="bx:reset"
                   fontSize={16}
                   className={`cursor-pointer ${
-                    socialLinks['twitter'] ||
-                    socialLinks['discord'] ||
-                    socialLinks['facedbook'] ||
-                    socialLinks['instagram']
+                    socialLinks['twitter']?.enabled ||
+                    socialLinks['discord']?.enabled ||
+                    socialLinks['facedbook']?.enabled ||
+                    socialLinks['instagram']?.enabled
                       ? `sm:mt-10`
                       : ''
                   }`}
@@ -501,6 +515,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                     className="cursor-pointer w-16 h-16 md:w-20 md:h-20 rounded-xl"
                     style={{ boxShadow: index === selectedNFTIndex ? '0px 0px 4px 2px #8247E5' : 'none' }}
                     onClick={() => handleSelectNFT(index, asset)}
+                    alt="asset"
                   />
                 ))}
               </div>
@@ -531,21 +546,35 @@ const DetailBox: React.FC<ComponentProps> = ({
               className="flex flex-row items-start justify-between md:items-center md:justify-start gap-4 md:flex-col mb-2 md:mb-0 px-2 md:px-0 z-10"
               style={{ color: fontColor ? fontColor : '#222221', minHeight: '12px' }}
             >
-              <div>
-                {socialLinks['twitter'] && <Icon icon="mdi:twitter" fontSize={16} className="cursor-pointer" />}
-                {socialLinks['discord'] && <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />}
-                {socialLinks['facebook'] && <Icon icon="gg:facebook" fontSize={16} className="cursor-pointer" />}
-                {socialLinks['instagram'] && <Icon icon="mdi:instagram" fontSize={16} className="cursor-pointer" />}
-              </div>
+              {socialLinks['twitter']?.enabled && (
+                <a href={socialLinks['tiwtter'].url} target="_blank" rel="noreferrer">
+                  <Icon icon="mdi:twitter" fontSize={16} className="cursor-pointer" />
+                </a>
+              )}
+              {socialLinks['discord']?.enabled && (
+                <a href={socialLinks['disocrd'].url} target="_blank" rel="noreferrer">
+                  <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />
+                </a>
+              )}
+              {socialLinks['facebook'].enalbed && (
+                <a href={socialLinks['facebook'].url} target="_blank" rel="noreferrer">
+                  <Icon icon="gg:facebook" fontSize={16} className="cursor-pointer" />
+                </a>
+              )}
+              {socialLinks['instagram']?.enabled && (
+                <a href={socialLinks['insatagram'].url} target="_blank" rel="noreferrer">
+                  <Icon icon="mdi:instagram" fontSize={16} className="cursor-pointer" />
+                </a>
+              )}
               {active && (
                 <Icon
                   icon="bx:reset"
                   fontSize={16}
                   className={`cursor-pointer ${
-                    socialLinks['twitter'] ||
-                    socialLinks['discord'] ||
-                    socialLinks['facedbook'] ||
-                    socialLinks['instagram']
+                    socialLinks['twitter']?.enabled ||
+                    socialLinks['discord']?.enabled ||
+                    socialLinks['facedbook']?.enabled ||
+                    socialLinks['instagram']?.enabled
                       ? `sm:mt-10`
                       : ''
                   }`}
