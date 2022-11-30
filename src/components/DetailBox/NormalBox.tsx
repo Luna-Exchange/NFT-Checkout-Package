@@ -54,6 +54,7 @@ const DetailBox: React.FC<ComponentProps> = ({
   const [currentNFTPgae, setCurrentNFTPage] = useState<number>(1);
   const [assetsList, setAssetsList] = useState<any>(assets);
   const [selectedNFTIndex, setSelectedNFTIndex] = useState<number>();
+  console.log(socialLinks);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -460,26 +461,26 @@ const DetailBox: React.FC<ComponentProps> = ({
               </div>
             </div>
             <div
-              className="flex flex-row items-start justify-between md:items-center md:justify-start gap-4 md:flex-col mb-2 md:mb-0 px-2 md:px-0 z-10"
+              className="flex flex-row items-start justify-start md:items-center md:justify-start gap-4 md:flex-col mb-2 md:mb-0 px-2 md:px-0 z-10"
               style={{ color: fontColor ? fontColor : '#222221', minHeight: '12px' }}
             >
-              {socialLinks['twitter']?.enabled && (
-                <a href={socialLinks['tiwtter'].url} target="_blank" rel="noreferrer">
+              {socialLinks.twitter?.enabled && (
+                <a href={socialLinks.twitter?.url} target="_blank" rel="noreferrer">
                   <Icon icon="mdi:twitter" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
-              {socialLinks['discord']?.enabled && (
-                <a href={socialLinks['disocrd'].url} target="_blank" rel="noreferrer">
+              {socialLinks.discord?.enabled && (
+                <a href={socialLinks.discord?.url} target="_blank" rel="noreferrer">
                   <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
-              {socialLinks['facebook'].enalbed && (
-                <a href={socialLinks['facebook'].url} target="_blank" rel="noreferrer">
+              {socialLinks.facebook.enalbed && (
+                <a href={socialLinks.facebook?.url} target="_blank" rel="noreferrer">
                   <Icon icon="gg:facebook" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
-              {socialLinks['instagram']?.enabled && (
-                <a href={socialLinks['insatagram'].url} target="_blank" rel="noreferrer">
+              {socialLinks.instagram?.enabled && (
+                <a href={socialLinks.instagram?.url} target="_blank" rel="noreferrer">
                   <Icon icon="mdi:instagram" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
@@ -488,10 +489,10 @@ const DetailBox: React.FC<ComponentProps> = ({
                   icon="bx:reset"
                   fontSize={16}
                   className={`cursor-pointer ${
-                    socialLinks['twitter']?.enabled ||
-                    socialLinks['discord']?.enabled ||
+                    socialLinks.twitter?.enabled ||
+                    socialLinks.discord?.enabled ||
                     socialLinks['facedbook']?.enabled ||
-                    socialLinks['instagram']?.enabled
+                    socialLinks.instagram?.enabled
                       ? `sm:mt-10`
                       : ''
                   }`}
@@ -543,26 +544,26 @@ const DetailBox: React.FC<ComponentProps> = ({
               </div>
             </div>
             <div
-              className="flex flex-row items-start justify-between md:items-center md:justify-start gap-4 md:flex-col mb-2 md:mb-0 px-2 md:px-0 z-10"
+              className="flex flex-row items-start justify-start md:items-center md:justify-start gap-4 md:flex-col mb-2 md:mb-0 px-2 md:px-0 z-10"
               style={{ color: fontColor ? fontColor : '#222221', minHeight: '12px' }}
             >
-              {socialLinks['twitter']?.enabled && (
-                <a href={socialLinks['tiwtter'].url} target="_blank" rel="noreferrer">
+              {socialLinks.twitter?.enabled && (
+                <a href={socialLinks.twitter?.url} target="_blank" rel="noreferrer">
                   <Icon icon="mdi:twitter" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
-              {socialLinks['discord']?.enabled && (
-                <a href={socialLinks['disocrd'].url} target="_blank" rel="noreferrer">
+              {socialLinks.discord?.enabled && (
+                <a href={socialLinks.discord?.url} target="_blank" rel="noreferrer">
                   <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
-              {socialLinks['facebook'].enalbed && (
-                <a href={socialLinks['facebook'].url} target="_blank" rel="noreferrer">
+              {socialLinks.facebook.enalbed && (
+                <a href={socialLinks.facebook?.url} target="_blank" rel="noreferrer">
                   <Icon icon="gg:facebook" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
-              {socialLinks['instagram']?.enabled && (
-                <a href={socialLinks['insatagram'].url} target="_blank" rel="noreferrer">
+              {socialLinks.instagram?.enabled && (
+                <a href={socialLinks.instagram?.url} target="_blank" rel="noreferrer">
                   <Icon icon="mdi:instagram" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
@@ -571,10 +572,10 @@ const DetailBox: React.FC<ComponentProps> = ({
                   icon="bx:reset"
                   fontSize={16}
                   className={`cursor-pointer ${
-                    socialLinks['twitter']?.enabled ||
-                    socialLinks['discord']?.enabled ||
+                    socialLinks.twitter?.enabled ||
+                    socialLinks.discord?.enabled ||
                     socialLinks['facedbook']?.enabled ||
-                    socialLinks['instagram']?.enabled
+                    socialLinks.instagram?.enabled
                       ? `sm:mt-10`
                       : ''
                   }`}
