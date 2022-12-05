@@ -139,37 +139,51 @@ const MiniBox: React.FC<ComponentProps> = ({
             <div className="relative flex flex-col w-full mx-auto" style={{ minHeight: '180px', maxWidth: '325px' }}>
               <div className="flex flex-col">
                 {stage === StageType.NORMAL ? (
-                  <div className="flex flex-row justify-between pt-4 gap-2">
+                  isMultipleNft && !active ? (
                     <div
-                      className="flex flex-col gap-1 rounded-lg py-2"
+                      className="flex flex-col rounded-lg py-2 w-full items-center mt-4"
                       style={{
-                        width: '150px',
                         color: fontColor ? fontColor : '#222221',
                         border: '1px solid #E8E8E8',
                         backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
                       }}
                     >
-                      <p className="flex items-center text-base font-normal justify-center">Price</p>
-                      <p className="flex items-center text-base font-semibold justify-center">
-                        {active ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
-                      </p>
+                      <p>Total Collection</p>
+                      <p>{assets?.length} NFT</p>
                     </div>
-                    <div
-                      className="flex flex-col gap-1 rounded-lg py-2"
-                      style={{
-                        width: '150px',
-                        color: fontColor ? fontColor : '#222221',
-                        border: '1px solid #E8E8E8',
-                        backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
-                      }}
-                    >
-                      <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
-                      <p className="flex items-center text-base font-semibold justify-center">
-                        {/* {!active ? '-' : maxSupply > Math.pow(10, 70) ? 'Unlimited' : maxSupply} */}
-                        {!active ? '-' : mintsRemain && mintsRemain > Math.pow(10, 70) ? 'Unlimited' : mintsRemain}
-                      </p>
+                  ) : (
+                    <div className="flex flex-row justify-between pt-4 gap-2">
+                      <div
+                        className="flex flex-col gap-1 rounded-lg py-2"
+                        style={{
+                          width: '150px',
+                          color: fontColor ? fontColor : '#222221',
+                          border: '1px solid #E8E8E8',
+                          backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+                        }}
+                      >
+                        <p className="flex items-center text-base font-normal justify-center">Price</p>
+                        <p className="flex items-center text-base font-semibold justify-center">
+                          {active ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
+                        </p>
+                      </div>
+                      <div
+                        className="flex flex-col gap-1 rounded-lg py-2"
+                        style={{
+                          width: '150px',
+                          color: fontColor ? fontColor : '#222221',
+                          border: '1px solid #E8E8E8',
+                          backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+                        }}
+                      >
+                        <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
+                        <p className="flex items-center text-base font-semibold justify-center">
+                          {/* {!active ? '-' : maxSupply > Math.pow(10, 70) ? 'Unlimited' : maxSupply} */}
+                          {!active ? '-' : mintsRemain && mintsRemain > Math.pow(10, 70) ? 'Unlimited' : mintsRemain}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )
                 ) : stage === StageType.TERMS ? (
                   <>
                     {questions.length > 0 ? (
@@ -374,7 +388,9 @@ const MiniBox: React.FC<ComponentProps> = ({
               {active && <Icon icon="bx:reset" fontSize={16} className="cursor-pointer" onClick={handleReset} />}
             </div>
             <div className="absolute bottom-2 flex flex-row gap-2 w-full items-center justify-center">
-              <p className="text-xs font-normal">Powered by:</p>
+              <p className="text-xs font-normal" style={{ color: fontColor ? fontColor : '#222221' }}>
+                Powered by:
+              </p>
               <CheckoutLogo />
             </div>
           </div>

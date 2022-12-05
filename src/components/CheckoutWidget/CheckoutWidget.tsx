@@ -127,7 +127,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
 
         setMintPrice(mintPrice);
         setMaxSupply(mintInfo.random_mint ? assets.length : maxSupplyReadable);
-        setMintRemain(remainingSupply);
+        setMintRemain(Number(remainingSupply.toString()));
       }
     }
     getTokenInfo();
