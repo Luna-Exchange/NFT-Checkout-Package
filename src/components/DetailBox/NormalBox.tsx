@@ -488,7 +488,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                   <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
-              {socialLinks.facebook.enalbed && (
+              {socialLinks.facebook.enabled && (
                 <a href={socialLinks.facebook?.url} target="_blank" rel="noreferrer">
                   <Icon icon="gg:facebook" fontSize={16} className="cursor-pointer" />
                 </a>
@@ -505,7 +505,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                   className={`cursor-pointer ${
                     socialLinks.twitter?.enabled ||
                     socialLinks.discord?.enabled ||
-                    socialLinks['facedbook']?.enabled ||
+                    socialLinks.facebook?.enabled ||
                     socialLinks.instagram?.enabled
                       ? `sm:mt-10`
                       : ''
@@ -573,7 +573,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                   <Icon icon="ic:baseline-discord" fontSize={16} className="cursor-pointer" />
                 </a>
               )}
-              {socialLinks.facebook.enalbed && (
+              {socialLinks.facebook.enabled && (
                 <a href={socialLinks.facebook?.url} target="_blank" rel="noreferrer">
                   <Icon icon="gg:facebook" fontSize={16} className="cursor-pointer" />
                 </a>
@@ -590,7 +590,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                   className={`cursor-pointer ${
                     socialLinks.twitter?.enabled ||
                     socialLinks.discord?.enabled ||
-                    socialLinks['facedbook']?.enabled ||
+                    socialLinks.facebook?.enabled ||
                     socialLinks.instagram?.enabled
                       ? `sm:mt-10`
                       : ''
