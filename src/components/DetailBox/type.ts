@@ -43,4 +43,6 @@ export type ComponentProps = {
   isRandomMint: boolean;
   assets?: any[];
   onChangeTokenId: (tokenId: number) => void;
+  organizationName?: string;
+  mintingDisabled: boolean;
 };

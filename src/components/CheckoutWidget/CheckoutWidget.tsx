@@ -50,7 +50,6 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
   useEffect(() => {
     getMintInfo(collectionId)
       .then(async (response: any) => {
-        console.log('getMintInfo response:', response);
         if (response.is_multiple_nft) {
           const assetsResponse = await getAllAssets(collectionId);
           setAssets(assetsResponse.data.items.reverse());
@@ -283,6 +282,8 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
               isRandomMint={mintInfo.random_mint}
               assets={assets}
               onChangeTokenId={setTokenId}
+              organizationName={mintInfo.organization_name}
+              mintingDisabled={mintInfo.minting_disabled}
             />
           ) : (
             <MiniBox
@@ -322,6 +323,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
               isRandomMint={mintInfo.random_mint}
               assets={assets}
               onChangeTokenId={setTokenId}
+              mintingDisabled={mintInfo.minting_disabled}
             />
           )}
         </>

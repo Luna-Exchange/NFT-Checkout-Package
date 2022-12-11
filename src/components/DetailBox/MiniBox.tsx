@@ -37,7 +37,8 @@ const MiniBox: React.FC<ComponentProps> = ({
   assets,
   chain,
   onChangeTokenId,
-  isRandomMint
+  isRandomMint,
+  mintingDisabled
 }): JSX.Element => {
   const [stage, setStage] = useState<StageType>(StageType.NORMAL);
   const [step, setStep] = useState<number>(0);
@@ -361,9 +362,11 @@ const MiniBox: React.FC<ComponentProps> = ({
                               </div>
                             )}
                             <button
-                              disabled={mintBtnDisabled && mintsRemain === 0}
+                              disabled={(mintBtnDisabled && mintsRemain === 0) || mintingDisabled}
                               onClick={onHandleMint}
-                              className="h-8 font-normal border border-solid border-white rounded-full bg-none cursor-pointer active:enabled:scale-[0.99]"
+                              className={`h-8 font-normal border border-solid border-white rounded-full ${
+                                (mintBtnDisabled && mintsRemain === 0) || mintingDisabled ? 'bg-gray-300' : 'bg-none'
+                              } cursor-pointer active:enabled:scale-[0.99]`}
                               style={{
                                 width: !isRandomMint ? '50%' : '100%',
                                 fontSize: '14px',

@@ -45,7 +45,9 @@ const DetailBox: React.FC<ComponentProps> = ({
   assets,
   chain,
   onChangeTokenId,
-  isRandomMint
+  isRandomMint,
+  organizationName,
+  mintingDisabled
 }): JSX.Element => {
   const [stage, setStage] = useState<StageType>(StageType.NORMAL);
   const [step, setStep] = useState<number>(0);
@@ -54,7 +56,6 @@ const DetailBox: React.FC<ComponentProps> = ({
   const [currentNFTPgae, setCurrentNFTPage] = useState<number>(1);
   const [assetsList, setAssetsList] = useState<any>(assets);
   const [selectedNFTIndex, setSelectedNFTIndex] = useState<number>();
-  console.log(socialLinks);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -171,7 +172,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                   }}
                 >
                   <div className="flex flex-row gap-2 items-center">
-                    <p className="text-xl font-bold">Insomnia Access Pass</p>
+                    <p className="text-xl font-bold">{organizationName}</p>
                     <Icon icon={chain === 'ethereum' ? 'logos:ethereum' : 'logos:polygon'} />
                   </div>
                   <p className="text-md font-normal">{nftTitle}</p>
@@ -453,10 +454,12 @@ const DetailBox: React.FC<ComponentProps> = ({
                               </div>
                             )}
                             <button
-                              disabled={mintBtnDisabled && mintsRemain === 0}
+                              disabled={(mintBtnDisabled && mintsRemain === 0) || mintingDisabled}
                               // onClick={() => onMintBtn(true)}
                               onClick={onHandleMint}
-                              className="h-8 font-normal border border-solid border-white rounded bg-none cursor-pointer active:enabled:scale-[0.99]"
+                              className={`h-8 font-normal border border-solid border-white rounded ${
+                                (mintBtnDisabled && mintsRemain === 0) || mintingDisabled ? 'bg-gray-300' : 'bg-none'
+                              } cursor-pointer active:enabled:scale-[0.99]`}
                               style={{
                                 width: !isRandomMint ? '50%' : '100%',
                                 fontSize: '14px',
