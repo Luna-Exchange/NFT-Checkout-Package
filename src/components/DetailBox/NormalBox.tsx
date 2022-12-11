@@ -103,6 +103,7 @@ const DetailBox: React.FC<ComponentProps> = ({
     setAnswers(answersArrary);
     setStage(StageType.TERMS);
     setStep(0);
+    setSelectedNFTIndex(undefined);
     onCancelTerms && onCancelTerms();
     onNftCountChange && onNftCountChange('');
   };
@@ -142,11 +143,20 @@ const DetailBox: React.FC<ComponentProps> = ({
             className="relative items-center justify-center w-full border border-white border-solid sm:h-full sm:border-none rounded-2xl"
             style={{ minHeight: '240px', maxHeight: '421px', maxWidth: '421px' }}
           >
-            <CheckoutCover
-              isMultipleNft={isMultipleNft}
-              isRandomMint={isRandomMint}
-              assets={!isMultipleNft || isRandomMint ? nftImgUrl : assets}
-            />
+            {selectedNFTIndex !== undefined && !isNaN(selectedNFTIndex) ? (
+              <img
+                src={assets && assets[selectedNFTIndex]?.image}
+                alt=""
+                className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl"
+                style={{ width: '421px', height: '421px' }}
+              />
+            ) : (
+              <CheckoutCover
+                isMultipleNft={isMultipleNft}
+                isRandomMint={isRandomMint}
+                assets={!isMultipleNft || isRandomMint ? nftImgUrl : assets}
+              />
+            )}
             <div className="absolute" style={{ inset: 0 }}>
               <div
                 style={{
@@ -172,7 +182,11 @@ const DetailBox: React.FC<ComponentProps> = ({
                   }}
                 >
                   <div className="flex flex-row gap-2 items-center">
-                    <p className="text-xl font-bold">{organizationName}</p>
+                    <p className="text-xl font-bold">
+                      {selectedNFTIndex !== undefined && !isNaN(selectedNFTIndex)
+                        ? assets && assets[selectedNFTIndex].name
+                        : organizationName}
+                    </p>
                     <Icon icon={chain === 'ethereum' ? 'logos:ethereum' : 'logos:polygon'} />
                   </div>
                   <p className="text-md font-normal">{nftTitle}</p>
