@@ -19,8 +19,8 @@ const CheckoutLogo = (props: SVGProps<SVGSVGElement>) => (
         y2="11.36"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#4596fa" />
-        <stop offset="1" stop-color="#45c1fa" />
+        <stop offset="0" stopColor="#4596fa" />
+        <stop offset="1" stopColor="#45c1fa" />
       </linearGradient>
       <linearGradient
         id="Unbenannter_Verlauf_15-2"

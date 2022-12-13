@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react';
 import { SpinningCircles } from 'react-loading-icons';
 import { Disclosure } from '@headlessui/react';
 import CheckoutLogo from '../../assets/CheckoutLogo';
-import { CheckoutCover } from '../Cover';
 import { StageType, ComponentProps } from './type';
 import { Pagination } from '@mui/material';
 import { getWindowSize } from '../../utils';
@@ -151,10 +150,11 @@ const DetailBox: React.FC<ComponentProps> = ({
                 style={{ width: '421px', height: '421px' }}
               />
             ) : (
-              <CheckoutCover
-                isMultipleNft={isMultipleNft}
-                isRandomMint={isRandomMint}
-                assets={!isMultipleNft || isRandomMint ? nftImgUrl : assets}
+              <img
+                src={nftImgUrl}
+                alt=""
+                className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl"
+                style={{ width: '421px', height: '421px' }}
               />
             )}
             <div className="absolute" style={{ inset: 0 }}>
