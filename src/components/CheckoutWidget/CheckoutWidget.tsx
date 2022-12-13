@@ -3,14 +3,19 @@ import { NormalBox, MiniBox } from '../DetailBox';
 import { getMintInfo, answerMintQuestions, getAllAssets } from '../../api/mint';
 import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
-import { testConnectors } from '../../utils/connector';
+import { testConnectors, mainConnectors } from '../../utils/connector';
 import NFT_ABI from '../../assets/abi/erc1155.json';
 import { FirstPartyAnswers } from '../../type';
 import { getContract } from '../../utils';
 import { Contract } from '@ethersproject/contracts';
-import { libraries, ComponentProps } from './type';
+import { libraries, ComponentProps, envs } from './type';
 
-const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, view }): JSX.Element => {
+const CheckoutWidget: React.FC<ComponentProps> = ({
+  collectionId,
+  libraryType,
+  view,
+  env = envs.PRODUCTION
+}): JSX.Element => {
   const { account, activate, deactivate, active, library, chainId } = useWeb3React();
   const [mintInfo, setMintInfo] = useState<any>();
 
@@ -48,10 +53,10 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
   // }, []);
 
   useEffect(() => {
-    getMintInfo(collectionId)
+    getMintInfo(collectionId, env)
       .then(async (response: any) => {
         if (response.is_multiple_nft) {
-          const assetsResponse = await getAllAssets(collectionId);
+          const assetsResponse = await getAllAssets(collectionId, env);
           setAssets(assetsResponse.data.items.reverse());
         }
         setMintInfo(response);
@@ -127,6 +132,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
         setMintPrice(mintPrice);
         setMaxSupply(mintInfo.random_mint ? assets.length : maxSupplyReadable);
         setMintRemain(Number(remainingSupply.toString()));
+        console.log(remainingSupply);
       }
     }
     getTokenInfo();
@@ -157,12 +163,19 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
       method: 'wallet_switchEthereumChain',
       params: [
         {
-          chainId: mintInfo.chain === 'ethereum' ? '0x5' : '0x13881'
+          chainId:
+            env === envs.DEVELOPMENT
+              ? mintInfo.chain === 'ethereum'
+                ? '0x5'
+                : '0x13881'
+              : mintInfo.chain === 'ethereum'
+              ? '0x1'
+              : '0x89'
         }
       ]
     });
 
-    activate(testConnectors.injected);
+    activate(env === envs.DEVELOPMENT ? testConnectors.injected : mainConnectors.injected);
   };
 
   const handleDisconnectMetamask = () => {
@@ -230,7 +243,7 @@ const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType, v
         answer: answers[index]
       }));
 
-      answerMintQuestions(collectionId, account, firstPartyAnswers)
+      answerMintQuestions(collectionId, account, firstPartyAnswers, env)
         .then(async (response: any) => {
           console.log('answerMintQuestions response:', response);
         })

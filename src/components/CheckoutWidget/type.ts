@@ -12,8 +12,16 @@ export const views = {
 
 export type ViewType = typeof views[keyof typeof views];
 
+export const envs = {
+  PRODUCTION: 'production',
+  DEVELOPMENT: 'development'
+} as const;
+
+export type EnvType = typeof envs[keyof typeof envs];
+
 export type ComponentProps = {
   collectionId: string;
   libraryType?: LibraryType;
   view?: ViewType;
+  env?: EnvType;
 };
