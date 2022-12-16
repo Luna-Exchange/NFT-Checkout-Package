@@ -17,11 +17,12 @@ const getLibraryFromWeb3 = (provider: any) => {
 const InsomniaCheckoutWeb3Wrapper: React.FC<ComponentProps> = ({
   collectionId,
   libraryType = 'ethers',
-  view = 'normal'
+  view = 'normal',
+  env = 'production'
 }): JSX.Element => {
   return (
     <Web3ReactProvider getLibrary={libraryType === 'ethers' ? getLibraryFromEthers : getLibraryFromWeb3}>
-      <CheckoutWidget collectionId={collectionId} libraryType={libraryType} view={view} />
+      <CheckoutWidget collectionId={collectionId} libraryType={libraryType} view={view} env={env} />
     </Web3ReactProvider>
   );
 };

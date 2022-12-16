@@ -6,6 +6,7 @@ import CheckoutLogo from '../../assets/CheckoutLogo';
 import { StageType, ComponentProps } from './type';
 import { Pagination } from '@mui/material';
 import { getWindowSize } from '../../utils';
+import PolygonLogo from '../../assets/PolygonLogo';
 
 const DetailBox: React.FC<ComponentProps> = ({
   active,
@@ -187,7 +188,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                         ? assets && assets[selectedNFTIndex].name
                         : organizationName}
                     </p>
-                    <Icon icon={chain === 'ethereum' ? 'logos:ethereum' : 'logos:polygon'} />
+                    {chain === 'ethereum' ? <Icon icon="logos:ethereum" /> : <PolygonLogo />}
                   </div>
                   <p className="text-md font-normal">{nftTitle}</p>
                 </div>
@@ -362,7 +363,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                           className="flex absolute -top-8 items-center justify-center text-xl font-normal align-center"
                           style={{ color: fontColor ? fontColor : '#222221' }}
                         >
-                          {nftCount} NFT is(are) successfully minted.
+                          {parseInt(nftCount) > 1 ? nftCount + ' NFTs' : nftCount + 'NFT'} successfully minted.
                         </p>
                         <button
                           className="font-normal border border-white border-solid rounded"

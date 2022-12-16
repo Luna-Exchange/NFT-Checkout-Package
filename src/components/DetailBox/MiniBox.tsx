@@ -266,7 +266,7 @@ const MiniBox: React.FC<ComponentProps> = ({
                           className="flex absolute -top-8 items-center justify-center text-xl font-normal align-center"
                           style={{ color: fontColor ? fontColor : '#222221' }}
                         >
-                          {nftCount} NFT is(are) successfully minted.
+                          {parseInt(nftCount) > 1 ? nftCount + ' NFTs' : nftCount + 'NFT'} successfully minted.
                         </p>
                         <button
                           className="font-normal border border-white border-solid rounded-full"
