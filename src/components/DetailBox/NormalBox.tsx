@@ -186,11 +186,11 @@ const DetailBox: React.FC<ComponentProps> = ({
                     <p className="text-xl font-bold">
                       {selectedNFTIndex !== undefined && !isNaN(selectedNFTIndex)
                         ? assets && assets[selectedNFTIndex].name
-                        : organizationName}
+                        : nftTitle}
                     </p>
                     {chain === 'ethereum' ? <Icon icon="logos:ethereum" /> : <PolygonLogo />}
                   </div>
-                  <p className="text-md font-normal">{nftTitle}</p>
+                  <p className="text-md font-normal">{organizationName}</p>
                 </div>
                 {stage === StageType.NORMAL ? (
                   <>
@@ -232,12 +232,14 @@ const DetailBox: React.FC<ComponentProps> = ({
                               <p
                                 className="flex items-center text-xs"
                                 style={{
-                                  display: '-webkit-box',
-                                  WebkitLineClamp: 2,
-                                  WebkitBoxOrient: 'vertical',
-                                  overflow: 'hidden',
-                                  color: fontColor ? fontColor : '#222221',
-                                  minHeight: '32px'
+                                  // display: '-webkit-box',
+                                  // WebkitLineClamp: 2,
+                                  // WebkitBoxOrient: 'vertical',
+                                  // overflow: 'hidden',
+                                  overflowY: 'scroll',
+                                  height: '60px',
+                                  color: fontColor ? fontColor : '#222221'
+                                  // minHeight: '32px'
                                 }}
                               >
                                 {nftDescription}
@@ -256,7 +258,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                           backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
                         }}
                       >
-                        <p>Total Collection</p>
+                        <p>Total Supply</p>
                         <p>{assets?.length} NFT</p>
                       </div>
                     ) : (
@@ -355,7 +357,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                   <>
                     {mintProcessing ? (
                       <div className="flex items-center justify-center w-full h-full">
-                        <SpinningCircles fill={bgColor ? `${bgColor}80` : '#8247E5'} />
+                        <SpinningCircles fill={bgColor ? `${bgColor}80` : '#109BEA'} />
                       </div>
                     ) : mintSucceed ? (
                       <div className="flex flex-col justify-center h-full relative">
@@ -363,7 +365,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                           className="flex absolute -top-8 items-center justify-center text-xl font-normal align-center"
                           style={{ color: fontColor ? fontColor : '#222221' }}
                         >
-                          {parseInt(nftCount) > 1 ? nftCount + ' NFTs' : nftCount + 'NFT'} successfully minted.
+                          {parseInt(nftCount) > 1 ? nftCount + ' NFTs' : nftCount + ' NFT'} successfully minted.
                         </p>
                         <button
                           className="font-normal border border-white border-solid rounded"
@@ -548,7 +550,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                     key={index}
                     src={asset.image}
                     className="cursor-pointer w-16 h-16 md:w-20 md:h-20 rounded-xl"
-                    style={{ boxShadow: index === selectedNFTIndex ? '0px 0px 4px 2px #8247E5' : 'none' }}
+                    style={{ boxShadow: index === selectedNFTIndex ? '0px 0px 4px 2px #109BEA' : 'none' }}
                     onClick={() => handleSelectNFT(index, asset)}
                     alt="asset"
                   />
