@@ -8,6 +8,65 @@ import { Pagination } from '@mui/material';
 import { getWindowSize } from '../../utils';
 import PolygonLogo from '../../assets/PolygonLogo';
 
+const CollectionDetails: React.FC<Partial<ComponentProps>> = ({
+  isMultipleNft,
+  active,
+  assets,
+  fontColor,
+  bgColor,
+  mintsRemain,
+  price,
+  chain
+}) => {
+  if (isMultipleNft && !active) {
+    return <div
+      className="flex flex-col rounded-lg py-2 w-full items-center mt-4"
+      style={{
+        color: fontColor ? fontColor : '#222221',
+        border: '1px solid #E8E8E8',
+        backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+      }}
+    >
+      <p>Total Supply</p>
+      <p>{assets?.length} NFT</p>
+    </div>;
+  } else {
+    return (
+      <div className="flex flex-row justify-between pt-4 gap-2">
+        <div
+          className="flex flex-col gap-1 rounded-lg py-2"
+          style={{
+            width: '150px',
+            color: fontColor ? fontColor : '#222221',
+            border: '1px solid #E8E8E8',
+            backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+          }}
+        >
+          <p className="flex items-center text-base font-normal justify-center">Price</p>
+          <p className="flex items-center text-base font-semibold justify-center">
+            {active ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
+          </p>
+        </div>
+        <div
+          className="flex flex-col gap-1 rounded-lg py-2"
+          style={{
+            width: '150px',
+            color: fontColor ? fontColor : '#222221',
+            border: '1px solid #E8E8E8',
+            backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
+          }}
+        >
+          <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
+          <p className="flex items-center text-base font-semibold justify-center">
+            {/* {!active ? '-' : maxSupply > Math.pow(10, 70) ? 'Unlimited' : maxSupply} */}
+            {!active ? '-' : mintsRemain && mintsRemain > Math.pow(10, 70) ? 'Unlimited' : mintsRemain}
+          </p>
+        </div>
+      </div>
+    );
+  }
+}
+
 const DetailBox: React.FC<ComponentProps> = ({
   active,
   nftImgUrl,
@@ -144,14 +203,22 @@ const DetailBox: React.FC<ComponentProps> = ({
             style={{ minHeight: '240px', maxHeight: '421px', maxWidth: '421px' }}
           >
             {selectedNFTIndex !== undefined && !isNaN(selectedNFTIndex) ? (
-              <img
+              assets && assets[selectedNFTIndex]?.image.slice(-3) === 'mp4' ? (
+                <video muted controls className="w-full h-full">
+                  <source src={assets[selectedNFTIndex].image} type="video/mp4" />
+                </video>
+              ) : <img
                 src={assets && assets[selectedNFTIndex]?.image}
                 alt=""
                 className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl"
                 style={{ width: '421px', height: '421px' }}
               />
             ) : (
-              <img
+              nftImgUrl?.slice(-3) === 'mp4' ? (
+                <video muted controls className="w-full h-full">
+                  <source src={nftImgUrl} type="video/mp4" />
+                </video>
+              ) : <img
                 src={nftImgUrl}
                 alt=""
                 className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl"
@@ -249,51 +316,16 @@ const DetailBox: React.FC<ComponentProps> = ({
                         )}
                       </Disclosure>
                     </div>
-                    {stage === StageType.NORMAL && isMultipleNft && !active ? (
-                      <div
-                        className="flex flex-col rounded-lg py-2 w-full items-center mt-4"
-                        style={{
-                          color: fontColor ? fontColor : '#222221',
-                          border: '1px solid #E8E8E8',
-                          backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
-                        }}
-                      >
-                        <p>Total Supply</p>
-                        <p>{assets?.length} NFT</p>
-                      </div>
-                    ) : (
-                      <div className="flex flex-row justify-between pt-4 gap-2">
-                        <div
-                          className="flex flex-col gap-1 rounded-lg py-2"
-                          style={{
-                            width: '150px',
-                            color: fontColor ? fontColor : '#222221',
-                            border: '1px solid #E8E8E8',
-                            backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
-                          }}
-                        >
-                          <p className="flex items-center text-base font-normal justify-center">Price</p>
-                          <p className="flex items-center text-base font-semibold justify-center">
-                            {active ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
-                          </p>
-                        </div>
-                        <div
-                          className="flex flex-col gap-1 rounded-lg py-2"
-                          style={{
-                            width: '150px',
-                            color: fontColor ? fontColor : '#222221',
-                            border: '1px solid #E8E8E8',
-                            backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
-                          }}
-                        >
-                          <p className="flex items-center text-base font-normal justify-center">Total Mints</p>
-                          <p className="flex items-center text-base font-semibold justify-center">
-                            {/* {!active ? '-' : maxSupply > Math.pow(10, 70) ? 'Unlimited' : maxSupply} */}
-                            {!active ? '-' : mintsRemain && mintsRemain > Math.pow(10, 70) ? 'Unlimited' : mintsRemain}
-                          </p>
-                        </div>
-                      </div>
-                    )}
+                    <CollectionDetails 
+                      isMultipleNft={isMultipleNft}
+                      active={active}
+                      assets={assets}
+                      fontColor={fontColor}
+                      bgColor={bgColor}
+                      mintsRemain={mintsRemain}
+                      price={price}
+                      chain={chain}
+                    />
                   </>
                 ) : stage === StageType.TERMS ? (
                   <>
@@ -307,7 +339,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                           backgroundColor: bgColor ? `${bgColor}80` : '#F8F8F8'
                         }}
                       >
-                        <p className="text-md">You need to answer our questionaire first before mininting.</p>
+                        <p className="text-md">You need to answer our questionaire first before minting.</p>
                       </div>
                     )}
                     <div
@@ -362,7 +394,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                     ) : mintSucceed ? (
                       <div className="flex flex-col justify-center h-full relative">
                         <p
-                          className="flex absolute -top-8 items-center justify-center text-xl font-normal align-center"
+                          className="flex absolute -top-8 items-center justify-center text-xl font-normal align-center text-center"
                           style={{ color: fontColor ? fontColor : '#222221' }}
                         >
                           {parseInt(nftCount) > 1 ? nftCount + ' NFTs' : nftCount + ' NFT'} successfully minted.

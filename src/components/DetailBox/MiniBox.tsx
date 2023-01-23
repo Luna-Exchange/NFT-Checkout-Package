@@ -120,14 +120,22 @@ const MiniBox: React.FC<ComponentProps> = ({
             style={{ minHeight: '240px', maxHeight: '421px', maxWidth: '421px' }}
           >
             {selectedNFTIndex !== undefined && !isNaN(selectedNFTIndex) ? (
-              <img
+              assets && assets[selectedNFTIndex]?.image.slice(-3) === 'mp4' ? (
+                <video muted controls className="w-full h-full">
+                  <source src={assets[selectedNFTIndex].image} type="video/mp4" />
+                </video>
+              ) : <img
                 src={assets && assets[selectedNFTIndex]?.image}
                 alt=""
                 className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl"
                 style={{ width: '421px', height: '421px' }}
               />
             ) : (
-              <img
+              nftImgUrl?.slice(-3) === 'mp4' ? (
+                <video muted controls className="w-full h-full">
+                  <source src={nftImgUrl} type="video/mp4" />
+                </video>
+              ) : <img
                 src={nftImgUrl}
                 alt=""
                 className="object-cover w-screen h-full sm:w-full sm:h-full rounded-2xl"
@@ -263,7 +271,7 @@ const MiniBox: React.FC<ComponentProps> = ({
                     ) : mintSucceed ? (
                       <div className="flex flex-col justify-center h-full relative">
                         <p
-                          className="flex absolute -top-8 items-center justify-center text-xl font-normal align-center"
+                          className="flex absolute -top-8 items-center justify-center text-xl font-normal align-center text-center"
                           style={{ color: fontColor ? fontColor : '#222221' }}
                         >
                           {parseInt(nftCount) > 1 ? nftCount + ' NFTs' : nftCount + ' NFT'} successfully minted.
