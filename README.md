@@ -3,18 +3,18 @@
 Luna NFT project's [React plugin](https://github.com/Luna-Exchange/NFT-Checkout-package) library published by creator's portal.
 
 **Built with React and TypeScript.**
-Check out the [Demo](https://zingy-cendol-f45b26.netlify.app/)!
+Check out the [Demo](https://j4c12g-3000.preview.csb.app/)!
 
 ## Usage
 
 ### Install from NPM
 
 ```bash
-yarn add luna-nft-checkout
+yarn add @insomnialab/mintstack-sdk-react
 ```
 
 ```bash
-npm install luna-nft-checkout
+npm install @insomnialab/mintstack-sdk-react
 ```
 
 ### Import CheckoutWidget from package
@@ -22,8 +22,8 @@ npm install luna-nft-checkout
 You can import component and style:
 
 ```ts
-import { CheckoutWidget } from 'luna-nft-checkout';
-import 'luna-nft-checkout/lib/esm/styles/style.css';
+import { CheckoutWidget } from '@insomnialab/mintstack-sdk-react';
+import '@insomnialab/mintstack-sdk-react/lib/esm/styles/style.css';
 ```
 
 and use with collection id, api key and secret key:
@@ -39,7 +39,7 @@ You can import DetailBox compoent and use directly in your front-end code.
 ### Components
 
 ```tsx
-import { DetailBox } from "luna-nft-checkout";
+import { DetailBox } from "@insomnialab/mintstack-sdk-react";
 ...
 <DetailBox
   active={active}
