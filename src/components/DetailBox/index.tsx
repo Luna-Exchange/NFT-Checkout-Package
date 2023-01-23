@@ -129,20 +129,13 @@ const DetailBox: React.FC<ComponentProps> = ({
           className="relative items-center justify-center w-full border border-white border-solid sm:h-full sm:border-none rounded-2xl"
           style={{ minHeight: '240px', maxWidth: '421px' }}
         >
-          {nftImgUrl?.slice(-3) === 'mp4' ? (
-            <video muted controls className="w-full h-full">
-              <source src={nftImgUrl} type="video/mp4" />
-            </video>
-          ) : (
-            <img
-              src={nftImgUrl}
-              width="100%"
-              height="100%"
-              alt=""
-              className="object-cover sm:w-full sm:h-full rounded-2xl"
-            />
-          )}
-          
+          <img
+            src={nftImgUrl}
+            width="100%"
+            height="100%"
+            alt=""
+            className="object-cover sm:w-full sm:h-full rounded-2xl"
+          />
           <div className="absolute" style={{ inset: 0 }}>
             <div
               style={{
@@ -238,7 +231,7 @@ const DetailBox: React.FC<ComponentProps> = ({
                 ) : mintSucceed ? (
                   <div className="flex flex-col justify-center h-full relative">
                     <p
-                      className="flex absolute -top-2 items-center justify-center text-xl font-normal align-center text-center"
+                      className="flex absolute -top-2 items-center justify-center text-xl font-normal align-center"
                       style={{ color: fontColor ? fontColor : 'white' }}
                     >
                       {nftCount} NFT is(are) successfully minted.
