@@ -316,16 +316,6 @@ const DetailBox: React.FC<ComponentProps> = ({
                         )}
                       </Disclosure>
                     </div>
-                    <CollectionDetails 
-                      isMultipleNft={isMultipleNft}
-                      active={active}
-                      assets={assets}
-                      fontColor={fontColor}
-                      bgColor={bgColor}
-                      mintsRemain={mintsRemain}
-                      price={price}
-                      chain={chain}
-                    />
                   </>
                 ) : stage === StageType.TERMS ? (
                   <>
@@ -360,6 +350,20 @@ const DetailBox: React.FC<ComponentProps> = ({
                   <></>
                 )}
               </div>
+
+              {stage !== StageType.TERMS && (
+                <CollectionDetails 
+                  isMultipleNft={isMultipleNft}
+                  active={active}
+                  assets={assets}
+                  fontColor={fontColor}
+                  bgColor={bgColor}
+                  mintsRemain={mintsRemain}
+                  price={price}
+                  chain={chain}
+                />
+              )}
+
               <div className="absolute bottom-2 sm:bottom-2 md:bottom-8 w-full">
                 {!active ? (
                   <button
