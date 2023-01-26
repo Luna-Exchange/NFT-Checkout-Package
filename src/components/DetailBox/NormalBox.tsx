@@ -44,7 +44,7 @@ const CollectionDetails: React.FC<Partial<ComponentProps>> = ({
         >
           <p className="flex items-center text-base font-normal justify-center">Price</p>
           <p className="flex items-center text-base font-semibold justify-center">
-            {active ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
+            {active && !Number.isNaN(price) ? `${price} ${chain === 'ethereum' ? 'ETH' : 'MATIC'}` : '-'}
           </p>
         </div>
         <div
