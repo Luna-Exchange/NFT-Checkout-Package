@@ -1,6 +1,6 @@
 {
     "name": "@insomnia-labs/mintstack-sdk-react",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "Library based on Typescript to mint Luna NFT!",
     "author": "Leon Jin <ultraj0330@gmail.com>",
     "repository": {
