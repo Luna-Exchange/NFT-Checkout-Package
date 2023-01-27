@@ -10,11 +10,11 @@ Check out the [Demo](https://j4c12g-3000.preview.csb.app/)!
 ### Install from NPM
 
 ```bash
-yarn add @insomnialab/mintstack-sdk-react
+yarn add @insomnia-labs/mintstack-sdk-react
 ```
 
 ```bash
-npm install @insomnialab/mintstack-sdk-react
+npm install @insomnia-labs/mintstack-sdk-react
 ```
 
 ### Import CheckoutWidget from package
@@ -22,8 +22,8 @@ npm install @insomnialab/mintstack-sdk-react
 You can import component and style:
 
 ```ts
-import { CheckoutWidget } from '@insomnialab/mintstack-sdk-react';
-import '@insomnialab/mintstack-sdk-react/lib/esm/styles/style.css';
+import { CheckoutWidget } from '@insomnia-labs/mintstack-sdk-react';
+import '@insomnia-labs/mintstack-sdk-react/lib/esm/styles/style.css';
 ```
 
 and use with collection id, api key and secret key:
@@ -39,7 +39,7 @@ You can import DetailBox compoent and use directly in your front-end code.
 ### Components
 
 ```tsx
-import { DetailBox } from "@insomnialab/mintstack-sdk-react";
+import { DetailBox } from "@insomnia-labs/mintstack-sdk-react";
 ...
 <DetailBox
   active={active}
